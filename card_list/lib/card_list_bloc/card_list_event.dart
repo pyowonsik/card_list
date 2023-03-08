@@ -1,40 +1,40 @@
 import 'package:equatable/equatable.dart';
 
-abstract class FlutterAssignmentEvent extends Equatable {
+abstract class CardListEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
 
-class AddNumberEvent extends FlutterAssignmentEvent {
+class AddNumberEvent extends CardListEvent {
   final int index;
   AddNumberEvent({required this.index});
   @override
   List<Object> get props => [index];
 }
 
-class AddIndexEvent extends FlutterAssignmentEvent {
+class AddIndexEvent extends CardListEvent {
   @override
   List<Object> get props => [];
 }
 
-class RemoveIndexEvent extends FlutterAssignmentEvent {
+class RemoveIndexEvent extends CardListEvent {
   final int index;
   RemoveIndexEvent({required this.index});
   @override
   List<Object> get props => [index];
 }
 
-class IsDraggingEvent extends FlutterAssignmentEvent {
+class IsDraggingEvent extends CardListEvent {
   @override
   List<Object> get props => [];
 }
 
-class IsNotDraggingEvent extends FlutterAssignmentEvent {
+class IsNotDraggingEvent extends CardListEvent {
   @override
   List<Object> get props => [];
 }
 
-class DragInfoEvent extends FlutterAssignmentEvent {
+class DragInfoEvent extends CardListEvent {
   final int index;
   DragInfoEvent({required this.index});
 
@@ -42,7 +42,7 @@ class DragInfoEvent extends FlutterAssignmentEvent {
   List<Object> get props => [index];
 }
 
-class DragEvent extends FlutterAssignmentEvent {
+class DragEvent extends CardListEvent {
   final int index;
 
   DragEvent({required this.index});
