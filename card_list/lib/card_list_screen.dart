@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:card_list/card_list_bloc/card_list_bloc.dart';
 import 'package:card_list/card_list_bloc/card_list_event.dart';
 import 'package:card_list/card_list_bloc/card_list_state.dart';

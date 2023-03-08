@@ -13,7 +13,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       (event, emit) {
         List<int> copyNumbers = [...state.numbers];
         copyNumbers[event.index]++;
-        emit(state.copyWith(numbers: copyNumbers));
+        return emit(state.copyWith(numbers: copyNumbers));
       },
     );
 
@@ -53,7 +53,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<DragInfoEvent>(
       (DragInfoEvent event, emit) {
-        emit(
+        return emit(
           state.copyWith(
             dragNumber: state.numbers[event.index],
             dragIndex: event.index,
@@ -71,7 +71,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
           copyIndex++;
           copyNumbers.insert(
               event.index, copyNumbers.removeAt(event.index - 1));
-          emit(
+          return emit(
             state.copyWith(dragIndex: copyIndex, numbers: copyNumbers),
           );
         }
@@ -80,7 +80,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
           copyIndex--;
           copyNumbers.insert(
               event.index, copyNumbers.removeAt(event.index + 1));
-          emit(
+          return emit(
             state.copyWith(dragIndex: copyIndex, numbers: copyNumbers),
           );
         }
