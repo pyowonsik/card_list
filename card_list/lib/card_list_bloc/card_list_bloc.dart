@@ -53,8 +53,6 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<DragInfoEvent>(
       (DragInfoEvent event, emit) {
-        // print('Dragg Number : ${state.numbers[event.index]}');
-        // print('Dragg Index : ${event.index}');
         emit(
           state.copyWith(
             dragNumber: state.numbers[event.index],
@@ -66,8 +64,6 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<DragEvent>(
       (DragEvent event, emit) {
-        // print('현재 Number : ${state.numbers[event.index]}');
-        // print('현재 Index : ${event.index}');
         List<int> copyNumbers = [...state.numbers];
         int copyIndex = state.dragIndex;
 

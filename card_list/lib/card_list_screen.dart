@@ -30,8 +30,6 @@ class CardListScreen extends StatelessWidget {
                     return Draggable(
                         data: index,
                         onDragStarted: () {
-                          // dragNumber = numbers[index];
-                          // dragIndex = index;
                           context
                               .read<CardListBloc>()
                               .add(DragInfoEvent(index: index));
@@ -118,10 +116,7 @@ class CardListScreen extends StatelessWidget {
                                 ),
                               );
                             },
-                            // onMove: (detail){},
                             onMove: (detail) {
-                              // 드래그 중일때 ,
-                              // insertOldNumber 에 현재 index를 넣어주어야한다.
                               if (state.isDragging) {
                                 context
                                     .read<CardListBloc>()
