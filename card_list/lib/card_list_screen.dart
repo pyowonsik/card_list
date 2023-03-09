@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:card_list/card_list_bloc/card_list_bloc.dart';
 import 'package:card_list/card_list_bloc/card_list_event.dart';
 import 'package:card_list/card_list_bloc/card_list_state.dart';
@@ -31,22 +30,19 @@ class CardListScreen extends StatelessWidget {
                     return Draggable(
                         data: index,
                         onDragStarted: () {
-                          // dragNumber = numbers[index];
-                          // dragIndex = index;
                           context
                               .read<CardListBloc>()
-                              .add(DragInfoEvent(index: index));
-                          context.read<CardListBloc>().add(IsDraggingEvent());
+                              .add(DragStartEvent(index: index));
                         },
                         onDraggableCanceled: (_, __) {
                           context
                               .read<CardListBloc>()
-                              .add(IsNotDraggingEvent());
+                              .add(DragStartEvent(index: index));
                         },
                         onDragCompleted: () {
                           context
                               .read<CardListBloc>()
-                              .add(IsNotDraggingEvent());
+                              .add(DragStartEvent(index: index));
                         },
                         feedback: Material(
                           child: ConstrainedBox(
@@ -69,10 +65,7 @@ class CardListScreen extends StatelessWidget {
                             ) {
                               return CardWidget(index: index, state: state);
                             },
-                            // onMove: (detail){},
                             onMove: (detail) {
-                              // 드래그 중일때 ,
-                              // insertOldNumber 에 현재 index를 넣어주어야한다.
                               if (state.isDragging) {
                                 context
                                     .read<CardListBloc>()
