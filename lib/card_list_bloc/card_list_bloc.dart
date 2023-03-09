@@ -6,33 +6,47 @@ import 'package:card_list/card_list_bloc/card_list_state.dart';
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
   CardListBloc()
       : super(const CardListState(
-            numbers: [], isDragging: false, dragNumber: 0, dragIndex: 0)) {
-    Random randomSeed = Random();
+            // numbers: [],
+            isDragging: false,
+            // dragNumber: 0,
+            dragIndex: 0,
+            todos: [],
+            dragTodo: '')) {
+    // Random randomSeed = Random();
 
-    on<AddCardNumberEvent>(
-      (AddCardNumberEvent event, emit) {
-        List<int> copyNumbers = [...state.numbers];
-        copyNumbers[event.index]++;
-        return emit(state.copyWith(numbers: copyNumbers));
-      },
-    );
+    // on<AddCardNumberEvent>(
+    //   (AddCardNumberEvent event, emit) {
+    //     List<int> copyTodos
+    // = [...state.numbers];
+    //     copyTodos
+    // [event.index]++;
+    //     return emit(state.copyWith(numbers: copyTodos
+    // ));
+    //   },
+    // );
 
-    on<AddCardEvent>(
-      (AddCardEvent event, emit) {
-        return emit(
-          state.copyWith(
-              numbers: [...state.numbers, randomSeed.nextInt(100) + 1]),
-        );
-      },
-    );
+    // on<AddCardEvent>(
+    //   (AddCardEvent event, emit) {
+    //     return emit(
+    //       state.copyWith(
+    //           numbers: [...state.numbers, randomSeed.nextInt(100) + 1]),
+    //     );
+    //   },
+    // );
 
     on<RemoveIndexEvent>(
       (RemoveIndexEvent event, emit) {
         return emit(
           state.copyWith(
-            numbers: List.from(state.numbers)..removeAt(event.index),
+            todos: List.from(state.todos)..removeAt(event.index),
           ),
         );
+      },
+    );
+
+    on<AddTodoEvent>(
+      (AddTodoEvent event, emit) {
+        return emit(state.copyWith(todos: [...state.todos, event.todo]));
       },
     );
 
@@ -40,7 +54,8 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       (DragStartEvent event, emit) {
         return emit(
           state.copyWith(
-              dragNumber: state.numbers[event.index],
+              // dragNumber: state.numbers[event.index],
+              dragTodo: state.todos[event.index],
               dragIndex: event.index,
               isDragging: true),
         );
@@ -54,23 +69,19 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<DragEvent>(
       (DragEvent event, emit) {
-        List<int> copyNumbers = [...state.numbers];
+        List<String> copyTodos = [...state.todos];
 
         if (isDragDown(event.index)) {
-          copyNumbers.insert(
-              event.index, copyNumbers.removeAt(event.index - 1));
+          copyTodos.insert(event.index, copyTodos.removeAt(event.index - 1));
           return emit(
-            state.copyWith(
-                dragIndex: state.dragIndex + 1, numbers: copyNumbers),
+            state.copyWith(dragIndex: state.dragIndex + 1, todos: copyTodos),
           );
         }
 
         if (isDragUp(event.index)) {
-          copyNumbers.insert(
-              event.index, copyNumbers.removeAt(event.index + 1));
+          copyTodos.insert(event.index, copyTodos.removeAt(event.index + 1));
           return emit(
-            state.copyWith(
-                dragIndex: state.dragIndex - 1, numbers: copyNumbers),
+            state.copyWith(dragIndex: state.dragIndex - 1, todos: copyTodos),
           );
         }
       },

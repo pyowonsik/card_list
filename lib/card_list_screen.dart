@@ -5,78 +5,115 @@ import 'package:card_list/card_list_widget/card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+late CardListBloc cardListBloc;
+
 class CardListScreen extends StatelessWidget {
-  const CardListScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 30),
+  // const CardListScreen({super.key});
+  late CardListBloc cardListBloc;
+  CardListScreen({super.key});
+
+  void _showMessage(BuildContext context, CardListState state) {
+    final todoController = TextEditingController();
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          title: const Text('Todo 입력 '),
+          content: BlocBuilder<CardListBloc, CardListState>(
+            bloc: cardListBloc,
+            builder: (context, state) {
+              return TextField(
+                controller: todoController,
+              );
+            },
+          ),
+          actions: [
             ElevatedButton(
-                onPressed: () {
-                  context.read<CardListBloc>().add(AddCardEvent());
-                },
-                child: const Text('추가')),
-            const SizedBox(height: 30),
-            BlocBuilder<CardListBloc, CardListState>(
-              builder: (context, state) {
-                return Expanded(
-                    child: ListView.builder(
-                  itemCount: state.numbers.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Draggable(
-                        data: index,
-                        onDragStarted: () {
-                          context
-                              .read<CardListBloc>()
-                              .add(DragStartEvent(index: index));
-                        },
-                        onDraggableCanceled: (_, __) {
-                          context.read<CardListBloc>().add(DragEndEvent());
-                        },
-                        onDragCompleted: () {
-                          context.read<CardListBloc>().add(DragEndEvent());
-                        },
-                        feedback: Material(
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width),
-                            child: CardWidget(index: index, state: state),
-                          ),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            context
-                                .read<CardListBloc>()
-                                .add(AddCardNumberEvent(index: index));
-                          },
-                          child: DragTarget(
-                            builder: (
-                              BuildContext context,
-                              List<dynamic> accepted,
-                              List<dynamic> rejected,
-                            ) {
-                              return CardWidget(index: index, state: state);
-                            },
-                            onMove: (detail) {
-                              if (state.isDragging) {
-                                context
-                                    .read<CardListBloc>()
-                                    .add(DragEvent(index: index));
-                              }
-                            },
-                          ),
-                        ));
-                  },
-                ));
+              child: const Text("추가"),
+              onPressed: () {
+                cardListBloc.add(AddTodoEvent(todo: todoController.text));
+                Navigator.pop(context);
               },
             ),
           ],
-        ),
-      ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    cardListBloc = context.read<CardListBloc>();
+    return Scaffold(
+      body: BlocBuilder<CardListBloc, CardListState>(builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 30),
+              ElevatedButton(
+                  onPressed: () {
+                    _showMessage(context, state);
+                  },
+                  child: const Text('추가')),
+              const SizedBox(height: 30),
+              Expanded(
+                  child: ListView.builder(
+                itemCount: state.todos.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Draggable(
+                      data: index,
+                      onDragStarted: () {
+                        print(state.dragTodo);
+                        context
+                            .read<CardListBloc>()
+                            .add(DragStartEvent(index: index));
+                      },
+                      onDraggableCanceled: (_, __) {
+                        context.read<CardListBloc>().add(DragEndEvent());
+                      },
+                      onDragCompleted: () {
+                        context.read<CardListBloc>().add(DragEndEvent());
+                      },
+                      feedback: Material(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width),
+                          child: CardWidget(index: index, state: state),
+                        ),
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          // context
+                          // .read<CardListBloc>()
+                          // .add(AddCardNumberEvent(index: index));
+                        },
+                        child: DragTarget(
+                          builder: (
+                            BuildContext context,
+                            List<dynamic> accepted,
+                            List<dynamic> rejected,
+                          ) {
+                            return CardWidget(index: index, state: state);
+                          },
+                          onMove: (detail) {
+                            if (state.isDragging) {
+                              context
+                                  .read<CardListBloc>()
+                                  .add(DragEvent(index: index));
+                            }
+                          },
+                        ),
+                      ));
+                },
+              )),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

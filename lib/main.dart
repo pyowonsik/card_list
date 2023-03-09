@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocProvider(
         create: (context) => CardListBloc(),
-        child: const CardListScreen(),
+        child: CardListScreen(),
       ),
     );
   }
