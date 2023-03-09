@@ -34,10 +34,7 @@ class CardListScreen extends StatelessWidget {
             ElevatedButton(
               child: const Text("추가"),
               onPressed: () {
-                print(todoController.text);
-
-                // addTodo 이벤트 파라미터로 todoContorller.text 넣어서 추가 버튼누르면 List에 추가
-                // context.read<CardListBloc>().add(AddCardEvent());
+                cardListBloc.add(AddTodoEvent(todo: todoController.text));
                 Navigator.pop(context);
               },
             ),

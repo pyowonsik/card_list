@@ -10,7 +10,6 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
             isDragging: false,
             dragNumber: 0,
             dragIndex: 0,
-            todo: '',
             todos: [])) {
     Random randomSeed = Random();
 
@@ -41,9 +40,18 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       },
     );
 
-    // on<AddTodoEvent>(
-    //   (AddTodoEvent event, emit) {},
-    // );
+    on<AddTodoEvent>(
+      (AddTodoEvent event, emit) {
+        // print(event.todo);
+        List<String> copyTodos = [...state.todos, event.todo];
+        // return emit(
+        //   state.copyWith(
+        //     todos: List.from(state.todos)..add(event.todo),
+        //   ),
+        // );
+        return emit(state.copyWith(todos: copyTodos));
+      },
+    );
 
     on<DragStartEvent>(
       (DragStartEvent event, emit) {
