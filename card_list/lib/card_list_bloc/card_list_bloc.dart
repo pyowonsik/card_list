@@ -58,23 +58,22 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
     on<DragEvent>(
       (DragEvent event, emit) {
         List<int> copyNumbers = [...state.numbers];
-        int copyIndex = state.dragIndex;
 
         if (isDragDown(event.index)) {
-          copyIndex++;
           copyNumbers.insert(
               event.index, copyNumbers.removeAt(event.index - 1));
           return emit(
-            state.copyWith(dragIndex: copyIndex, numbers: copyNumbers),
+            state.copyWith(
+                dragIndex: state.dragIndex + 1, numbers: copyNumbers),
           );
         }
 
         if (isDragUp(event.index)) {
-          copyIndex--;
           copyNumbers.insert(
               event.index, copyNumbers.removeAt(event.index + 1));
           return emit(
-            state.copyWith(dragIndex: copyIndex, numbers: copyNumbers),
+            state.copyWith(
+                dragIndex: state.dragIndex - 1, numbers: copyNumbers),
           );
         }
       },
