@@ -34,8 +34,8 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
     //   },
     // );
 
-    on<RemoveIndexEvent>(
-      (RemoveIndexEvent event, emit) {
+    on<RemoveTodoEvent>(
+      (RemoveTodoEvent event, emit) {
         return emit(
           state.copyWith(
             todos: List.from(state.todos)..removeAt(event.index),
