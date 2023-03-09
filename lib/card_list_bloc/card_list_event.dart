@@ -17,6 +17,13 @@ class AddCardEvent extends CardListEvent {
   List<Object> get props => [];
 }
 
+class AddTodoEvent extends CardListEvent {
+  final String todo;
+  AddTodoEvent({required this.todo});
+  @override
+  List<Object> get props => [todo];
+}
+
 class RemoveIndexEvent extends CardListEvent {
   final int index;
   RemoveIndexEvent({required this.index});

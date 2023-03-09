@@ -6,7 +6,12 @@ import 'package:card_list/card_list_bloc/card_list_state.dart';
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
   CardListBloc()
       : super(const CardListState(
-            numbers: [], isDragging: false, dragNumber: 0, dragIndex: 0)) {
+            numbers: [],
+            isDragging: false,
+            dragNumber: 0,
+            dragIndex: 0,
+            todo: '',
+            todos: [])) {
     Random randomSeed = Random();
 
     on<AddCardNumberEvent>(
@@ -35,6 +40,10 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
         );
       },
     );
+
+    // on<AddTodoEvent>(
+    //   (AddTodoEvent event, emit) {},
+    // );
 
     on<DragStartEvent>(
       (DragStartEvent event, emit) {

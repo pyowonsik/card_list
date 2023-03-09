@@ -13,6 +13,7 @@ class CardListScreen extends StatelessWidget {
   CardListScreen({super.key});
 
   void _showMessage(BuildContext context, CardListState state) {
+    final todoController = TextEditingController();
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -24,16 +25,19 @@ class CardListScreen extends StatelessWidget {
           content: BlocBuilder<CardListBloc, CardListState>(
             bloc: cardListBloc,
             builder: (context, state) {
-              return Text(state.toString());
+              return TextField(
+                controller: todoController,
+              );
             },
           ),
           actions: [
             ElevatedButton(
               child: const Text("추가"),
               onPressed: () {
-                print(context);
-                // context.read<CardListBloc>().add(AddCardEvent());
+                print(todoController.text);
 
+                // addTodo 이벤트 파라미터로 todoContorller.text 넣어서 추가 버튼누르면 List에 추가
+                // context.read<CardListBloc>().add(AddCardEvent());
                 Navigator.pop(context);
               },
             ),
