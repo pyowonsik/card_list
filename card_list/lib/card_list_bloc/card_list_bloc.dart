@@ -13,7 +13,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       (event, emit) {
         List<int> copyNumbers = [...state.numbers];
         copyNumbers[event.index]++;
-        emit(state.copyWith(numbers: copyNumbers));
+        return emit(state.copyWith(numbers: copyNumbers));
       },
     );
 
@@ -22,8 +22,6 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
         return emit(
           state.copyWith(
               numbers: [...state.numbers, randomSeed.nextInt(100) + 1]),
-          // List.from(state.numbers)
-          //   ..add(randomSeed.nextInt(100) + 1)
         );
       },
     );
@@ -46,59 +44,41 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       },
     );
 
-    on<IsDraggingEvent>((IsDraggingEvent event, emit) =>
-        emit(state.copyWith(isDragging: true)));
-    on<IsNotDraggingEvent>((IsNotDraggingEvent event, emit) =>
-        emit(state.copyWith(isDragging: false)));
-
-    on<DragInfoEvent>(
-      (DragInfoEvent event, emit) {
-        // print('Dragg Number : ${state.numbers[event.index]}');
-        // print('Dragg Index : ${event.index}');
-        emit(
+    on<DragStartEvent>(
+      (DragStartEvent event, emit) {
+        return emit(
           state.copyWith(
-            dragNumber: state.numbers[event.index],
-            dragIndex: event.index,
-          ),
+              dragNumber: state.numbers[event.index],
+              dragIndex: event.index,
+              isDragging: !state.isDragging),
         );
       },
     );
 
     on<DragEvent>(
       (DragEvent event, emit) {
-        // print('현재 Number : ${state.numbers[event.index]}');
-        // print('현재 Index : ${event.index}');
         List<int> copyNumbers = [...state.numbers];
-        int copyIndex = state.dragIndex;
 
         if (isDragDown(event.index)) {
-          copyIndex++;
           copyNumbers.insert(
               event.index, copyNumbers.removeAt(event.index - 1));
-          emit(
-            state.copyWith(dragIndex: copyIndex, numbers: copyNumbers),
+          return emit(
+            state.copyWith(
+                dragIndex: state.dragIndex + 1, numbers: copyNumbers),
           );
         }
 
         if (isDragUp(event.index)) {
-          copyIndex--;
           copyNumbers.insert(
               event.index, copyNumbers.removeAt(event.index + 1));
-          emit(
-            state.copyWith(dragIndex: copyIndex, numbers: copyNumbers),
+          return emit(
+            state.copyWith(
+                dragIndex: state.dragIndex - 1, numbers: copyNumbers),
           );
         }
       },
     );
   }
-
-  bool isDragDown(int index) {
-    if (state.dragIndex < index) return true;
-    return false;
-  }
-
-  bool isDragUp(int index) {
-    if (state.dragIndex > index) return true;
-    return false;
-  }
+  bool isDragDown(int index) => (state.dragIndex < index) ? true : false;
+  bool isDragUp(int index) => (state.dragIndex > index) ? true : false;
 }
