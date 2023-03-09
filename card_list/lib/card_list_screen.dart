@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:card_list/card_list_bloc/card_list_bloc.dart';
 import 'package:card_list/card_list_bloc/card_list_event.dart';
 import 'package:card_list/card_list_bloc/card_list_state.dart';
+import 'package:card_list/card_list_widget/card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -51,30 +52,7 @@ class CardListScreen extends StatelessWidget {
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
                                 maxWidth: MediaQuery.of(context).size.width),
-                            child: SizedBox(
-                              height: 50,
-                              child: Card(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        state.numbers[index].toString(),
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      ElevatedButton(
-                                          onPressed: () {},
-                                          child: const Text('삭제')),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+                            child: CardWidget(index: index, state: state),
                           ),
                         ),
                         child: GestureDetector(
@@ -89,34 +67,7 @@ class CardListScreen extends StatelessWidget {
                               List<dynamic> accepted,
                               List<dynamic> rejected,
                             ) {
-                              return SizedBox(
-                                height: 50,
-                                child: Card(
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            state.numbers[index].toString(),
-                                            style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          ElevatedButton(
-                                              onPressed: () {
-                                                context
-                                                    .read<CardListBloc>()
-                                                    .add(RemoveIndexEvent(
-                                                        index: index));
-                                              },
-                                              child: const Text('삭제')),
-                                        ]),
-                                  ),
-                                ),
-                              );
+                              return CardWidget(index: index, state: state);
                             },
                             // onMove: (detail){},
                             onMove: (detail) {
