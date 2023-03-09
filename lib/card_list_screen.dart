@@ -34,7 +34,9 @@ class CardListScreen extends StatelessWidget {
             ElevatedButton(
               child: const Text("추가"),
               onPressed: () {
+                print(state.todos);
                 cardListBloc.add(AddTodoEvent(todo: todoController.text));
+
                 Navigator.pop(context);
               },
             ),
@@ -62,7 +64,7 @@ class CardListScreen extends StatelessWidget {
               const SizedBox(height: 30),
               Expanded(
                   child: ListView.builder(
-                itemCount: state.numbers.length,
+                itemCount: state.todos.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Draggable(
                       data: index,

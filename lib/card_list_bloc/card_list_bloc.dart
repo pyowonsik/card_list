@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:card_list/card_list_bloc/card_list_event.dart';
@@ -42,14 +43,8 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<AddTodoEvent>(
       (AddTodoEvent event, emit) {
-        // print(event.todo);
-        List<String> copyTodos = [...state.todos, event.todo];
-        // return emit(
-        //   state.copyWith(
-        //     todos: List.from(state.todos)..add(event.todo),
-        //   ),
-        // );
-        return emit(state.copyWith(todos: copyTodos));
+        print(event.todo);
+        return emit(state.copyWith(todos: [...state.todos, event.todo]));
       },
     );
 
