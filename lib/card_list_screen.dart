@@ -21,7 +21,7 @@ class CardListScreen extends StatelessWidget {
         return AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          title: const Text('Title'),
+          title: const Text('Todo 입력 '),
           content: BlocBuilder<CardListBloc, CardListState>(
             bloc: cardListBloc,
             builder: (context, state) {
@@ -34,9 +34,7 @@ class CardListScreen extends StatelessWidget {
             ElevatedButton(
               child: const Text("추가"),
               onPressed: () {
-                print(state.todos);
                 cardListBloc.add(AddTodoEvent(todo: todoController.text));
-
                 Navigator.pop(context);
               },
             ),
@@ -69,6 +67,7 @@ class CardListScreen extends StatelessWidget {
                   return Draggable(
                       data: index,
                       onDragStarted: () {
+                        print(state.dragTodo);
                         context
                             .read<CardListBloc>()
                             .add(DragStartEvent(index: index));
@@ -88,9 +87,9 @@ class CardListScreen extends StatelessWidget {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          context
-                              .read<CardListBloc>()
-                              .add(AddCardNumberEvent(index: index));
+                          // context
+                          // .read<CardListBloc>()
+                          // .add(AddCardNumberEvent(index: index));
                         },
                         child: DragTarget(
                           builder: (
