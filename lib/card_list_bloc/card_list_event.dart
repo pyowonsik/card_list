@@ -5,14 +5,14 @@ abstract class CardListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AddNumberEvent extends CardListEvent {
+class AddCardNumberEvent extends CardListEvent {
   final int index;
-  AddNumberEvent({required this.index});
+  AddCardNumberEvent({required this.index});
   @override
   List<Object> get props => [index];
 }
 
-class AddIndexEvent extends CardListEvent {
+class AddCardEvent extends CardListEvent {
   @override
   List<Object> get props => [];
 }
@@ -30,6 +30,11 @@ class DragStartEvent extends CardListEvent {
 
   @override
   List<Object> get props => [index];
+}
+
+class DragEndEvent extends CardListEvent {
+  @override
+  List<Object> get props => [];
 }
 
 class DragEvent extends CardListEvent {
