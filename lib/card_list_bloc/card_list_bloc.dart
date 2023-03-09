@@ -9,16 +9,16 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
             numbers: [], isDragging: false, dragNumber: 0, dragIndex: 0)) {
     Random randomSeed = Random();
 
-    on<AddNumberEvent>(
-      (event, emit) {
+    on<AddCardNumberEvent>(
+      (AddCardNumberEvent event, emit) {
         List<int> copyNumbers = [...state.numbers];
         copyNumbers[event.index]++;
         return emit(state.copyWith(numbers: copyNumbers));
       },
     );
 
-    on<AddIndexEvent>(
-      (AddIndexEvent event, emit) {
+    on<AddCardEvent>(
+      (AddCardEvent event, emit) {
         return emit(
           state.copyWith(
               numbers: [...state.numbers, randomSeed.nextInt(100) + 1]),
@@ -28,14 +28,6 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<RemoveIndexEvent>(
       (RemoveIndexEvent event, emit) {
-        // return emit(
-        //   state.copyWith(
-        //     numbers: state.numbers
-        //         .whereIndexed((index, element) => index != event.index)
-        //         .toList(),
-        //   ),
-        // );
-
         return emit(
           state.copyWith(
             numbers: List.from(state.numbers)..removeAt(event.index),
@@ -50,9 +42,14 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
           state.copyWith(
               dragNumber: state.numbers[event.index],
               dragIndex: event.index,
-              isDragging: !state.isDragging),
+              isDragging: true),
         );
       },
+    );
+
+    on<DragEndEvent>(
+      (DragEndEvent event, emit) =>
+          emit(state.copyWith(isDragging: !state.isDragging)),
     );
 
     on<DragEvent>(

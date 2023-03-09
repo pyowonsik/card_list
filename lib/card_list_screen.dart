@@ -17,7 +17,7 @@ class CardListScreen extends StatelessWidget {
             const SizedBox(height: 30),
             ElevatedButton(
                 onPressed: () {
-                  context.read<CardListBloc>().add(AddIndexEvent());
+                  context.read<CardListBloc>().add(AddCardEvent());
                 },
                 child: const Text('추가')),
             const SizedBox(height: 30),
@@ -35,14 +35,10 @@ class CardListScreen extends StatelessWidget {
                               .add(DragStartEvent(index: index));
                         },
                         onDraggableCanceled: (_, __) {
-                          context
-                              .read<CardListBloc>()
-                              .add(DragStartEvent(index: index));
+                          context.read<CardListBloc>().add(DragEndEvent());
                         },
                         onDragCompleted: () {
-                          context
-                              .read<CardListBloc>()
-                              .add(DragStartEvent(index: index));
+                          context.read<CardListBloc>().add(DragEndEvent());
                         },
                         feedback: Material(
                           child: ConstrainedBox(
@@ -55,7 +51,7 @@ class CardListScreen extends StatelessWidget {
                           onTap: () {
                             context
                                 .read<CardListBloc>()
-                                .add(AddNumberEvent(index: index));
+                                .add(AddCardNumberEvent(index: index));
                           },
                           child: DragTarget(
                             builder: (
