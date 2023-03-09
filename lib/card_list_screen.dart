@@ -9,7 +9,8 @@ late CardListBloc cardListBloc;
 
 class CardListScreen extends StatelessWidget {
   // const CardListScreen({super.key});
-  late CardListBloc cardListBloc;
+
+  late CardListBloc cardListBloc; // late로 선언
   CardListScreen({super.key});
 
   void _showMessage(BuildContext context, CardListState state) {
@@ -23,7 +24,7 @@ class CardListScreen extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           title: const Text('Todo 입력 '),
           content: BlocBuilder<CardListBloc, CardListState>(
-            bloc: cardListBloc,
+            bloc: cardListBloc, // showDialog에서 bloc 등록
             builder: (context, state) {
               return TextField(
                 controller: todoController,
@@ -46,7 +47,7 @@ class CardListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    cardListBloc = context.read<CardListBloc>();
+    cardListBloc = context.read<CardListBloc>(); // bloc 등록
     return Scaffold(
       body: BlocBuilder<CardListBloc, CardListState>(builder: (context, state) {
         return Padding(
