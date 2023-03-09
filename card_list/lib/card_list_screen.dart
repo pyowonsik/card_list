@@ -29,20 +29,22 @@ class CardListScreen extends StatelessWidget {
                     return Draggable(
                         data: index,
                         onDragStarted: () {
+                          print('Started');
                           context
                               .read<CardListBloc>()
                               .add(DragInfoEvent(index: index));
-                          context.read<CardListBloc>().add(IsDraggingEvent());
                         },
                         onDraggableCanceled: (_, __) {
+                          print('Canceled');
                           context
                               .read<CardListBloc>()
-                              .add(IsNotDraggingEvent());
+                              .add(DragInfoEvent(index: index));
                         },
                         onDragCompleted: () {
+                          print('Completed');
                           context
                               .read<CardListBloc>()
-                              .add(IsNotDraggingEvent());
+                              .add(DragInfoEvent(index: index));
                         },
                         feedback: Material(
                           child: ConstrainedBox(

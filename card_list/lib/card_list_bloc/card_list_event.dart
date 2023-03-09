@@ -24,16 +24,6 @@ class RemoveIndexEvent extends CardListEvent {
   List<Object> get props => [index];
 }
 
-class IsDraggingEvent extends CardListEvent {
-  @override
-  List<Object> get props => [];
-}
-
-class IsNotDraggingEvent extends CardListEvent {
-  @override
-  List<Object> get props => [];
-}
-
 class DragInfoEvent extends CardListEvent {
   final int index;
   DragInfoEvent({required this.index});

@@ -46,18 +46,13 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       },
     );
 
-    on<IsDraggingEvent>((IsDraggingEvent event, emit) =>
-        emit(state.copyWith(isDragging: true)));
-    on<IsNotDraggingEvent>((IsNotDraggingEvent event, emit) =>
-        emit(state.copyWith(isDragging: false)));
-
     on<DragInfoEvent>(
       (DragInfoEvent event, emit) {
         return emit(
           state.copyWith(
-            dragNumber: state.numbers[event.index],
-            dragIndex: event.index,
-          ),
+              dragNumber: state.numbers[event.index],
+              dragIndex: event.index,
+              isDragging: !state.isDragging),
         );
       },
     );
