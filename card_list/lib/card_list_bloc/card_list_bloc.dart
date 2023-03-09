@@ -22,8 +22,6 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
         return emit(
           state.copyWith(
               numbers: [...state.numbers, randomSeed.nextInt(100) + 1]),
-          // List.from(state.numbers)
-          //   ..add(randomSeed.nextInt(100) + 1)
         );
       },
     );
@@ -46,8 +44,8 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       },
     );
 
-    on<DragInfoEvent>(
-      (DragInfoEvent event, emit) {
+    on<DragStartEvent>(
+      (DragStartEvent event, emit) {
         return emit(
           state.copyWith(
               dragNumber: state.numbers[event.index],
