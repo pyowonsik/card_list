@@ -79,14 +79,6 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       },
     );
   }
-
-  bool isDragDown(int index) {
-    if (state.dragIndex < index) return true;
-    return false;
-  }
-
-  bool isDragUp(int index) {
-    if (state.dragIndex > index) return true;
-    return false;
-  }
+  bool isDragDown(int index) => (state.dragIndex < index) ? true : false;
+  bool isDragUp(int index) => (state.dragIndex > index) ? true : false;
 }
