@@ -35,7 +35,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       (RemoveIndexEvent event, emit) {
         return emit(
           state.copyWith(
-            numbers: List.from(state.numbers)..removeAt(event.index),
+            todos: List.from(state.todos)..removeAt(event.index),
           ),
         );
       },
@@ -43,7 +43,6 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<AddTodoEvent>(
       (AddTodoEvent event, emit) {
-        print(event.todo);
         return emit(state.copyWith(todos: [...state.todos, event.todo]));
       },
     );
