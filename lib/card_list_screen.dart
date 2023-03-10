@@ -44,8 +44,11 @@ class CardListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CardListBloc cardListBloc = context.read<
-        CardListBloc>(); // modal 에서 bloc 사용하기위해 bloc 등록 , modal 안에서 context를 showDialog를 사용하기 때문
+    CardListBloc cardListBloc = context.read<CardListBloc>();
+    // modal 에서 bloc 사용하기위해 bloc 등록 ,
+    // modal 안에서 context를 showDialog를 사용하기 때문에,
+    // 등록한 bloc을 사용하여 event를 발생시켜야함
+
     final todoController = TextEditingController();
 
     return Scaffold(
@@ -117,9 +120,37 @@ class CardListScreen extends StatelessWidget {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          // context
-                          // .read<CardListBloc>()
-                          // .add(AddCardNumberEvent(index: index));
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  title: const Text('변경할 Todo 입력 '),
+                                  content:
+                                      BlocBuilder<CardListBloc, CardListState>(
+                                    bloc: cardListBloc, // showDialog에서 bloc 등록
+                                    builder: (context, state) {
+                                      return TextField(
+                                        controller: todoController,
+                                      );
+                                    },
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                      child: const Text("변경"),
+                                      onPressed: () {
+                                        cardListBloc.add(ChangeTodoEvent(
+                                            todo: todoController.text,
+                                            index: index));
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                );
+                              });
+                          todoController.clear();
                         },
                         child: DragTarget(
                           builder: (

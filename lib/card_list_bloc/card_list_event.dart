@@ -32,10 +32,11 @@ class RemoveTodoEvent extends CardListEvent {
 }
 
 class ChangeTodoEvent extends CardListEvent {
+  final String todo;
   final int index;
-  ChangeTodoEvent({required this.index});
+  ChangeTodoEvent({required this.todo, required this.index});
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [todo];
 }
 
 class DragStartEvent extends CardListEvent {
