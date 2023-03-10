@@ -5,46 +5,47 @@ import 'package:card_list/card_list_widget/card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-late CardListBloc cardListBloc; // late로 선언
-
 class CardListScreen extends StatelessWidget {
   const CardListScreen({super.key});
-  void addTodo(BuildContext context, CardListState state) {
-    final todoController = TextEditingController();
 
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          title: const Text('Todo 입력 '),
-          content: BlocBuilder<CardListBloc, CardListState>(
-            bloc: cardListBloc, // showDialog에서 bloc 등록
-            builder: (context, state) {
-              return TextField(
-                controller: todoController,
-              );
-            },
-          ),
-          actions: [
-            ElevatedButton(
-              child: const Text("추가"),
-              onPressed: () {
-                cardListBloc.add(AddTodoEvent(todo: todoController.text));
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // void addTodo(BuildContext context, CardListState state) {
+  //   final todoController = TextEditingController();
+  //   showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         shape:
+  //             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+  //         title: const Text('Todo 입력 '),
+  //         content: BlocBuilder<CardListBloc, CardListState>(
+  //           bloc: cardListBloc, // showDialog에서 bloc 등록
+  //           builder: (context, state) {
+  //             return TextField(
+  //               controller: todoController,
+  //             );
+  //           },
+  //         ),
+  //         actions: [
+  //           ElevatedButton(
+  //             child: const Text("추가"),
+  //             onPressed: () {
+  //               cardListBloc.add(AddTodoEvent(todo: todoController.text));
+  //               Navigator.pop(context);
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
-    cardListBloc = context.read<CardListBloc>(); // bloc 등록
+    // late CardListBloc cardListBloc; // late로 선언
+    CardListBloc cardListBloc = context.read<CardListBloc>(); // bloc 등록
+    final todoController = TextEditingController();
+
     return Scaffold(
       body: BlocBuilder<CardListBloc, CardListState>(builder: (context, state) {
         return Padding(
@@ -54,7 +55,36 @@ class CardListScreen extends StatelessWidget {
               const SizedBox(height: 30),
               ElevatedButton(
                   onPressed: () {
-                    addTodo(context, state);
+                    // addTodo(context, state);
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            title: const Text('Todo 입력 '),
+                            content: BlocBuilder<CardListBloc, CardListState>(
+                              bloc: cardListBloc, // showDialog에서 bloc 등록
+                              builder: (context, state) {
+                                return TextField(
+                                  controller: todoController,
+                                );
+                              },
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                child: const Text("추가"),
+                                onPressed: () {
+                                  cardListBloc.add(
+                                      AddTodoEvent(todo: todoController.text));
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          );
+                        });
+
+                    todoController.clear();
                   },
                   child: const Text('추가')),
               const SizedBox(height: 30),
@@ -65,7 +95,6 @@ class CardListScreen extends StatelessWidget {
                   return Draggable(
                       data: index,
                       onDragStarted: () {
-                        print(state.dragTodo);
                         context
                             .read<CardListBloc>()
                             .add(DragStartEvent(index: index));
