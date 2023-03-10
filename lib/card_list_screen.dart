@@ -5,16 +5,13 @@ import 'package:card_list/card_list_widget/card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-late CardListBloc cardListBloc;
+late CardListBloc cardListBloc; // late로 선언
 
 class CardListScreen extends StatelessWidget {
-  // const CardListScreen({super.key});
-
-  late CardListBloc cardListBloc; // late로 선언
-  CardListScreen({super.key});
-
-  void _showMessage(BuildContext context, CardListState state) {
+  const CardListScreen({super.key});
+  void addTodo(BuildContext context, CardListState state) {
     final todoController = TextEditingController();
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -57,7 +54,7 @@ class CardListScreen extends StatelessWidget {
               const SizedBox(height: 30),
               ElevatedButton(
                   onPressed: () {
-                    _showMessage(context, state);
+                    addTodo(context, state);
                   },
                   child: const Text('추가')),
               const SizedBox(height: 30),
