@@ -8,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CardListScreen extends StatelessWidget {
   const CardListScreen({super.key});
 
+  // late CardListBloc cardListBloc; // late로 선언
+
   // void addTodo(BuildContext context, CardListState state) {
   //   final todoController = TextEditingController();
   //   showDialog(
@@ -42,8 +44,8 @@ class CardListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // late CardListBloc cardListBloc; // late로 선언
-    CardListBloc cardListBloc = context.read<CardListBloc>(); // bloc 등록
+    CardListBloc cardListBloc = context.read<
+        CardListBloc>(); // modal 에서 bloc 사용하기위해 bloc 등록 , modal 안에서 context를 showDialog를 사용하기 때문
     final todoController = TextEditingController();
 
     return Scaffold(
@@ -56,6 +58,7 @@ class CardListScreen extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     // addTodo(context, state);
+
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
