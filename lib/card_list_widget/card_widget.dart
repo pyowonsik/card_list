@@ -19,7 +19,6 @@ class CardWidget extends StatelessWidget {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
-              // state.numbers[index].toString(),
               state.todos[index],
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
