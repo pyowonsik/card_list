@@ -10,7 +10,8 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
             // dragNumber: 0,
             dragIndex: 0,
             todos: [],
-            dragTodo: '')) {
+            dragTodo: '',
+            isChecked: false)) {
     // Random randomSeed = Random();
 
     // on<AddCardNumberEvent>(

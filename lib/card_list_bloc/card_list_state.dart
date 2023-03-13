@@ -5,12 +5,14 @@ class CardListState extends Equatable {
   final int dragIndex;
   final List<String> todos;
   final String dragTodo;
+  final bool isChecked;
 
   const CardListState({
     required this.isDragging,
     required this.dragIndex,
     required this.todos,
     required this.dragTodo,
+    required this.isChecked,
   });
 
   CardListState copyWith({
@@ -18,15 +20,17 @@ class CardListState extends Equatable {
     int? dragIndex,
     List<String>? todos,
     String? dragTodo,
+    bool? isChecked,
   }) {
     return CardListState(
       isDragging: isDragging ?? this.isDragging,
       dragIndex: dragIndex ?? this.dragIndex,
       todos: todos ?? this.todos,
       dragTodo: dragTodo ?? this.dragTodo,
+      isChecked: isChecked ?? this.isChecked,
     );
   }
 
   @override
-  List<Object> get props => [isDragging, dragIndex, todos];
+  List<Object> get props => [isDragging, dragIndex, todos, dragTodo, isChecked];
 }

@@ -39,6 +39,14 @@ class ChangeTodoEvent extends CardListEvent {
   List<Object> get props => [todo];
 }
 
+class CheckTodoEvent extends CardListEvent {
+  final int index;
+  CheckTodoEvent({required this.index});
+
+  @override
+  List<Object> get props => [index];
+}
+
 class DragStartEvent extends CardListEvent {
   final int index;
   DragStartEvent({required this.index});
