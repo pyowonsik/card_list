@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class CardListState extends Equatable {
+  // final Todo todos; <- model로 묶어서 관린
   final bool isDragging;
   final int dragIndex;
   final List<String> todos;
