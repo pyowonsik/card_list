@@ -1,4 +1,4 @@
-import 'package:card_list/card_list_bloc/card_list_bloc.dart';
+import 'package:card_list/bloc/card_list_bloc.dart';
 import 'package:card_list/card_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

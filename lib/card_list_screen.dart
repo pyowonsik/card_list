@@ -1,7 +1,7 @@
-import 'package:card_list/card_list_bloc/card_list_bloc.dart';
+import 'package:card_list/bloc/card_list_bloc.dart';
+import 'package:card_list/bloc/card_list_state.dart';
 import 'package:card_list/card_list_bloc/card_list_event.dart';
-import 'package:card_list/card_list_bloc/card_list_state.dart';
-import 'package:card_list/card_list_widget/card_widget.dart';
+import 'package:card_list/widget/card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -55,75 +55,29 @@ class CardListScreen extends StatelessWidget {
 
     final todoController = TextEditingController();
 
-    return Scaffold(
-      body: BlocBuilder<CardListBloc, CardListState>(builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 30),
-              ElevatedButton(
-                  onPressed: () {
-                    // addTodo(context, state);
+    return MaterialApp(
+      home: DefaultTabController(
+          length: 3,
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Todo List'),
+              bottom: const TabBar(tabs: [
+                Tab(text: 'all'),
+                Tab(text: 'check'),
+                Tab(text: 'other'),
+              ]),
+            ),
+            body: BlocBuilder<CardListBloc, CardListState>(
+                builder: (context, state) {
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                        onPressed: () {
+                          // addTodo(context, state);
 
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                            title: const Text('Todo 입력 '),
-                            content: BlocBuilder<CardListBloc, CardListState>(
-                              bloc: cardListBloc, // showDialog에서 bloc 등록
-                              builder: (context, state) {
-                                return TextField(
-                                  controller: todoController,
-                                );
-                              },
-                            ),
-                            actions: [
-                              ElevatedButton(
-                                child: const Text("추가"),
-                                onPressed: () {
-                                  cardListBloc.add(
-                                      AddTodoEvent(todo: todoController.text));
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
-                          );
-                        });
-
-                    todoController.clear();
-                  },
-                  child: const Text('추가')),
-              const SizedBox(height: 30),
-              Expanded(
-                  child: ListView.builder(
-                itemCount: state.todos.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Draggable(
-                      data: index,
-                      onDragStarted: () {
-                        context
-                            .read<CardListBloc>()
-                            .add(DragStartEvent(index: index));
-                      },
-                      onDraggableCanceled: (_, __) {
-                        context.read<CardListBloc>().add(DragEndEvent());
-                      },
-                      onDragCompleted: () {
-                        context.read<CardListBloc>().add(DragEndEvent());
-                      },
-                      feedback: Material(
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width),
-                          child: CardWidget(index: index, state: state),
-                        ),
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -131,7 +85,7 @@ class CardListScreen extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(10.0)),
-                                  title: const Text('변경할 Todo 입력 '),
+                                  title: const Text('Todo 입력 '),
                                   content:
                                       BlocBuilder<CardListBloc, CardListState>(
                                     bloc: cardListBloc, // showDialog에서 bloc 등록
@@ -143,42 +97,105 @@ class CardListScreen extends StatelessWidget {
                                   ),
                                   actions: [
                                     ElevatedButton(
-                                      child: const Text("변경"),
+                                      child: const Text("추가"),
                                       onPressed: () {
-                                        cardListBloc.add(ChangeTodoEvent(
-                                            todo: todoController.text,
-                                            index: index));
+                                        cardListBloc.add(AddTodoEvent(
+                                            todo: todoController.text));
                                         Navigator.pop(context);
                                       },
                                     ),
                                   ],
                                 );
                               });
+
                           todoController.clear();
                         },
-                        child: DragTarget(
-                          builder: (
-                            BuildContext context,
-                            List<dynamic> accepted,
-                            List<dynamic> rejected,
-                          ) {
-                            return CardWidget(index: index, state: state);
-                          },
-                          onMove: (detail) {
-                            if (state.isDragging) {
+                        child: const Text('추가')),
+                    const SizedBox(height: 30),
+                    Expanded(
+                        child: ListView.builder(
+                      itemCount: state.todos.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Draggable(
+                            data: index,
+                            onDragStarted: () {
                               context
                                   .read<CardListBloc>()
-                                  .add(DragEvent(index: index));
-                            }
-                          },
-                        ),
-                      ));
-                },
-              )),
-            ],
-          ),
-        );
-      }),
+                                  .add(DragStartEvent(index: index));
+                            },
+                            onDraggableCanceled: (_, __) {
+                              context.read<CardListBloc>().add(DragEndEvent());
+                            },
+                            onDragCompleted: () {
+                              context.read<CardListBloc>().add(DragEndEvent());
+                            },
+                            feedback: Material(
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    maxWidth:
+                                        MediaQuery.of(context).size.width),
+                                child: CardWidget(index: index, state: state),
+                              ),
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        title: const Text('변경할 Todo 입력 '),
+                                        content: BlocBuilder<CardListBloc,
+                                            CardListState>(
+                                          bloc:
+                                              cardListBloc, // showDialog에서 bloc 등록
+                                          builder: (context, state) {
+                                            return TextField(
+                                              controller: todoController,
+                                            );
+                                          },
+                                        ),
+                                        actions: [
+                                          ElevatedButton(
+                                            child: const Text("변경"),
+                                            onPressed: () {
+                                              cardListBloc.add(ChangeTodoEvent(
+                                                  todo: todoController.text,
+                                                  index: index));
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    });
+                                todoController.clear();
+                              },
+                              child: DragTarget(
+                                builder: (
+                                  BuildContext context,
+                                  List<dynamic> accepted,
+                                  List<dynamic> rejected,
+                                ) {
+                                  return CardWidget(index: index, state: state);
+                                },
+                                onMove: (detail) {
+                                  if (state.isDragging) {
+                                    context
+                                        .read<CardListBloc>()
+                                        .add(DragEvent(index: index));
+                                  }
+                                },
+                              ),
+                            ));
+                      },
+                    )),
+                  ],
+                ),
+              );
+            }),
+          )),
     );
   }
 }
