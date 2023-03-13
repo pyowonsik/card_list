@@ -59,14 +59,14 @@ class CardListScreen extends StatelessWidget {
       home: DefaultTabController(
           length: 3,
           child: Scaffold(
-            // appBar: AppBar(
-            //   title: const Text('Todo List'),
-            //   bottom: const TabBar(tabs: [
-            //     Tab(text: 'all'),
-            //     Tab(text: 'check'),
-            //     Tab(text: 'others'),
-            //   ]),
-            // ),
+            appBar: AppBar(
+              title: const Text('Todo List'),
+              bottom: const TabBar(tabs: [
+                Tab(text: 'all'),
+                Tab(text: 'check'),
+                Tab(text: 'others'),
+              ]),
+            ),
             body:
                 // const TabBarView(children: []),
                 BlocBuilder<CardListBloc, CardListState>(
