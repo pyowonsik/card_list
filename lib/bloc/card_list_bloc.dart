@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:card_list/bloc/card_list_state.dart';
 import 'package:card_list/bloc/card_list_event.dart';
+import 'package:card_list/todo/todo.dart';
 import 'package:card_list/widget/card_widget.dart';
 
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
@@ -10,7 +11,8 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
             dragIndex: 0,
             todos: [],
             dragTodo: '',
-            isChecked: [])) {
+            isChecked: [],
+            todoList: [])) {
     on<AddTodoEvent>(
       (AddTodoEvent event, emit) {
         return emit(state.copyWith(
@@ -38,7 +40,6 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
     );
 
     on<CheckTodoEvent>((CheckTodoEvent event, emit) {
-      print('${state.todos[event.index]} : ${state.isChecked[event.index]}');
       List<bool> copyIsChecked = [...state.isChecked];
       (copyIsChecked[event.index])
           ? copyIsChecked[event.index] = false
@@ -94,6 +95,37 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
         }
       },
     );
+
+    on<AllListEvent>(
+      (AllListEvent event, emit) {
+        List<bool> copyIsChecked = [...state.isChecked];
+        List<String> copyTodos = [...state.todos];
+
+        print('All : ${state.isChecked} , ${state.todos}');
+        print('Checked : $copyIsChecked , $copyTodos');
+      },
+    );
+
+    on<CheckedListEvent>(
+      (CheckedListEvent event, emit) {
+        List<bool> copyIsChecked = [];
+        List<String> copyTodos = [];
+
+        for (var i = 0; i < state.isChecked.length; i++) {
+          if (state.isChecked[i] == true) {
+            copyIsChecked.add(state.isChecked[i]);
+            copyTodos.add(state.todos[i]);
+          }
+        }
+
+        print('All : ${state.isChecked} , ${state.todos}');
+        print('Checked : $copyIsChecked , $copyTodos');
+
+        return emit(state.copyWith(isChecked: copyIsChecked, todos: copyTodos));
+      },
+    );
+
+    // otherListEvent
   }
   bool isDragDown(int index) => (state.dragIndex < index) ? true : false;
   bool isDragUp(int index) => (state.dragIndex > index) ? true : false;

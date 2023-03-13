@@ -59,25 +59,47 @@ class CardListScreen extends StatelessWidget {
       home: DefaultTabController(
           length: 3,
           child: Scaffold(
-            appBar: AppBar(
-              title: const Text('Todo List'),
-              bottom: const TabBar(tabs: [
-                Tab(text: 'all'),
-                Tab(text: 'check'),
-                Tab(text: 'other'),
-              ]),
-            ),
-            body: BlocBuilder<CardListBloc, CardListState>(
-                builder: (context, state) {
+            // appBar: AppBar(
+            //   title: const Text('Todo List'),
+            //   bottom: const TabBar(tabs: [
+            //     Tab(text: 'all'),
+            //     Tab(text: 'check'),
+            //     Tab(text: 'others'),
+            //   ]),
+            // ),
+            body:
+                // const TabBarView(children: []),
+                BlocBuilder<CardListBloc, CardListState>(
+                    builder: (context, state) {
               return Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              context.read<CardListBloc>().add(AllListEvent());
+                            },
+                            child: const Text('all')),
+                        const SizedBox(width: 30),
+                        ElevatedButton(
+                            onPressed: () {
+                              context
+                                  .read<CardListBloc>()
+                                  .add(CheckedListEvent());
+                            },
+                            child: const Text('check')),
+                        const SizedBox(width: 30),
+                        ElevatedButton(
+                            onPressed: () {}, child: const Text('other')),
+                      ],
+                    ),
                     const SizedBox(height: 30),
                     ElevatedButton(
                         onPressed: () {
                           // addTodo(context, state);
-
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {

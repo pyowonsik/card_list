@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 abstract class CardListEvent extends Equatable {
   @override
@@ -67,4 +68,19 @@ class DragEvent extends CardListEvent {
 
   @override
   List<Object> get props => [index];
+}
+
+class AllListEvent extends CardListEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class CheckedListEvent extends CardListEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class OtherListEvent extends CardListEvent {
+  @override
+  List<Object> get props => [];
 }
