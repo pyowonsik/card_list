@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:card_list/card_list_bloc/card_list_event.dart';
 import 'package:card_list/card_list_bloc/card_list_state.dart';
+import 'package:card_list/card_list_widget/card_widget.dart';
 
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
   CardListBloc()
@@ -11,7 +12,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
             dragIndex: 0,
             todos: [],
             dragTodo: '',
-            isChecked: false)) {
+            isChecked: [])) {
     // Random randomSeed = Random();
 
     // on<AddCardNumberEvent>(
@@ -36,7 +37,9 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<AddTodoEvent>(
       (AddTodoEvent event, emit) {
-        return emit(state.copyWith(todos: [...state.todos, event.todo]));
+        return emit(state.copyWith(
+            todos: [...state.todos, event.todo],
+            isChecked: [...state.isChecked, false]));
       },
     );
 
@@ -57,6 +60,14 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
         return emit(state.copyWith(todos: copyTodos));
       },
     );
+
+    on<CheckTodoEvent>((CheckTodoEvent event, emit) {
+      List<bool> copyIsChecked = [...state.isChecked];
+      (copyIsChecked[event.index])
+          ? copyIsChecked[event.index] = false
+          : copyIsChecked[event.index] = true;
+      return emit(state.copyWith(isChecked: copyIsChecked));
+    });
 
     on<DragStartEvent>(
       (DragStartEvent event, emit) {

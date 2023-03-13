@@ -5,7 +5,7 @@ class CardListState extends Equatable {
   final int dragIndex;
   final List<String> todos;
   final String dragTodo;
-  final bool isChecked;
+  final List<bool> isChecked;
 
   const CardListState({
     required this.isDragging,
@@ -20,7 +20,7 @@ class CardListState extends Equatable {
     int? dragIndex,
     List<String>? todos,
     String? dragTodo,
-    bool? isChecked,
+    List<bool>? isChecked,
   }) {
     return CardListState(
       isDragging: isDragging ?? this.isDragging,

@@ -4,8 +4,6 @@ import '../card_list_bloc/card_list_bloc.dart';
 import '../card_list_bloc/card_list_event.dart';
 import '../card_list_bloc/card_list_state.dart';
 
-bool isChecked = false;
-
 class CardWidget extends StatelessWidget {
   final int index;
   final CardListState state;
@@ -20,7 +18,13 @@ class CardWidget extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Checkbox(value: isChecked, onChanged: (value) {}),
+            Checkbox(
+                value: state.isChecked[index],
+                onChanged: (value) {
+                  context
+                      .read<CardListBloc>()
+                      .add(CheckTodoEvent(index: index));
+                }),
             Text(
               state.todos[index],
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
