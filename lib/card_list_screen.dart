@@ -93,7 +93,12 @@ class CardListScreen extends StatelessWidget {
                             child: const Text('check')),
                         const SizedBox(width: 30),
                         ElevatedButton(
-                            onPressed: () {}, child: const Text('other')),
+                            onPressed: () {
+                              context
+                                  .read<CardListBloc>()
+                                  .add(OtherListEvent());
+                            },
+                            child: const Text('other')),
                       ],
                     ),
                     const SizedBox(height: 30),
