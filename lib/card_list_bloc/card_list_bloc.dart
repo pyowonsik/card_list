@@ -62,6 +62,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
     );
 
     on<CheckTodoEvent>((CheckTodoEvent event, emit) {
+      print('${state.todos[event.index]} : ${state.isChecked[event.index]}');
       List<bool> copyIsChecked = [...state.isChecked];
       (copyIsChecked[event.index])
           ? copyIsChecked[event.index] = false
@@ -89,18 +90,30 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
     on<DragEvent>(
       (DragEvent event, emit) {
         List<String> copyTodos = [...state.todos];
+        List<bool> copyIsChecked = [...state.isChecked];
 
         if (isDragDown(event.index)) {
           copyTodos.insert(event.index, copyTodos.removeAt(event.index - 1));
+          copyIsChecked.insert(
+              event.index, copyIsChecked.removeAt(event.index - 1));
           return emit(
-            state.copyWith(dragIndex: state.dragIndex + 1, todos: copyTodos),
+            state.copyWith(
+                dragIndex: state.dragIndex + 1,
+                todos: copyTodos,
+                isChecked: copyIsChecked),
           );
         }
 
         if (isDragUp(event.index)) {
           copyTodos.insert(event.index, copyTodos.removeAt(event.index + 1));
+          copyIsChecked.insert(
+              event.index, copyIsChecked.removeAt(event.index + 1));
+
           return emit(
-            state.copyWith(dragIndex: state.dragIndex - 1, todos: copyTodos),
+            state.copyWith(
+                dragIndex: state.dragIndex - 1,
+                todos: copyTodos,
+                isChecked: copyIsChecked),
           );
         }
       },
