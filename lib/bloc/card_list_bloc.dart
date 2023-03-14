@@ -7,18 +7,19 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       : super(const CardListState(
             isDragging: false,
             dragIndex: 0,
-            todos: [],
             dragTodo: '',
+            todos: [],
             checked: [],
             todoList: [],
-            checkedList: [])) {
+            checkedList: [],
+            notCheckedList: [],
+            notTodoList: [],
+            todoModel: [])) {
     on<AddTodoEvent>(
       (AddTodoEvent event, emit) {
         return emit(state.copyWith(
           todos: [...state.todos, event.todo],
           checked: [...state.checked, false],
-          todoList: [...state.todos, event.todo],
-          checkedList: [...state.checked, false],
         ));
       },
     );
@@ -41,11 +42,38 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<CheckTodoEvent>((CheckTodoEvent event, emit) {
       List<bool> copychecked = [...state.checked];
+
+      List<bool> Cchecked = [];
+      List<String> Ctodo = [];
+
+      List<bool> Nchecked = [];
+      List<String> Ntodo = [];
+
       (copychecked[event.index])
           ? copychecked[event.index] = false
           : copychecked[event.index] = true;
-      return emit(
-          state.copyWith(checked: copychecked, checkedList: copychecked));
+
+      emit(state.copyWith(
+        checked: copychecked,
+      ));
+
+      for (var i = 0; i < state.checked.length; i++) {
+        if (state.checked[i] == true) {
+          Cchecked.add(state.checked[i]);
+          Ctodo.add(state.todos[i]);
+        }
+
+        if (state.checked[i] == false) {
+          Nchecked.add(state.checked[i]);
+          Ntodo.add(state.todos[i]);
+        }
+      }
+
+      return emit(state.copyWith(
+          todoList: Ctodo,
+          checkedList: Cchecked,
+          notCheckedList: Nchecked,
+          notTodoList: Ntodo));
     });
 
     on<DragStartEvent>(
@@ -95,51 +123,28 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
         }
       },
     );
-
-    // on<AllListEvent>(
-    //   (AllListEvent event, emit) {
-    //     // print('All : ${state.checkedList} , ${state.todoList}');
-    //     return emit(
-    //       state.copyWith(todos: state.todoList, checked: state.checkedList),
-    //     );
-    //   },
-    // );
-
-    // on<CheckedListEvent>(
-    //   (CheckedListEvent event, emit) {
-    //     List<bool> copychecked = [];
-    //     List<String> copyTodos = [];
-
-    //     // emit(state.copyWith(checked: state.checkedList, todos: state.todoList));
-    //     for (var i = 0; i < state.checked.length; i++) {
-    //       if (state.checked[i] == true) {
-    //         copychecked.add(state.checked[i]);
-    //         copyTodos.add(state.todos[i]);
-    //       }
-    //     }
-    //     print('Checked : ${copychecked} , ${copyTodos}');
-    //     return emit(state.copyWith(checked: copychecked, todos: copyTodos));
-    //   },
-    // );
-
-    // on<OtherListEvent>(
-    //   (OtherListEvent event, emit) {
-    //     List<bool> copychecked = [];
-    //     List<String> copyTodos = [];
-
-    //     // emit(state.copyWith(checked: state.checkedList, todos: state.todoList));
-    //     for (var i = 0; i < state.checked.length; i++) {
-    //       if (state.checked[i] == false) {
-    //         copychecked.add(state.checked[i]);
-    //         copyTodos.add(state.todos[i]);
-    //       }
-    //     }
-    //     print('Others : ${copychecked} , ${copyTodos}');
-    //     return emit(state.copyWith(checked: copychecked, todos: copyTodos));
-    //   },
-    // );
   }
 
   bool isDragDown(int index) => (state.dragIndex < index) ? true : false;
   bool isDragUp(int index) => (state.dragIndex > index) ? true : false;
+
+  List<bool> findCheckTrue(List<bool> checked) {
+    List<bool> result = [];
+    for (var i = 0; i < state.checked.length; i++) {
+      if (state.checked[i] == true) {
+        result.add(state.checked[i]);
+      }
+    }
+    return result;
+  }
+
+  List<String> findCheckTodo(List<bool> checked) {
+    List<String> result = [];
+    for (var i = 0; i < state.checked.length; i++) {
+      if (state.checked[i] == true) {
+        result.add(state.todos[i]);
+      }
+    }
+    return result;
+  }
 }

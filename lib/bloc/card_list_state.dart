@@ -5,10 +5,15 @@ class CardListState extends Equatable {
   final bool isDragging;
   final int dragIndex;
   final String dragTodo;
+
   final List<String> todos;
   final List<bool> checked;
   final List<String> todoList;
   final List<bool> checkedList;
+  final List<String> notTodoList;
+  final List<bool> notCheckedList;
+
+  final List<Todo> todoModel;
 
   const CardListState({
     required this.isDragging,
@@ -18,6 +23,9 @@ class CardListState extends Equatable {
     required this.checked,
     required this.todoList,
     required this.checkedList,
+    required this.notTodoList,
+    required this.notCheckedList,
+    required this.todoModel,
   });
 
   CardListState copyWith({
@@ -28,6 +36,9 @@ class CardListState extends Equatable {
     List<bool>? checked,
     List<String>? todoList,
     List<bool>? checkedList,
+    List<String>? notTodoList,
+    List<bool>? notCheckedList,
+    List<Todo>? todoModel,
   }) {
     return CardListState(
       isDragging: isDragging ?? this.isDragging,
@@ -37,6 +48,9 @@ class CardListState extends Equatable {
       checked: checked ?? this.checked,
       todoList: todoList ?? this.todoList,
       checkedList: checkedList ?? this.checkedList,
+      notTodoList: notTodoList ?? this.notTodoList,
+      notCheckedList: notCheckedList ?? this.notCheckedList,
+      todoModel: todoModel ?? this.todoModel,
     );
   }
 
@@ -49,5 +63,6 @@ class CardListState extends Equatable {
         checked,
         todoList,
         checkedList,
+        todoModel,
       ];
 }

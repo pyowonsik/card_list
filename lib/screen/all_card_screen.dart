@@ -1,10 +1,10 @@
+import 'package:card_list/widget/all_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/card_list_bloc.dart';
 import '../bloc/card_list_event.dart';
 import '../bloc/card_list_state.dart';
-import '../widget/card_widget.dart';
 
 class AllCardScreen extends StatelessWidget {
   const AllCardScreen({super.key});
@@ -18,32 +18,9 @@ class AllCardScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      context.read<CardListBloc>().add(AllListEvent());
-                    },
-                    child: const Text('all')),
-                const SizedBox(width: 30),
-                ElevatedButton(
-                    onPressed: () {
-                      context.read<CardListBloc>().add(CheckedListEvent());
-                    },
-                    child: const Text('check')),
-                const SizedBox(width: 30),
-                ElevatedButton(
-                    onPressed: () {
-                      context.read<CardListBloc>().add(OtherListEvent());
-                    },
-                    child: const Text('other')),
-              ],
-            ),
             const SizedBox(height: 30),
             ElevatedButton(
                 onPressed: () {
-                  // addTodo(context, state);
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -109,7 +86,7 @@ class AllCardScreen extends StatelessWidget {
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
                             maxWidth: MediaQuery.of(context).size.width),
-                        child: CardWidget(index: index, state: state),
+                        child: AllCardWidget(index: index, state: state),
                       ),
                     ),
                     child: GestureDetector(
@@ -163,7 +140,7 @@ class AllCardScreen extends StatelessWidget {
                           List<dynamic> accepted,
                           List<dynamic> rejected,
                         ) {
-                          return CardWidget(index: index, state: state);
+                          return AllCardWidget(index: index, state: state);
                         },
                         onMove: (detail) {
                           if (state.isDragging) {

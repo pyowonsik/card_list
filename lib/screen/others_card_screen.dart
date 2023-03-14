@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/card_list_bloc.dart';
 import '../bloc/card_list_event.dart';
 import '../bloc/card_list_state.dart';
-import '../widget/card_widget.dart';
+import '../widget/others_card_widget.dart';
 
-class OtherCardScreen extends StatelessWidget {
-  const OtherCardScreen({super.key});
+class OthersCardScreen extends StatelessWidget {
+  const OthersCardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class OtherCardScreen extends StatelessWidget {
             const SizedBox(height: 30),
             Expanded(
                 child: ListView.builder(
-              itemCount: state.todos.length,
+              itemCount: state.notTodoList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Draggable(
                     data: index,
@@ -40,7 +40,7 @@ class OtherCardScreen extends StatelessWidget {
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
                             maxWidth: MediaQuery.of(context).size.width),
-                        child: CardWidget(index: index, state: state),
+                        child: OthersCardWidget(index: index, state: state),
                       ),
                     ),
                     child: GestureDetector(
@@ -94,7 +94,7 @@ class OtherCardScreen extends StatelessWidget {
                           List<dynamic> accepted,
                           List<dynamic> rejected,
                         ) {
-                          return CardWidget(index: index, state: state);
+                          return OthersCardWidget(index: index, state: state);
                         },
                         onMove: (detail) {
                           if (state.isDragging) {
