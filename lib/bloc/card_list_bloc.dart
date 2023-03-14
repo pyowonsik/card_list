@@ -14,25 +14,33 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
             unCheckedTodoList: [])) {
     on<AddTodoEvent>(
       (AddTodoEvent event, emit) {
-        Todo newTodo = Todo(todo: event.todo, isChecked: false);
-        List<Todo> currentTodo = [...state.todoList, newTodo];
-        List<Todo> checkedTodo = [...state.checkedTodoList];
-        List<Todo> unCheckedTodo = [...state.checkedTodoList];
-
-        checkedTodo = currentTodo.where((e) => e.isChecked == true).toList();
-        unCheckedTodo = currentTodo.where((e) => e.isChecked == false).toList();
+        List<Todo> currentTodo = [
+          ...state.todoList,
+          Todo(todo: event.todo, isChecked: false)
+        ];
 
         return emit(state.copyWith(
             todoList: currentTodo,
-            checkedTodoList: checkedTodo,
-            unCheckedTodoList: unCheckedTodo));
+            checkedTodoList: getCheckedTodoList(currentTodo),
+            unCheckedTodoList: getUnCheckedTodoList(currentTodo)));
       },
     );
 
     on<RemoveTodoEvent>(
       (RemoveTodoEvent event, emit) {
+        emit(
+          state.copyWith(
+            todoList: List.from(state.todoList)..removeAt(event.index),
+            checkedTodoList: List.from(state.checkedTodoList)
+              ..removeAt(event.index),
+            unCheckedTodoList: List.from(state.checkedTodoList)
+              ..removeAt(event.index),
+          ),
+        );
+
         return emit(state.copyWith(
-            todoList: List.from(state.todoList)..removeAt(event.index)));
+            checkedTodoList: getCheckedTodoList([...state.todoList]),
+            unCheckedTodoList: getUnCheckedTodoList([...state.todoList])));
       },
     );
 
@@ -42,14 +50,15 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
         currentTodo[event.index] = Todo(
             todo: event.todo, isChecked: state.todoList[event.index].isChecked);
-        return emit(state.copyWith(todoList: currentTodo));
+        emit(state.copyWith(todoList: currentTodo));
+        return emit(state.copyWith(
+            checkedTodoList: getCheckedTodoList(currentTodo),
+            unCheckedTodoList: getUnCheckedTodoList(currentTodo)));
       },
     );
 
     on<CheckTodoEvent>((CheckTodoEvent event, emit) {
       List<Todo> currentTodo = [...state.todoList];
-      List<Todo> checkedTodo = [...state.checkedTodoList];
-      List<Todo> unCheckedTodo = [...state.checkedTodoList];
 
       (currentTodo[event.index].isChecked == true)
           ? currentTodo[event.index] =
@@ -57,13 +66,10 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
           : currentTodo[event.index] =
               Todo(todo: state.todoList[event.index].todo, isChecked: true);
 
-      checkedTodo = currentTodo.where((e) => e.isChecked == true).toList();
-      unCheckedTodo = currentTodo.where((e) => e.isChecked == false).toList();
-
       return emit(state.copyWith(
           todoList: currentTodo,
-          checkedTodoList: checkedTodo,
-          unCheckedTodoList: unCheckedTodo));
+          checkedTodoList: getCheckedTodoList(currentTodo),
+          unCheckedTodoList: getUnCheckedTodoList(currentTodo)));
     });
 
     on<DragStartEvent>(
@@ -110,4 +116,8 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
   bool isDragDown(int index) => (state.dragIndex < index) ? true : false;
   bool isDragUp(int index) => (state.dragIndex > index) ? true : false;
+  List<Todo> getCheckedTodoList(List<Todo> currentTodo) =>
+      currentTodo.where((e) => e.isChecked == true).toList();
+  List<Todo> getUnCheckedTodoList(List<Todo> currentTodo) =>
+      currentTodo.where((e) => e.isChecked == false).toList();
 }
