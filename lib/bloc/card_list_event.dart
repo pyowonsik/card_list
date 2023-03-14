@@ -1,3 +1,4 @@
+import 'package:card_list/todo/todo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
@@ -5,18 +6,6 @@ abstract class CardListEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
-
-// class AddCardNumberEvent extends CardListEvent {
-//   final int index;
-//   AddCardNumberEvent({required this.index});
-//   @override
-//   List<Object> get props => [index];
-// }
-
-// class AddCardEvent extends CardListEvent {
-//   @override
-//   List<Object> get props => [];
-// }
 
 class AddTodoEvent extends CardListEvent {
   final String todo;
@@ -68,19 +57,4 @@ class DragEvent extends CardListEvent {
 
   @override
   List<Object> get props => [index];
-}
-
-class AllListEvent extends CardListEvent {
-  @override
-  List<Object> get props => [];
-}
-
-class CheckedListEvent extends CardListEvent {
-  @override
-  List<Object> get props => [];
-}
-
-class OtherListEvent extends CardListEvent {
-  @override
-  List<Object> get props => [];
 }

@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/card_list_event.dart';
 
-class CardWidget extends StatelessWidget {
+class CheckCardWidget extends StatelessWidget {
   final int index;
   final CardListState state;
-  const CardWidget({super.key, required this.index, required this.state});
+  const CheckCardWidget({super.key, required this.index, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +19,14 @@ class CardWidget extends StatelessWidget {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Checkbox(
-                value: state.isChecked[index],
+                value: state.checkedTodoList[index].isChecked,
                 onChanged: (value) {
                   context
                       .read<CardListBloc>()
                       .add(CheckTodoEvent(index: index));
                 }),
             Text(
-              state.todos[index],
+              state.checkedTodoList[index].todo,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             ElevatedButton(
