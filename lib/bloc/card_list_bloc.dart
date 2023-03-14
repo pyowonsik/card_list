@@ -5,27 +5,21 @@ import 'package:card_list/bloc/card_list_event.dart';
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
   CardListBloc()
       : super(const CardListState(
-          isDragging: false,
-          dragIndex: 0,
-          todos: [],
-          dragTodo: '',
-          isChecked: [],
-          todoList: [],
-          checkedList: [],
-          todoModel: [],
-        )) {
+            isDragging: false,
+            dragIndex: 0,
+            todos: [],
+            dragTodo: '',
+            checked: [],
+            todoList: [],
+            checkedList: [])) {
     on<AddTodoEvent>(
       (AddTodoEvent event, emit) {
-        // Todo newTodo = Todo(todo: event.todo, isChecked: false);
-        // List<Todo> currentTodo = [...state.todoL];
-        // currentTodo.add(newTodo);
-        // return emit(state.copyWith(todoL: currentTodo));
-
         return emit(state.copyWith(
-            todos: [...state.todos, event.todo],
-            isChecked: [...state.isChecked, false],
-            todoList: [...state.todoList, event.todo],
-            checkedList: [...state.checkedList, false]));
+          todos: [...state.todos, event.todo],
+          checked: [...state.checked, false],
+          todoList: [...state.todos, event.todo],
+          checkedList: [...state.checked, false],
+        ));
       },
     );
 
@@ -48,12 +42,12 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
     );
 
     on<CheckTodoEvent>((CheckTodoEvent event, emit) {
-      List<bool> copyIsChecked = [...state.isChecked];
-      (copyIsChecked[event.index])
-          ? copyIsChecked[event.index] = false
-          : copyIsChecked[event.index] = true;
+      List<bool> copychecked = [...state.checked];
+      (copychecked[event.index])
+          ? copychecked[event.index] = false
+          : copychecked[event.index] = true;
       return emit(
-          state.copyWith(isChecked: copyIsChecked, checkedList: copyIsChecked));
+          state.copyWith(checked: copychecked, checkedList: copychecked));
     });
 
     on<DragStartEvent>(
@@ -76,30 +70,30 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       (DragEvent event, emit) {
         // List<Todos>
         List<String> copyTodos = [...state.todos];
-        List<bool> copyIsChecked = [...state.isChecked];
+        List<bool> copychecked = [...state.checked];
 
         if (isDragDown(event.index)) {
           copyTodos.insert(event.index, copyTodos.removeAt(event.index - 1));
-          copyIsChecked.insert(
-              event.index, copyIsChecked.removeAt(event.index - 1));
+          copychecked.insert(
+              event.index, copychecked.removeAt(event.index - 1));
           return emit(
             state.copyWith(
                 dragIndex: state.dragIndex + 1,
                 todos: copyTodos,
-                isChecked: copyIsChecked),
+                checked: copychecked),
           );
         }
 
         if (isDragUp(event.index)) {
           copyTodos.insert(event.index, copyTodos.removeAt(event.index + 1));
-          copyIsChecked.insert(
-              event.index, copyIsChecked.removeAt(event.index + 1));
+          copychecked.insert(
+              event.index, copychecked.removeAt(event.index + 1));
 
           return emit(
             state.copyWith(
                 dragIndex: state.dragIndex - 1,
                 todos: copyTodos,
-                isChecked: copyIsChecked),
+                checked: copychecked),
           );
         }
       },
@@ -107,49 +101,47 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<AllListEvent>(
       (AllListEvent event, emit) {
-        emit(state.copyWith(
-            todos: state.todoList, isChecked: state.checkedList));
+        print('${state.checkedList} , ${state.todoList}');
+        return emit(
+            state.copyWith(todos: state.todoList, checked: state.checkedList));
       },
     );
 
     on<CheckedListEvent>(
       (CheckedListEvent event, emit) {
-        List<bool> copyIsChecked = [];
+        List<bool> copychecked = [];
         List<String> copyTodos = [];
 
-        for (var i = 0; i < state.checkedList.length; i++) {
-          if (state.checkedList[i] == true) {
-            copyIsChecked.add(state.isChecked[i]);
+        emit(state.copyWith(checked: state.checkedList, todos: state.todoList));
+        for (var i = 0; i < state.checked.length; i++) {
+          if (state.checked[i] == true) {
+            copychecked.add(state.checked[i]);
             copyTodos.add(state.todos[i]);
           }
         }
-
-        print('Checked : ${copyIsChecked} , ${copyTodos}');
-
-        // return emit(state.copyWith(isChecked: copyIsChecked, todos: copyTodos));
+        print('Checked : ${copychecked} , ${copyTodos}');
+        return emit(state.copyWith(checked: copychecked, todos: copyTodos));
       },
     );
-
-    // otherListEvent
 
     on<OtherListEvent>(
       (OtherListEvent event, emit) {
-        List<bool> copyIsNotChecked = [];
-        List<String> copyDoNotTodos = [];
+        List<bool> copychecked = [];
+        List<String> copyTodos = [];
 
-        for (var i = 0; i < state.checkedList.length; i++) {
-          if (state.checkedList[i] == false) {
-            copyIsNotChecked.add(state.isChecked[i]);
-            copyDoNotTodos.add(state.todos[i]);
+        emit(state.copyWith(checked: state.checkedList, todos: state.todoList));
+        for (var i = 0; i < state.checked.length; i++) {
+          if (state.checked[i] == false) {
+            copychecked.add(state.checked[i]);
+            copyTodos.add(state.todos[i]);
           }
         }
-
-        print('Other : ${copyIsNotChecked} , ${copyDoNotTodos}');
-        // return emit(
-        //     state.copyWith(isChecked: copyIsNotChecked, todos: copyDoNotTodos));
+        print('Others : ${copychecked} , ${copyTodos}');
+        return emit(state.copyWith(checked: copychecked, todos: copyTodos));
       },
     );
   }
+
   bool isDragDown(int index) => (state.dragIndex < index) ? true : false;
   bool isDragUp(int index) => (state.dragIndex > index) ? true : false;
 }

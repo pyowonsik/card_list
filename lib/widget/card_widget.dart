@@ -19,7 +19,7 @@ class CardWidget extends StatelessWidget {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Checkbox(
-                value: state.isChecked[index],
+                value: state.checked[index],
                 onChanged: (value) {
                   context
                       .read<CardListBloc>()

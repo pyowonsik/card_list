@@ -12,40 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CardListScreen extends StatelessWidget {
   const CardListScreen({super.key});
 
-  // late CardListBloc cardListBloc; // late로 선언
-
-  // void addTodo(BuildContext context, CardListState state) {
-  //   final todoController = TextEditingController();
-  //   showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         shape:
-  //             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-  //         title: const Text('Todo 입력 '),
-  //         content: BlocBuilder<CardListBloc, CardListState>(
-  //           bloc: cardListBloc, // showDialog에서 bloc 등록
-  //           builder: (context, state) {
-  //             return TextField(
-  //               controller: todoController,
-  //             );
-  //           },
-  //         ),
-  //         actions: [
-  //           ElevatedButton(
-  //             child: const Text("추가"),
-  //             onPressed: () {
-  //               cardListBloc.add(AddTodoEvent(todo: todoController.text));
-  //               Navigator.pop(context);
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     CardListBloc cardListBloc = context.read<CardListBloc>();
