@@ -5,13 +5,15 @@ import 'package:card_list/bloc/card_list_event.dart';
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
   CardListBloc()
       : super(const CardListState(
-            isDragging: false,
-            dragIndex: 0,
-            todos: [],
-            dragTodo: '',
-            isChecked: [],
-            todoList: [],
-            checkedList: [])) {
+          isDragging: false,
+          dragIndex: 0,
+          todos: [],
+          dragTodo: '',
+          isChecked: [],
+          todoList: [],
+          checkedList: [],
+          todoModel: [],
+        )) {
     on<AddTodoEvent>(
       (AddTodoEvent event, emit) {
         // Todo newTodo = Todo(todo: event.todo, isChecked: false);

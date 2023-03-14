@@ -6,18 +6,6 @@ abstract class CardListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-// class AddCardNumberEvent extends CardListEvent {
-//   final int index;
-//   AddCardNumberEvent({required this.index});
-//   @override
-//   List<Object> get props => [index];
-// }
-
-// class AddCardEvent extends CardListEvent {
-//   @override
-//   List<Object> get props => [];
-// }
-
 class AddTodoEvent extends CardListEvent {
   final String todo;
   AddTodoEvent({required this.todo});
