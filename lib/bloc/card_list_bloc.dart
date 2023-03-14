@@ -14,6 +14,11 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
             checkedList: [])) {
     on<AddTodoEvent>(
       (AddTodoEvent event, emit) {
+        // Todo newTodo = Todo(todo: event.todo, isChecked: false);
+        // List<Todo> currentTodo = [...state.todoL];
+        // currentTodo.add(newTodo);
+        // return emit(state.copyWith(todoL: currentTodo));
+
         return emit(state.copyWith(
             todos: [...state.todos, event.todo],
             isChecked: [...state.isChecked, false],

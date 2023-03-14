@@ -40,5 +40,13 @@ class CardListState extends Equatable {
   }
 
   @override
-  List<Object> get props => [isDragging, dragIndex, todos, dragTodo, isChecked];
+  List<Object> get props => [
+        isDragging,
+        dragIndex,
+        todos,
+        dragTodo,
+        isChecked,
+        todoList,
+        checkedList
+      ];
 }
