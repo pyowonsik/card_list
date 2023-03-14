@@ -19,14 +19,14 @@ class OthersCardWidget extends StatelessWidget {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Checkbox(
-                value: state.notCheckedList[index],
+                value: state.unCheckedModel[index].isChecked,
                 onChanged: (value) {
                   context
                       .read<CardListBloc>()
                       .add(CheckTodoEvent(index: index));
                 }),
             Text(
-              state.notTodoList[index],
+              state.unCheckedModel[index].todo,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             ElevatedButton(

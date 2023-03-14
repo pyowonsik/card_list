@@ -21,7 +21,7 @@ class OthersCardScreen extends StatelessWidget {
             const SizedBox(height: 30),
             Expanded(
                 child: ListView.builder(
-              itemCount: state.notTodoList.length,
+              itemCount: state.unCheckedModel.length,
               itemBuilder: (BuildContext context, int index) {
                 return Draggable(
                     data: index,

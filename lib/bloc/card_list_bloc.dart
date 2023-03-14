@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:card_list/bloc/card_list_state.dart';
 import 'package:card_list/bloc/card_list_event.dart';
+import 'package:card_list/todo/todo.dart';
 
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
   CardListBloc()
@@ -8,79 +9,71 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
             isDragging: false,
             dragIndex: 0,
             dragTodo: '',
-            todos: [],
-            checked: [],
-            todoList: [],
-            checkedList: [],
-            notCheckedList: [],
-            notTodoList: [],
-            todoModel: [])) {
+            todoModel: [],
+            checkedModel: [],
+            unCheckedModel: [])) {
     on<AddTodoEvent>(
       (AddTodoEvent event, emit) {
+        Todo newTodo = Todo(todo: event.todo, isChecked: false);
+        List<Todo> currentTodo = [...state.todoModel, newTodo];
+        List<Todo> checkedTodo = [...state.checkedModel];
+        List<Todo> unCheckedTodo = [...state.checkedModel];
+
+        checkedTodo = currentTodo.where((e) => e.isChecked == true).toList();
+        unCheckedTodo = currentTodo.where((e) => e.isChecked == false).toList();
+
         return emit(state.copyWith(
-          todos: [...state.todos, event.todo],
-          checked: [...state.checked, false],
-        ));
+            todoModel: currentTodo,
+            checkedModel: checkedTodo,
+            unCheckedModel: unCheckedTodo));
       },
     );
 
     on<RemoveTodoEvent>(
       (RemoveTodoEvent event, emit) {
-        return emit(
-          state.copyWith(todos: List.from(state.todos)..removeAt(event.index)),
-        );
+        return emit(state.copyWith(
+            todoModel: List.from(state.todoModel)..removeAt(event.index)));
       },
     );
 
     on<ChangeTodoEvent>(
       (ChangeTodoEvent event, emit) {
-        List<String> copyTodos = [...state.todos];
-        copyTodos[event.index] = event.todo;
-        return emit(state.copyWith(todos: copyTodos));
+        List<Todo> currentTodo = [...state.todoModel];
+
+        // Todo 클래스 사용
+        currentTodo[event.index] = Todo(
+            todo: event.todo,
+            isChecked: state.todoModel[event.index].isChecked);
+        return emit(state.copyWith(todoModel: currentTodo));
       },
     );
 
+    // Todo 클래스 사용
     on<CheckTodoEvent>((CheckTodoEvent event, emit) {
-      List<bool> copychecked = [...state.checked];
+      List<Todo> currentTodo = [...state.todoModel];
+      List<Todo> checkedTodo = [...state.checkedModel];
+      List<Todo> unCheckedTodo = [...state.checkedModel];
 
-      List<bool> Cchecked = [];
-      List<String> Ctodo = [];
+      (currentTodo[event.index].isChecked == true)
+          ? currentTodo[event.index] =
+              Todo(todo: state.todoModel[event.index].todo, isChecked: false)
+          : currentTodo[event.index] =
+              Todo(todo: state.todoModel[event.index].todo, isChecked: true);
 
-      List<bool> Nchecked = [];
-      List<String> Ntodo = [];
-
-      (copychecked[event.index])
-          ? copychecked[event.index] = false
-          : copychecked[event.index] = true;
-
-      emit(state.copyWith(
-        checked: copychecked,
-      ));
-
-      for (var i = 0; i < state.checked.length; i++) {
-        if (state.checked[i] == true) {
-          Cchecked.add(state.checked[i]);
-          Ctodo.add(state.todos[i]);
-        }
-
-        if (state.checked[i] == false) {
-          Nchecked.add(state.checked[i]);
-          Ntodo.add(state.todos[i]);
-        }
-      }
+      checkedTodo = currentTodo.where((e) => e.isChecked == true).toList();
+      unCheckedTodo = currentTodo.where((e) => e.isChecked == false).toList();
 
       return emit(state.copyWith(
-          todoList: Ctodo,
-          checkedList: Cchecked,
-          notCheckedList: Nchecked,
-          notTodoList: Ntodo));
+          todoModel: currentTodo,
+          checkedModel: checkedTodo,
+          unCheckedModel: unCheckedTodo));
     });
 
     on<DragStartEvent>(
       (DragStartEvent event, emit) {
         return emit(
           state.copyWith(
-              dragTodo: state.todos[event.index],
+              dragTodo: state.todoModel[event.index].todo,
               dragIndex: event.index,
               isDragging: true),
         );
@@ -94,31 +87,24 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<DragEvent>(
       (DragEvent event, emit) {
-        List<String> copyTodos = [...state.todos];
-        List<bool> copychecked = [...state.checked];
+        List<Todo> currentTodo = [...state.todoModel];
 
         if (isDragDown(event.index)) {
-          copyTodos.insert(event.index, copyTodos.removeAt(event.index - 1));
-          copychecked.insert(
-              event.index, copychecked.removeAt(event.index - 1));
+          currentTodo.insert(
+              event.index, currentTodo.removeAt(event.index - 1));
           return emit(
             state.copyWith(
-                dragIndex: state.dragIndex + 1,
-                todos: copyTodos,
-                checked: copychecked),
+                dragIndex: state.dragIndex + 1, todoModel: currentTodo),
           );
         }
 
         if (isDragUp(event.index)) {
-          copyTodos.insert(event.index, copyTodos.removeAt(event.index + 1));
-          copychecked.insert(
-              event.index, copychecked.removeAt(event.index + 1));
+          currentTodo.insert(
+              event.index, currentTodo.removeAt(event.index + 1));
 
           return emit(
             state.copyWith(
-                dragIndex: state.dragIndex - 1,
-                todos: copyTodos,
-                checked: copychecked),
+                dragIndex: state.dragIndex - 1, todoModel: currentTodo),
           );
         }
       },
@@ -127,24 +113,4 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
   bool isDragDown(int index) => (state.dragIndex < index) ? true : false;
   bool isDragUp(int index) => (state.dragIndex > index) ? true : false;
-
-  List<bool> findCheckTrue(List<bool> checked) {
-    List<bool> result = [];
-    for (var i = 0; i < state.checked.length; i++) {
-      if (state.checked[i] == true) {
-        result.add(state.checked[i]);
-      }
-    }
-    return result;
-  }
-
-  List<String> findCheckTodo(List<bool> checked) {
-    List<String> result = [];
-    for (var i = 0; i < state.checked.length; i++) {
-      if (state.checked[i] == true) {
-        result.add(state.todos[i]);
-      }
-    }
-    return result;
-  }
 }
