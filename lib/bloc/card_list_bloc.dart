@@ -31,10 +31,6 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
         emit(
           state.copyWith(
             todoList: List.from(state.todoList)..removeAt(event.index),
-            checkedTodoList: List.from(state.checkedTodoList)
-              ..removeAt(event.index),
-            unCheckedTodoList: List.from(state.checkedTodoList)
-              ..removeAt(event.index),
           ),
         );
 
@@ -104,7 +100,6 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
         if (isDragUp(event.index)) {
           currentTodo.insert(
               event.index, currentTodo.removeAt(event.index + 1));
-
           return emit(
             state.copyWith(
                 dragIndex: state.dragIndex - 1, todoList: currentTodo),

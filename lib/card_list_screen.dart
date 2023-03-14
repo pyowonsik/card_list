@@ -25,7 +25,7 @@ class CardListScreen extends StatelessWidget {
               bottom: const TabBar(tabs: [
                 Tab(text: 'all'),
                 Tab(text: 'check'),
-                Tab(text: 'others'),
+                Tab(text: 'uncheck'),
               ]),
             ),
             body: const TabBarView(children: [
