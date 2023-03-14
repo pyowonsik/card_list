@@ -22,7 +22,7 @@ class CheckCardScreen extends StatelessWidget {
             const SizedBox(height: 30),
             Expanded(
                 child: ListView.builder(
-              itemCount: state.checkedModel.length,
+              itemCount: state.checkedTodoList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Draggable(
                     data: index,
