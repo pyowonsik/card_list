@@ -7,7 +7,12 @@ import '../bloc/card_list_event.dart';
 class CheckCardWidget extends StatelessWidget {
   final int index;
   final CardListState state;
-  const CheckCardWidget({super.key, required this.index, required this.state});
+  final bool ischecked;
+  const CheckCardWidget(
+      {super.key,
+      required this.index,
+      required this.state,
+      required this.ischecked});
 
   @override
   Widget build(BuildContext context) {
@@ -16,26 +21,49 @@ class CheckCardWidget extends StatelessWidget {
       child: Card(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Checkbox(
-                value: state.checkedTodoList[index].isChecked,
-                onChanged: (value) {
-                  context
-                      .read<CardListBloc>()
-                      .add(CheckTodoEvent(id: state.checkedTodoList[index].id));
-                }),
-            Text(
-              state.checkedTodoList[index].todo,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  context.read<CardListBloc>().add(
-                      RemoveTodoEvent(id: state.checkedTodoList[index].id));
-                },
-                child: const Text('삭제')),
-          ]),
+          child: (ischecked)
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                      Checkbox(
+                          value: state.checkedTodoList[index].isChecked,
+                          onChanged: (value) {
+                            context.read<CardListBloc>().add(CheckTodoEvent(
+                                id: state.checkedTodoList[index].id));
+                          }),
+                      Text(
+                        state.checkedTodoList[index].todo,
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            context.read<CardListBloc>().add(RemoveTodoEvent(
+                                id: state.checkedTodoList[index].id));
+                          },
+                          child: const Text('삭제')),
+                    ])
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                      Checkbox(
+                          value: state.unCheckedTodoList[index].isChecked,
+                          onChanged: (value) {
+                            context.read<CardListBloc>().add(CheckTodoEvent(
+                                id: state.unCheckedTodoList[index].id));
+                          }),
+                      Text(
+                        state.unCheckedTodoList[index].todo,
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            context.read<CardListBloc>().add(RemoveTodoEvent(
+                                id: state.unCheckedTodoList[index].id));
+                          },
+                          child: const Text('삭제')),
+                    ]),
         ),
       ),
     );

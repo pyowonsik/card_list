@@ -14,6 +14,7 @@ class CheckCardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     CardListBloc cardListBloc = context.read<CardListBloc>();
     final todoController = TextEditingController();
+
     return BlocBuilder<CardListBloc, CardListState>(builder: (context, state) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
@@ -41,7 +42,8 @@ class CheckCardScreen extends StatelessWidget {
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
                             maxWidth: MediaQuery.of(context).size.width),
-                        child: AllCardWidget(index: index, state: state),
+                        child: CheckCardWidget(
+                            index: index, state: state, ischecked: true),
                       ),
                     ),
                     child: GestureDetector(
@@ -96,7 +98,11 @@ class CheckCardScreen extends StatelessWidget {
                           List<dynamic> accepted,
                           List<dynamic> rejected,
                         ) {
-                          return CheckCardWidget(index: index, state: state);
+                          return CheckCardWidget(
+                            index: index,
+                            state: state,
+                            ischecked: true,
+                          );
                         },
                         onMove: (detail) {
                           if (state.isDragging) {

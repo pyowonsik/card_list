@@ -1,10 +1,10 @@
+import 'package:card_list/widget/check_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/card_list_bloc.dart';
 import '../bloc/card_list_event.dart';
 import '../bloc/card_list_state.dart';
-import '../widget/others_card_widget.dart';
 
 class OthersCardScreen extends StatelessWidget {
   const OthersCardScreen({super.key});
@@ -40,7 +40,11 @@ class OthersCardScreen extends StatelessWidget {
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
                             maxWidth: MediaQuery.of(context).size.width),
-                        child: OthersCardWidget(index: index, state: state),
+                        child: CheckCardWidget(
+                          index: index,
+                          state: state,
+                          ischecked: false,
+                        ),
                       ),
                     ),
                     child: GestureDetector(
@@ -95,7 +99,8 @@ class OthersCardScreen extends StatelessWidget {
                           List<dynamic> accepted,
                           List<dynamic> rejected,
                         ) {
-                          return OthersCardWidget(index: index, state: state);
+                          return CheckCardWidget(
+                              index: index, state: state, ischecked: false);
                         },
                         onMove: (detail) {
                           if (state.isDragging) {
