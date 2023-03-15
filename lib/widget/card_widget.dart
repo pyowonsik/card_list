@@ -8,24 +8,24 @@ import '../bloc/card_list_event.dart';
 class CardWidget extends StatelessWidget {
   final int index;
   final CardListState state;
-  final String listType;
+  final String isChecked;
   const CardWidget(
       {super.key,
       required this.index,
       required this.state,
-      required this.listType});
+      required this.isChecked});
 
   @override
   Widget build(BuildContext context) {
-    List<CardModel>? todoListType;
-    if (listType == 'all') {
-      todoListType = state.cardList;
+    List<CardModel>? cardListType;
+    if (isChecked == 'all') {
+      cardListType = state.cardList;
     }
-    if (listType == 'check') {
-      todoListType = state.cardList.where((e) => e.isChecked == true).toList();
+    if (isChecked == 'check') {
+      cardListType = state.cardList.where((e) => e.isChecked == true).toList();
     }
-    if (listType == 'uncheck') {
-      todoListType = state.cardList.where((e) => e.isChecked == false).toList();
+    if (isChecked == 'uncheck') {
+      cardListType = state.cardList.where((e) => e.isChecked == false).toList();
     }
 
     return SizedBox(
@@ -36,21 +36,21 @@ class CardWidget extends StatelessWidget {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Checkbox(
-                value: todoListType![index].isChecked,
+                value: cardListType![index].isChecked,
                 onChanged: (value) {
                   context
                       .read<CardListBloc>()
-                      .add(CheckCardEvent(time: todoListType![index].time));
+                      .add(CheckCardEvent(time: cardListType![index].time));
                 }),
             Text(
-              todoListType[index].todo,
+              cardListType[index].todo,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             ElevatedButton(
                 onPressed: () {
                   context
                       .read<CardListBloc>()
-                      .add(RemoveCardEvent(time: todoListType![index].time));
+                      .add(RemoveCardEvent(time: cardListType![index].time));
                 },
                 child: const Text('삭제')),
           ]),

@@ -89,7 +89,7 @@ class ListScreen extends StatelessWidget {
                         child: CardWidget(
                           index: index,
                           state: state,
-                          listType: 'all',
+                          isChecked: 'all',
                         ),
                       ),
                     ),
@@ -148,7 +148,7 @@ class ListScreen extends StatelessWidget {
                           return CardWidget(
                             index: index,
                             state: state,
-                            listType: 'all',
+                            isChecked: 'all',
                           );
                         },
                         onMove: (detail) {

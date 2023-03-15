@@ -2,10 +2,6 @@ import 'package:card_list/screen/List_screen.dart';
 import 'package:card_list/screen/check_list_screen.dart';
 import 'package:flutter/material.dart';
 
-// 투두리스트 처럼 체크 박스를 추가해주세요
-// 그리고 상단에 탭을 둬서 체크한 것만
-// 화면에 표시, 전체 표시, 체크 되지 않은 것만 표시 3가지로 화면을 나타낼 수 있도록 변경해주세요.
-
 class CardListScreen extends StatelessWidget {
   const CardListScreen({super.key});
 
@@ -25,8 +21,8 @@ class CardListScreen extends StatelessWidget {
             ),
             body: const TabBarView(children: [
               ListScreen(),
-              CheckListScreen(listType: true),
-              CheckListScreen(listType: false),
+              CheckListScreen(isChecked: true),
+              CheckListScreen(isChecked: false),
             ]),
           )),
     );
