@@ -64,6 +64,12 @@ class AllCardScreen extends StatelessWidget {
                   todoController.clear();
                 },
                 child: const Text('추가')),
+            const SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () {
+                  print(state.todoList);
+                },
+                child: const Text('Show Todo')),
             const SizedBox(height: 30),
             Expanded(
                 child: ListView.builder(

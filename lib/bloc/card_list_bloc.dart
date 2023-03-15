@@ -16,7 +16,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       (AddTodoEvent event, emit) {
         List<Todo> currentTodo = [
           ...state.todoList,
-          Todo(todo: event.todo, isChecked: false)
+          Todo(id: event.todo, todo: event.todo, isChecked: false)
         ];
 
         return emit(state.copyWith(
@@ -45,7 +45,9 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
         List<Todo> currentTodo = [...state.todoList];
 
         currentTodo[event.index] = Todo(
-            todo: event.todo, isChecked: state.todoList[event.index].isChecked);
+            id: event.todo,
+            todo: event.todo,
+            isChecked: state.todoList[event.index].isChecked);
         emit(state.copyWith(todoList: currentTodo));
         return emit(state.copyWith(
             checkedTodoList: getCheckedTodoList(currentTodo),
@@ -57,10 +59,14 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       List<Todo> currentTodo = [...state.todoList];
 
       (currentTodo[event.index].isChecked == true)
-          ? currentTodo[event.index] =
-              Todo(todo: state.todoList[event.index].todo, isChecked: false)
-          : currentTodo[event.index] =
-              Todo(todo: state.todoList[event.index].todo, isChecked: true);
+          ? currentTodo[event.index] = Todo(
+              id: state.todoList[event.index].id,
+              todo: state.todoList[event.index].todo,
+              isChecked: false)
+          : currentTodo[event.index] = Todo(
+              id: state.todoList[event.index].id,
+              todo: state.todoList[event.index].todo,
+              isChecked: true);
 
       return emit(state.copyWith(
           todoList: currentTodo,
