@@ -4,11 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/card_list_bloc.dart';
 import '../bloc/card_list_event.dart';
 import '../bloc/card_list_state.dart';
-import '../widget/all_card_widget.dart';
-import '../widget/check_card_widget.dart';
+import '../widget/card_widget.dart';
 
-class CheckCardScreen extends StatelessWidget {
-  const CheckCardScreen({super.key});
+class CheckListScreen extends StatelessWidget {
+  const CheckListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +41,8 @@ class CheckCardScreen extends StatelessWidget {
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
                             maxWidth: MediaQuery.of(context).size.width),
-                        child: CheckCardWidget(
-                            index: index, state: state, ischecked: true),
+                        child: CardWidget(
+                            index: index, state: state, listType: 'check'),
                       ),
                     ),
                     child: GestureDetector(
@@ -98,10 +97,10 @@ class CheckCardScreen extends StatelessWidget {
                           List<dynamic> accepted,
                           List<dynamic> rejected,
                         ) {
-                          return CheckCardWidget(
+                          return CardWidget(
                             index: index,
                             state: state,
-                            ischecked: true,
+                            listType: 'check',
                           );
                         },
                         onMove: (detail) {
