@@ -23,7 +23,7 @@ class AllCardWidget extends StatelessWidget {
                 onChanged: (value) {
                   context
                       .read<CardListBloc>()
-                      .add(CheckTodoEvent(index: index));
+                      .add(CheckTodoEvent(id: state.todoList[index].id));
                 }),
             Text(
               state.todoList[index].todo,

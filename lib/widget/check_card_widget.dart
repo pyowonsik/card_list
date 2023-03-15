@@ -23,7 +23,7 @@ class CheckCardWidget extends StatelessWidget {
                 onChanged: (value) {
                   context
                       .read<CardListBloc>()
-                      .add(CheckTodoEvent(index: index));
+                      .add(CheckTodoEvent(id: state.checkedTodoList[index].id));
                 }),
             Text(
               state.checkedTodoList[index].todo,

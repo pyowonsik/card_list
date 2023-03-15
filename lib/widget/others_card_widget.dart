@@ -21,9 +21,8 @@ class OthersCardWidget extends StatelessWidget {
             Checkbox(
                 value: state.unCheckedTodoList[index].isChecked,
                 onChanged: (value) {
-                  context
-                      .read<CardListBloc>()
-                      .add(CheckTodoEvent(index: index));
+                  context.read<CardListBloc>().add(
+                      CheckTodoEvent(id: state.unCheckedTodoList[index].id));
                 }),
             Text(
               state.unCheckedTodoList[index].todo,
