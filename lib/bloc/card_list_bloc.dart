@@ -1,35 +1,31 @@
 import 'package:bloc/bloc.dart';
 import 'package:card_list/bloc/card_list_state.dart';
 import 'package:card_list/bloc/card_list_event.dart';
-import 'package:card_list/todo/todo.dart';
-
-// id로 시간값 넣기
+import 'package:card_list/todo/card_model.dart';
 
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
   CardListBloc()
       : super(const CardListState(
-            isDragging: false,
-            dragIndex: 0,
-            dragTodo: '',
-            cardList: [],
-            checkedCardList: [],
-            unCheckedCardList: [])) {
-    on<AddTodoEvent>(
-      (AddTodoEvent event, emit) {
+          isDragging: false,
+          dragIndex: 0,
+          dragTodo: '',
+          cardList: [],
+        )) {
+    on<AddCardEvent>(
+      (AddCardEvent event, emit) {
         DateTime time = DateTime.now();
-        List<Todo> currentTodo = [
+        List<CardModel> currentTodo = [
           ...state.cardList,
-          Todo(todo: event.todo, isChecked: false, time: time),
+          CardModel(todo: event.card, isChecked: false, time: time),
         ];
 
         return emit(state.copyWith(
-            cardList: currentTodo,
-            checkedCardList: getCheckedTodoList(currentTodo),
-            unCheckedCardList: getUnCheckedTodoList(currentTodo)));
+          cardList: currentTodo,
+        ));
       },
     );
-    on<RemoveTodoEvent>(
-      (RemoveTodoEvent event, emit) {
+    on<RemoveCardEvent>(
+      (RemoveCardEvent event, emit) {
         emit(
           state.copyWith(
             cardList: List.from(state.cardList)
@@ -37,47 +33,40 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
           ),
         );
 
-        return emit(state.copyWith(
-            checkedCardList: getCheckedTodoList([...state.cardList]),
-            unCheckedCardList: getUnCheckedTodoList([...state.cardList])));
+        return emit(state.copyWith());
       },
     );
 
-    on<ChangeTodoEvent>(
-      (ChangeTodoEvent event, emit) {
-        List<Todo> currentTodo = [...state.cardList];
+    on<ChangeCardEvent>(
+      (ChangeCardEvent event, emit) {
+        List<CardModel> currentTodo = [...state.cardList];
 
         int index = state.cardList.indexWhere((e) => e.time == event.time);
-        currentTodo[index] = Todo(
-            todo: event.todo,
+        currentTodo[index] = CardModel(
+            todo: event.card,
             isChecked: state.cardList[index].isChecked,
             time: state.cardList[index].time);
 
         emit(state.copyWith(cardList: currentTodo));
-        return emit(state.copyWith(
-            checkedCardList: getCheckedTodoList(currentTodo),
-            unCheckedCardList: getUnCheckedTodoList(currentTodo)));
+        return emit(state.copyWith());
       },
     );
 
-    on<CheckTodoEvent>((CheckTodoEvent event, emit) {
-      List<Todo> currentTodo = [...state.cardList];
+    on<CheckCardEvent>((CheckCardEvent event, emit) {
+      List<CardModel> currentTodo = [...state.cardList];
       int index = state.cardList.indexWhere((e) => e.time == event.time);
 
       (currentTodo[index].isChecked == true)
-          ? currentTodo[index] = Todo(
+          ? currentTodo[index] = CardModel(
               todo: state.cardList[index].todo,
               isChecked: false,
               time: state.cardList[index].time)
-          : currentTodo[index] = Todo(
+          : currentTodo[index] = CardModel(
               todo: state.cardList[index].todo,
               isChecked: true,
               time: state.cardList[index].time);
 
-      return emit(state.copyWith(
-          cardList: currentTodo,
-          checkedCardList: getCheckedTodoList(currentTodo),
-          unCheckedCardList: getUnCheckedTodoList(currentTodo)));
+      return emit(state.copyWith(cardList: currentTodo));
     });
 
     on<DragStartEvent>(
@@ -98,7 +87,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<DragEvent>(
       (DragEvent event, emit) {
-        List<Todo> currentTodo = [...state.cardList];
+        List<CardModel> currentTodo = [...state.cardList];
 
         if (isDragDown(event.index)) {
           currentTodo.insert(
@@ -123,8 +112,4 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
   bool isDragDown(int index) => (state.dragIndex < index) ? true : false;
   bool isDragUp(int index) => (state.dragIndex > index) ? true : false;
-  List<Todo> getCheckedTodoList(List<Todo> currentTodo) =>
-      currentTodo.where((e) => e.isChecked == true).toList();
-  List<Todo> getUnCheckedTodoList(List<Todo> currentTodo) =>
-      currentTodo.where((e) => e.isChecked == false).toList();
 }

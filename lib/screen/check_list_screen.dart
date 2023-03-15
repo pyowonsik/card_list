@@ -1,4 +1,4 @@
-import 'package:card_list/todo/todo.dart';
+import 'package:card_list/todo/card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,19 +8,21 @@ import '../bloc/card_list_state.dart';
 import '../widget/card_widget.dart';
 
 class CheckListScreen extends StatelessWidget {
-  final bool isChecked;
-  const CheckListScreen({super.key, required this.isChecked});
+  final bool listType;
+  const CheckListScreen({super.key, required this.listType});
 
   @override
   Widget build(BuildContext context) {
     CardListBloc cardListBloc = context.read<CardListBloc>();
     final todoController = TextEditingController();
-    List<Todo>? todoListType;
+    List<CardModel>? todoListType;
 
     return BlocBuilder<CardListBloc, CardListState>(builder: (context, state) {
-      (isChecked)
-          ? todoListType = state.checkedCardList
-          : todoListType = state.unCheckedCardList;
+      (listType)
+          ? todoListType =
+              state.cardList.where((e) => e.isChecked == true).toList()
+          : todoListType =
+              state.cardList.where((e) => e.isChecked == false).toList();
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -54,9 +56,9 @@ class CheckListScreen extends StatelessWidget {
                                   ElevatedButton(
                                     child: const Text("변경"),
                                     onPressed: () {
-                                      cardListBloc.add(ChangeTodoEvent(
+                                      cardListBloc.add(ChangeCardEvent(
                                           time: todoListType![index].time,
-                                          todo: todoController.text));
+                                          card: todoController.text));
                                       Navigator.pop(context);
                                     },
                                   ),
@@ -74,7 +76,7 @@ class CheckListScreen extends StatelessWidget {
                         });
                     todoController.clear();
                   },
-                  child: (isChecked)
+                  child: (listType)
                       ? CardWidget(
                           index: index,
                           state: state,

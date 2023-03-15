@@ -5,31 +5,31 @@ abstract class CardListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AddTodoEvent extends CardListEvent {
-  final String todo;
-  AddTodoEvent({required this.todo});
+class AddCardEvent extends CardListEvent {
+  final String card;
+  AddCardEvent({required this.card});
   @override
-  List<Object> get props => [todo];
+  List<Object> get props => [card];
 }
 
-class RemoveTodoEvent extends CardListEvent {
+class RemoveCardEvent extends CardListEvent {
   final DateTime time;
-  RemoveTodoEvent({required this.time});
+  RemoveCardEvent({required this.time});
   @override
   List<Object> get props => [time];
 }
 
-class ChangeTodoEvent extends CardListEvent {
-  final String todo;
+class ChangeCardEvent extends CardListEvent {
+  final String card;
   final DateTime time;
-  ChangeTodoEvent({required this.todo, required this.time});
+  ChangeCardEvent({required this.card, required this.time});
   @override
-  List<Object> get props => [todo, time];
+  List<Object> get props => [card, time];
 }
 
-class CheckTodoEvent extends CardListEvent {
+class CheckCardEvent extends CardListEvent {
   final DateTime time;
-  CheckTodoEvent({required this.time});
+  CheckCardEvent({required this.time});
 
   @override
   List<Object> get props => [time];

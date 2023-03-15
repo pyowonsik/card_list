@@ -1,10 +1,10 @@
-import 'package:card_list/widget/card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/card_list_bloc.dart';
 import '../bloc/card_list_event.dart';
 import '../bloc/card_list_state.dart';
+import '../widget/card_widget.dart';
 
 class ListScreen extends StatelessWidget {
   const ListScreen({super.key});
@@ -43,8 +43,8 @@ class ListScreen extends StatelessWidget {
                                 ElevatedButton(
                                   child: const Text("추가"),
                                   onPressed: () {
-                                    cardListBloc.add(AddTodoEvent(
-                                        todo: todoController.text));
+                                    cardListBloc.add(AddCardEvent(
+                                        card: todoController.text));
                                     Navigator.pop(context);
                                   },
                                 ),
@@ -118,9 +118,9 @@ class ListScreen extends StatelessWidget {
                                       ElevatedButton(
                                         child: const Text("변경"),
                                         onPressed: () {
-                                          cardListBloc.add(ChangeTodoEvent(
+                                          cardListBloc.add(ChangeCardEvent(
                                             time: state.cardList[index].time,
-                                            todo: todoController.text,
+                                            card: todoController.text,
                                           ));
                                           Navigator.pop(context);
                                         },

@@ -1,6 +1,6 @@
 import 'package:card_list/bloc/card_list_bloc.dart';
 import 'package:card_list/bloc/card_list_state.dart';
-import 'package:card_list/todo/todo.dart';
+import 'package:card_list/todo/card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/card_list_event.dart';
@@ -17,15 +17,15 @@ class CardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Todo>? todoListType;
+    List<CardModel>? todoListType;
     if (listType == 'all') {
       todoListType = state.cardList;
     }
     if (listType == 'check') {
-      todoListType = state.checkedCardList;
+      todoListType = state.cardList.where((e) => e.isChecked == true).toList();
     }
     if (listType == 'uncheck') {
-      todoListType = state.unCheckedCardList;
+      todoListType = state.cardList.where((e) => e.isChecked == false).toList();
     }
 
     return SizedBox(
@@ -40,7 +40,7 @@ class CardWidget extends StatelessWidget {
                 onChanged: (value) {
                   context
                       .read<CardListBloc>()
-                      .add(CheckTodoEvent(time: todoListType![index].time));
+                      .add(CheckCardEvent(time: todoListType![index].time));
                 }),
             Text(
               todoListType[index].todo,
@@ -50,7 +50,7 @@ class CardWidget extends StatelessWidget {
                 onPressed: () {
                   context
                       .read<CardListBloc>()
-                      .add(RemoveTodoEvent(time: todoListType![index].time));
+                      .add(RemoveCardEvent(time: todoListType![index].time));
                 },
                 child: const Text('삭제')),
           ]),

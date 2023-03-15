@@ -25,8 +25,8 @@ class CardListScreen extends StatelessWidget {
             ),
             body: const TabBarView(children: [
               ListScreen(),
-              CheckListScreen(isChecked: true),
-              CheckListScreen(isChecked: false),
+              CheckListScreen(listType: true),
+              CheckListScreen(listType: false),
             ]),
           )),
     );
