@@ -30,7 +30,8 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       (RemoveTodoEvent event, emit) {
         emit(
           state.copyWith(
-            todoList: List.from(state.todoList)..removeAt(event.index),
+            todoList: List.from(state.todoList)
+              ..removeWhere((e) => e.id == event.id),
           ),
         );
 

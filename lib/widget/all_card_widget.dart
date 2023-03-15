@@ -33,7 +33,7 @@ class AllCardWidget extends StatelessWidget {
                 onPressed: () {
                   context
                       .read<CardListBloc>()
-                      .add(RemoveTodoEvent(index: index));
+                      .add(RemoveTodoEvent(id: state.todoList[index].id));
                 },
                 child: const Text('삭제')),
           ]),
