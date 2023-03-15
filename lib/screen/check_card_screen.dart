@@ -20,12 +20,6 @@ class CheckCardScreen extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            ElevatedButton(
-                onPressed: () {
-                  print(state.checkedTodoList);
-                },
-                child: const Text('Show Checked')),
-            const SizedBox(height: 30),
             Expanded(
                 child: ListView.builder(
               itemCount: state.checkedTodoList.length,
