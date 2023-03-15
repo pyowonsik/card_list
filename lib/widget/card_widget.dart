@@ -7,27 +7,11 @@ import '../bloc/card_list_event.dart';
 
 class CardWidget extends StatelessWidget {
   final int index;
-  final CardListState state;
-  final String isChecked;
-  const CardWidget(
-      {super.key,
-      required this.index,
-      required this.state,
-      required this.isChecked});
+  final List<CardModel> cardList;
+  const CardWidget({super.key, required this.index, required this.cardList});
 
   @override
   Widget build(BuildContext context) {
-    List<CardModel>? cardListType;
-    if (isChecked == 'all') {
-      cardListType = state.cardList;
-    }
-    if (isChecked == 'check') {
-      cardListType = state.cardList.where((e) => e.isChecked == true).toList();
-    }
-    if (isChecked == 'uncheck') {
-      cardListType = state.cardList.where((e) => e.isChecked == false).toList();
-    }
-
     return SizedBox(
       height: 50,
       child: Card(
@@ -36,21 +20,21 @@ class CardWidget extends StatelessWidget {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Checkbox(
-                value: cardListType![index].isChecked,
+                value: cardList[index].isChecked,
                 onChanged: (value) {
                   context
                       .read<CardListBloc>()
-                      .add(CheckCardEvent(time: cardListType![index].time));
+                      .add(CheckCardEvent(time: cardList[index].time));
                 }),
             Text(
-              cardListType[index].todo,
+              cardList[index].todo,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             ElevatedButton(
                 onPressed: () {
                   context
                       .read<CardListBloc>()
-                      .add(RemoveCardEvent(time: cardListType![index].time));
+                      .add(RemoveCardEvent(time: cardList[index].time));
                 },
                 child: const Text('삭제')),
           ]),

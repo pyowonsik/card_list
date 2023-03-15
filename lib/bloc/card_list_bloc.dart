@@ -26,14 +26,12 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
     );
     on<RemoveCardEvent>(
       (RemoveCardEvent event, emit) {
-        emit(
+        return emit(
           state.copyWith(
             cardList: List.from(state.cardList)
               ..removeWhere((e) => e.time == event.time),
           ),
         );
-
-        return emit(state.copyWith());
       },
     );
 
@@ -47,8 +45,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
             isChecked: state.cardList[index].isChecked,
             time: state.cardList[index].time);
 
-        emit(state.copyWith(cardList: currentTodo));
-        return emit(state.copyWith());
+        return emit(state.copyWith(cardList: currentTodo));
       },
     );
 

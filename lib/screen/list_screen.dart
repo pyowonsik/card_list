@@ -1,3 +1,4 @@
+import 'package:card_list/todo/card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,12 +8,14 @@ import '../bloc/card_list_state.dart';
 import '../widget/card_widget.dart';
 
 class ListScreen extends StatelessWidget {
-  const ListScreen({super.key});
+  final List<CardModel> cardList;
+  const ListScreen({super.key, required this.cardList});
 
   @override
   Widget build(BuildContext context) {
     CardListBloc cardListBloc = context.read<CardListBloc>();
     final todoController = TextEditingController();
+
     return BlocBuilder<CardListBloc, CardListState>(builder: (context, state) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
@@ -88,8 +91,7 @@ class ListScreen extends StatelessWidget {
                             maxWidth: MediaQuery.of(context).size.width),
                         child: CardWidget(
                           index: index,
-                          state: state,
-                          isChecked: 'all',
+                          cardList: cardList,
                         ),
                       ),
                     ),
@@ -147,8 +149,7 @@ class ListScreen extends StatelessWidget {
                         ) {
                           return CardWidget(
                             index: index,
-                            state: state,
-                            isChecked: 'all',
+                            cardList: cardList,
                           );
                         },
                         onMove: (detail) {
