@@ -18,11 +18,6 @@ class ListScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            ElevatedButton(
-                onPressed: () {
-                  print(state.cardList);
-                },
-                child: Text('Show')),
             const SizedBox(height: 30),
             ElevatedButton(
                 onPressed: () {
@@ -124,7 +119,7 @@ class ListScreen extends StatelessWidget {
                                         child: const Text("변경"),
                                         onPressed: () {
                                           cardListBloc.add(ChangeTodoEvent(
-                                            id: state.cardList[index].id,
+                                            time: state.cardList[index].time,
                                             todo: todoController.text,
                                           ));
                                           Navigator.pop(context);

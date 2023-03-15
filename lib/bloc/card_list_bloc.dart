@@ -19,7 +19,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
         DateTime time = DateTime.now();
         List<Todo> currentTodo = [
           ...state.cardList,
-          Todo(id: event.todo, todo: event.todo, isChecked: false, time: time),
+          Todo(todo: event.todo, isChecked: false, time: time),
         ];
 
         return emit(state.copyWith(
@@ -28,14 +28,12 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
             unCheckedCardList: getUnCheckedTodoList(currentTodo)));
       },
     );
-
-    // event로 해당 id의 time 넣기
     on<RemoveTodoEvent>(
       (RemoveTodoEvent event, emit) {
         emit(
           state.copyWith(
             cardList: List.from(state.cardList)
-              ..removeWhere((e) => e.id == event.id),
+              ..removeWhere((e) => e.time == event.time),
           ),
         );
 
@@ -48,12 +46,13 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
     on<ChangeTodoEvent>(
       (ChangeTodoEvent event, emit) {
         List<Todo> currentTodo = [...state.cardList];
-        int idx = state.cardList.indexWhere((e) => e.id == event.id);
-        currentTodo[idx] = Todo(
-            id: event.todo,
+
+        int index = state.cardList.indexWhere((e) => e.time == event.time);
+        currentTodo[index] = Todo(
             todo: event.todo,
-            isChecked: state.cardList[idx].isChecked,
-            time: state.cardList[idx].time);
+            isChecked: state.cardList[index].isChecked,
+            time: state.cardList[index].time);
+
         emit(state.copyWith(cardList: currentTodo));
         return emit(state.copyWith(
             checkedCardList: getCheckedTodoList(currentTodo),
@@ -63,18 +62,17 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<CheckTodoEvent>((CheckTodoEvent event, emit) {
       List<Todo> currentTodo = [...state.cardList];
-      int idx = state.cardList.indexWhere((e) => e.id == event.id);
-      (currentTodo[idx].isChecked == true)
-          ? currentTodo[idx] = Todo(
-              id: state.cardList[idx].id,
-              todo: state.cardList[idx].todo,
+      int index = state.cardList.indexWhere((e) => e.time == event.time);
+
+      (currentTodo[index].isChecked == true)
+          ? currentTodo[index] = Todo(
+              todo: state.cardList[index].todo,
               isChecked: false,
-              time: state.cardList[idx].time)
-          : currentTodo[idx] = Todo(
-              id: state.cardList[idx].id,
-              todo: state.cardList[idx].todo,
+              time: state.cardList[index].time)
+          : currentTodo[index] = Todo(
+              todo: state.cardList[index].todo,
               isChecked: true,
-              time: state.cardList[idx].time);
+              time: state.cardList[index].time);
 
       return emit(state.copyWith(
           cardList: currentTodo,

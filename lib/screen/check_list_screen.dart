@@ -26,12 +26,6 @@ class CheckListScreen extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            ElevatedButton(
-                onPressed: () {
-                  print(state.cardList);
-                },
-                child: Text('Show')),
-            const SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
               itemCount: todoListType!.length,
@@ -61,7 +55,7 @@ class CheckListScreen extends StatelessWidget {
                                     child: const Text("변경"),
                                     onPressed: () {
                                       cardListBloc.add(ChangeTodoEvent(
-                                          id: todoListType![index].id,
+                                          time: todoListType![index].time,
                                           todo: todoController.text));
                                       Navigator.pop(context);
                                     },

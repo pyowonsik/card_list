@@ -13,26 +13,26 @@ class AddTodoEvent extends CardListEvent {
 }
 
 class RemoveTodoEvent extends CardListEvent {
-  final String id;
-  RemoveTodoEvent({required this.id});
+  final DateTime time;
+  RemoveTodoEvent({required this.time});
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [time];
 }
 
 class ChangeTodoEvent extends CardListEvent {
   final String todo;
-  final String id;
-  ChangeTodoEvent({required this.todo, required this.id});
+  final DateTime time;
+  ChangeTodoEvent({required this.todo, required this.time});
   @override
-  List<Object> get props => [todo, id];
+  List<Object> get props => [todo, time];
 }
 
 class CheckTodoEvent extends CardListEvent {
-  final String id;
-  CheckTodoEvent({required this.id});
+  final DateTime time;
+  CheckTodoEvent({required this.time});
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [time];
 }
 
 class DragStartEvent extends CardListEvent {

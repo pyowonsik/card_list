@@ -40,7 +40,7 @@ class CardWidget extends StatelessWidget {
                 onChanged: (value) {
                   context
                       .read<CardListBloc>()
-                      .add(CheckTodoEvent(id: todoListType![index].id));
+                      .add(CheckTodoEvent(time: todoListType![index].time));
                 }),
             Text(
               todoListType[index].todo,
@@ -50,7 +50,7 @@ class CardWidget extends StatelessWidget {
                 onPressed: () {
                   context
                       .read<CardListBloc>()
-                      .add(RemoveTodoEvent(id: todoListType![index].id));
+                      .add(RemoveTodoEvent(time: todoListType![index].time));
                 },
                 child: const Text('삭제')),
           ]),
