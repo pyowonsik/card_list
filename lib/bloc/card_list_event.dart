@@ -1,40 +1,38 @@
-import 'package:card_list/todo/todo.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 abstract class CardListEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
 
-class AddTodoEvent extends CardListEvent {
-  final String todo;
-  AddTodoEvent({required this.todo});
+class AddCardEvent extends CardListEvent {
+  final String card;
+  AddCardEvent({required this.card});
   @override
-  List<Object> get props => [todo];
+  List<Object> get props => [card];
 }
 
-class RemoveTodoEvent extends CardListEvent {
-  final int index;
-  RemoveTodoEvent({required this.index});
+class RemoveCardEvent extends CardListEvent {
+  final DateTime time;
+  RemoveCardEvent({required this.time});
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [time];
 }
 
-class ChangeTodoEvent extends CardListEvent {
-  final String todo;
-  final int index;
-  ChangeTodoEvent({required this.todo, required this.index});
+class ChangeCardEvent extends CardListEvent {
+  final String card;
+  final DateTime time;
+  ChangeCardEvent({required this.card, required this.time});
   @override
-  List<Object> get props => [todo];
+  List<Object> get props => [card, time];
 }
 
-class CheckTodoEvent extends CardListEvent {
-  final int index;
-  CheckTodoEvent({required this.index});
+class CheckCardEvent extends CardListEvent {
+  final DateTime time;
+  CheckCardEvent({required this.time});
 
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [time];
 }
 
 class DragStartEvent extends CardListEvent {

@@ -1,18 +1,21 @@
-import 'package:card_list/widget/all_card_widget.dart';
+import 'package:card_list/todo/card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/card_list_bloc.dart';
 import '../bloc/card_list_event.dart';
 import '../bloc/card_list_state.dart';
+import '../widget/card_widget.dart';
 
-class AllCardScreen extends StatelessWidget {
-  const AllCardScreen({super.key});
+class ListScreen extends StatelessWidget {
+  final List<CardModel> cardList;
+  const ListScreen({super.key, required this.cardList});
 
   @override
   Widget build(BuildContext context) {
     CardListBloc cardListBloc = context.read<CardListBloc>();
     final todoController = TextEditingController();
+
     return BlocBuilder<CardListBloc, CardListState>(builder: (context, state) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
@@ -43,8 +46,8 @@ class AllCardScreen extends StatelessWidget {
                                 ElevatedButton(
                                   child: const Text("추가"),
                                   onPressed: () {
-                                    cardListBloc.add(AddTodoEvent(
-                                        todo: todoController.text));
+                                    cardListBloc.add(AddCardEvent(
+                                        card: todoController.text));
                                     Navigator.pop(context);
                                   },
                                 ),
@@ -64,10 +67,10 @@ class AllCardScreen extends StatelessWidget {
                   todoController.clear();
                 },
                 child: const Text('추가')),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
-              itemCount: state.todoList.length,
+              itemCount: state.cardList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Draggable(
                     data: index,
@@ -86,7 +89,10 @@ class AllCardScreen extends StatelessWidget {
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
                             maxWidth: MediaQuery.of(context).size.width),
-                        child: AllCardWidget(index: index, state: state),
+                        child: CardWidget(
+                          index: index,
+                          cardList: cardList,
+                        ),
                       ),
                     ),
                     child: GestureDetector(
@@ -114,9 +120,10 @@ class AllCardScreen extends StatelessWidget {
                                       ElevatedButton(
                                         child: const Text("변경"),
                                         onPressed: () {
-                                          cardListBloc.add(ChangeTodoEvent(
-                                              todo: todoController.text,
-                                              index: index));
+                                          cardListBloc.add(ChangeCardEvent(
+                                            time: state.cardList[index].time,
+                                            card: todoController.text,
+                                          ));
                                           Navigator.pop(context);
                                         },
                                       ),
@@ -140,7 +147,10 @@ class AllCardScreen extends StatelessWidget {
                           List<dynamic> accepted,
                           List<dynamic> rejected,
                         ) {
-                          return AllCardWidget(index: index, state: state);
+                          return CardWidget(
+                            index: index,
+                            cardList: cardList,
+                          );
                         },
                         onMove: (detail) {
                           if (state.isDragging) {
