@@ -30,108 +30,62 @@ class CheckListScreen extends StatelessWidget {
                 child: ListView.builder(
               itemCount: todoListType!.length,
               itemBuilder: (BuildContext context, int index) {
-                return Draggable(
-                    data: index,
-                    onDragStarted: () {
-                      context
-                          .read<CardListBloc>()
-                          .add(DragStartEvent(index: index));
-                    },
-                    onDraggableCanceled: (_, __) {
-                      context.read<CardListBloc>().add(DragEndEvent());
-                    },
-                    onDragCompleted: () {
-                      context.read<CardListBloc>().add(DragEndEvent());
-                    },
-                    feedback: Material(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                            maxWidth: MediaQuery.of(context).size.width),
-                        child: (isChecked)
-                            ? CardWidget(
-                                index: index,
-                                state: state,
-                                listType: 'check',
-                              )
-                            : CardWidget(
-                                index: index,
-                                state: state,
-                                listType: 'uncheck',
-                              ),
-                      ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                title: const Text('변경할 Todo 입력 '),
-                                content:
-                                    BlocBuilder<CardListBloc, CardListState>(
-                                  bloc: cardListBloc, // showDialog에서 bloc 등록
-                                  builder: (context, state) {
-                                    return TextField(
-                                      controller: todoController,
-                                    );
-                                  },
-                                ),
-                                actions: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ElevatedButton(
-                                        child: const Text("변경"),
-                                        onPressed: () {
-                                          cardListBloc.add(ChangeTodoEvent(
-                                              id: todoListType![index].id,
-                                              todo: todoController.text));
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                      const SizedBox(width: 15),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text('취소'),
-                                      ),
-                                    ],
+                return GestureDetector(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            title: const Text('변경할 Todo 입력 '),
+                            content: BlocBuilder<CardListBloc, CardListState>(
+                              bloc: cardListBloc, // showDialog에서 bloc 등록
+                              builder: (context, state) {
+                                return TextField(
+                                  controller: todoController,
+                                );
+                              },
+                            ),
+                            actions: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    child: const Text("변경"),
+                                    onPressed: () {
+                                      cardListBloc.add(ChangeTodoEvent(
+                                          id: todoListType![index].id,
+                                          todo: todoController.text));
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  const SizedBox(width: 15),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('취소'),
                                   ),
                                 ],
-                              );
-                            });
-                        todoController.clear();
-                      },
-                      child: DragTarget(
-                        builder: (
-                          BuildContext context,
-                          List<dynamic> accepted,
-                          List<dynamic> rejected,
-                        ) {
-                          return (isChecked)
-                              ? CardWidget(
-                                  index: index,
-                                  state: state,
-                                  listType: 'check',
-                                )
-                              : CardWidget(
-                                  index: index,
-                                  state: state,
-                                  listType: 'uncheck',
-                                );
-                        },
-                        onMove: (detail) {
-                          if (state.isDragging) {
-                            context
-                                .read<CardListBloc>()
-                                .add(DragEvent(index: index));
-                          }
-                        },
-                      ),
-                    ));
+                              ),
+                            ],
+                          );
+                        });
+                    todoController.clear();
+                  },
+                  child: (isChecked)
+                      ? CardWidget(
+                          index: index,
+                          state: state,
+                          listType: 'check',
+                        )
+                      : CardWidget(
+                          index: index,
+                          state: state,
+                          listType: 'uncheck',
+                        ),
+                );
               },
             )),
           ],
