@@ -3,8 +3,6 @@ import 'package:card_list/bloc/card_list_state.dart';
 import 'package:card_list/bloc/card_list_event.dart';
 import 'package:card_list/todo/todo.dart';
 
-// id값을 따로 텍스트로 받아보자 , 지금 id값이랑 todo를 같이 쓰기 때문
-
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
   CardListBloc()
       : super(const CardListState(
@@ -60,9 +58,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<CheckTodoEvent>((CheckTodoEvent event, emit) {
       List<Todo> currentTodo = [...state.cardList];
-
       int idx = state.cardList.indexWhere((e) => e.id == event.id);
-
       (currentTodo[idx].isChecked == true)
           ? currentTodo[idx] = Todo(
               id: state.cardList[idx].id,

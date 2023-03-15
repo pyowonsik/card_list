@@ -12,10 +12,6 @@ class CardListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // modal 에서 bloc 사용하기위해 bloc 등록 ,
-    // modal 안에서 context를 showDialog를 사용하기 때문에,
-    // 등록한 bloc을 사용하여 event를 발생시켜야함
-
     return MaterialApp(
       home: DefaultTabController(
           length: 3,
