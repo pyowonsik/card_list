@@ -3,6 +3,8 @@ import 'package:card_list/bloc/card_list_state.dart';
 import 'package:card_list/bloc/card_list_event.dart';
 import 'package:card_list/todo/todo.dart';
 
+// id로 시간값 넣기
+
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
   CardListBloc()
       : super(const CardListState(
@@ -14,9 +16,10 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
             unCheckedCardList: [])) {
     on<AddTodoEvent>(
       (AddTodoEvent event, emit) {
+        DateTime time = DateTime.now();
         List<Todo> currentTodo = [
           ...state.cardList,
-          Todo(id: event.todo, todo: event.todo, isChecked: false)
+          Todo(id: event.todo, todo: event.todo, isChecked: false, time: time),
         ];
 
         return emit(state.copyWith(
@@ -26,6 +29,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       },
     );
 
+    // event로 해당 id의 time 넣기
     on<RemoveTodoEvent>(
       (RemoveTodoEvent event, emit) {
         emit(
@@ -48,7 +52,8 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
         currentTodo[idx] = Todo(
             id: event.todo,
             todo: event.todo,
-            isChecked: state.cardList[idx].isChecked);
+            isChecked: state.cardList[idx].isChecked,
+            time: state.cardList[idx].time);
         emit(state.copyWith(cardList: currentTodo));
         return emit(state.copyWith(
             checkedCardList: getCheckedTodoList(currentTodo),
@@ -63,11 +68,13 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
           ? currentTodo[idx] = Todo(
               id: state.cardList[idx].id,
               todo: state.cardList[idx].todo,
-              isChecked: false)
+              isChecked: false,
+              time: state.cardList[idx].time)
           : currentTodo[idx] = Todo(
               id: state.cardList[idx].id,
               todo: state.cardList[idx].todo,
-              isChecked: true);
+              isChecked: true,
+              time: state.cardList[idx].time);
 
       return emit(state.copyWith(
           cardList: currentTodo,
