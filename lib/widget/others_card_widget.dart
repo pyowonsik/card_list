@@ -31,9 +31,8 @@ class OthersCardWidget extends StatelessWidget {
             ),
             ElevatedButton(
                 onPressed: () {
-                  context
-                      .read<CardListBloc>()
-                      .add(RemoveTodoEvent(id: state.todoList[index].id));
+                  context.read<CardListBloc>().add(
+                      RemoveTodoEvent(id: state.unCheckedTodoList[index].id));
                 },
                 child: const Text('삭제')),
           ]),

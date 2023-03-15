@@ -121,8 +121,9 @@ class AllCardScreen extends StatelessWidget {
                                         child: const Text("변경"),
                                         onPressed: () {
                                           cardListBloc.add(ChangeTodoEvent(
-                                              todo: todoController.text,
-                                              index: index));
+                                            id: state.todoList[index].id,
+                                            todo: todoController.text,
+                                          ));
                                           Navigator.pop(context);
                                         },
                                       ),

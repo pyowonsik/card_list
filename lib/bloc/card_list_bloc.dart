@@ -44,11 +44,11 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
     on<ChangeTodoEvent>(
       (ChangeTodoEvent event, emit) {
         List<Todo> currentTodo = [...state.todoList];
-
-        currentTodo[event.index] = Todo(
+        var idx = state.todoList.indexWhere((e) => e.id == event.id);
+        currentTodo[idx] = Todo(
             id: event.todo,
             todo: event.todo,
-            isChecked: state.todoList[event.index].isChecked);
+            isChecked: state.todoList[idx].isChecked);
         emit(state.copyWith(todoList: currentTodo));
         return emit(state.copyWith(
             checkedTodoList: getCheckedTodoList(currentTodo),

@@ -22,11 +22,11 @@ class RemoveTodoEvent extends CardListEvent {
 }
 
 class ChangeTodoEvent extends CardListEvent {
-  final String todo;
-  final int index;
-  ChangeTodoEvent({required this.todo, required this.index});
+  String todo;
+  String id;
+  ChangeTodoEvent({required this.todo, required this.id});
   @override
-  List<Object> get props => [todo];
+  List<Object> get props => [todo, id];
 }
 
 class CheckTodoEvent extends CardListEvent {

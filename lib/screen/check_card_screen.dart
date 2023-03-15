@@ -76,8 +76,9 @@ class CheckCardScreen extends StatelessWidget {
                                         child: const Text("변경"),
                                         onPressed: () {
                                           cardListBloc.add(ChangeTodoEvent(
-                                              todo: todoController.text,
-                                              index: index));
+                                              id: state
+                                                  .checkedTodoList[index].id,
+                                              todo: todoController.text));
                                           Navigator.pop(context);
                                         },
                                       ),
