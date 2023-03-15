@@ -21,7 +21,7 @@ class UnCheckListScreen extends StatelessWidget {
             const SizedBox(height: 30),
             Expanded(
                 child: ListView.builder(
-              itemCount: state.unCheckedTodoList.length,
+              itemCount: state.unCheckedCardList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Draggable(
                     data: index,
@@ -74,7 +74,7 @@ class UnCheckListScreen extends StatelessWidget {
                                         onPressed: () {
                                           cardListBloc.add(ChangeTodoEvent(
                                               id: state
-                                                  .unCheckedTodoList[index].id,
+                                                  .unCheckedCardList[index].id,
                                               todo: todoController.text));
                                           Navigator.pop(context);
                                         },

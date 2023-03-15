@@ -67,7 +67,7 @@ class ListScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
-              itemCount: state.todoList.length,
+              itemCount: state.cardList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Draggable(
                     data: index,
@@ -119,7 +119,7 @@ class ListScreen extends StatelessWidget {
                                         child: const Text("변경"),
                                         onPressed: () {
                                           cardListBloc.add(ChangeTodoEvent(
-                                            id: state.todoList[index].id,
+                                            id: state.cardList[index].id,
                                             todo: todoController.text,
                                           ));
                                           Navigator.pop(context);

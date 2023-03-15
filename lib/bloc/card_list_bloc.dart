@@ -11,20 +11,20 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
             isDragging: false,
             dragIndex: 0,
             dragTodo: '',
-            todoList: [],
-            checkedTodoList: [],
-            unCheckedTodoList: [])) {
+            cardList: [],
+            checkedCardList: [],
+            unCheckedCardList: [])) {
     on<AddTodoEvent>(
       (AddTodoEvent event, emit) {
         List<Todo> currentTodo = [
-          ...state.todoList,
+          ...state.cardList,
           Todo(id: event.todo, todo: event.todo, isChecked: false)
         ];
 
         return emit(state.copyWith(
-            todoList: currentTodo,
-            checkedTodoList: getCheckedTodoList(currentTodo),
-            unCheckedTodoList: getUnCheckedTodoList(currentTodo)));
+            cardList: currentTodo,
+            checkedCardList: getCheckedTodoList(currentTodo),
+            unCheckedCardList: getUnCheckedTodoList(currentTodo)));
       },
     );
 
@@ -32,58 +32,58 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       (RemoveTodoEvent event, emit) {
         emit(
           state.copyWith(
-            todoList: List.from(state.todoList)
+            cardList: List.from(state.cardList)
               ..removeWhere((e) => e.id == event.id),
           ),
         );
 
         return emit(state.copyWith(
-            checkedTodoList: getCheckedTodoList([...state.todoList]),
-            unCheckedTodoList: getUnCheckedTodoList([...state.todoList])));
+            checkedCardList: getCheckedTodoList([...state.cardList]),
+            unCheckedCardList: getUnCheckedTodoList([...state.cardList])));
       },
     );
 
     on<ChangeTodoEvent>(
       (ChangeTodoEvent event, emit) {
-        List<Todo> currentTodo = [...state.todoList];
-        int idx = state.todoList.indexWhere((e) => e.id == event.id);
+        List<Todo> currentTodo = [...state.cardList];
+        int idx = state.cardList.indexWhere((e) => e.id == event.id);
         currentTodo[idx] = Todo(
             id: event.todo,
             todo: event.todo,
-            isChecked: state.todoList[idx].isChecked);
-        emit(state.copyWith(todoList: currentTodo));
+            isChecked: state.cardList[idx].isChecked);
+        emit(state.copyWith(cardList: currentTodo));
         return emit(state.copyWith(
-            checkedTodoList: getCheckedTodoList(currentTodo),
-            unCheckedTodoList: getUnCheckedTodoList(currentTodo)));
+            checkedCardList: getCheckedTodoList(currentTodo),
+            unCheckedCardList: getUnCheckedTodoList(currentTodo)));
       },
     );
 
     on<CheckTodoEvent>((CheckTodoEvent event, emit) {
-      List<Todo> currentTodo = [...state.todoList];
+      List<Todo> currentTodo = [...state.cardList];
 
-      int idx = state.todoList.indexWhere((e) => e.id == event.id);
+      int idx = state.cardList.indexWhere((e) => e.id == event.id);
 
       (currentTodo[idx].isChecked == true)
           ? currentTodo[idx] = Todo(
-              id: state.todoList[idx].id,
-              todo: state.todoList[idx].todo,
+              id: state.cardList[idx].id,
+              todo: state.cardList[idx].todo,
               isChecked: false)
           : currentTodo[idx] = Todo(
-              id: state.todoList[idx].id,
-              todo: state.todoList[idx].todo,
+              id: state.cardList[idx].id,
+              todo: state.cardList[idx].todo,
               isChecked: true);
 
       return emit(state.copyWith(
-          todoList: currentTodo,
-          checkedTodoList: getCheckedTodoList(currentTodo),
-          unCheckedTodoList: getUnCheckedTodoList(currentTodo)));
+          cardList: currentTodo,
+          checkedCardList: getCheckedTodoList(currentTodo),
+          unCheckedCardList: getUnCheckedTodoList(currentTodo)));
     });
 
     on<DragStartEvent>(
       (DragStartEvent event, emit) {
         return emit(
           state.copyWith(
-              dragTodo: state.todoList[event.index].todo,
+              dragTodo: state.cardList[event.index].todo,
               dragIndex: event.index,
               isDragging: true),
         );
@@ -97,14 +97,14 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<DragEvent>(
       (DragEvent event, emit) {
-        List<Todo> currentTodo = [...state.todoList];
+        List<Todo> currentTodo = [...state.cardList];
 
         if (isDragDown(event.index)) {
           currentTodo.insert(
               event.index, currentTodo.removeAt(event.index - 1));
           return emit(
             state.copyWith(
-                dragIndex: state.dragIndex + 1, todoList: currentTodo),
+                dragIndex: state.dragIndex + 1, cardList: currentTodo),
           );
         }
 
@@ -113,7 +113,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
               event.index, currentTodo.removeAt(event.index + 1));
           return emit(
             state.copyWith(
-                dragIndex: state.dragIndex - 1, todoList: currentTodo),
+                dragIndex: state.dragIndex - 1, cardList: currentTodo),
           );
         }
       },

@@ -19,13 +19,13 @@ class CardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Todo>? todoListType;
     if (listType == 'all') {
-      todoListType = state.todoList;
+      todoListType = state.cardList;
     }
     if (listType == 'check') {
-      todoListType = state.checkedTodoList;
+      todoListType = state.checkedCardList;
     }
     if (listType == 'uncheck') {
-      todoListType = state.unCheckedTodoList;
+      todoListType = state.unCheckedCardList;
     }
 
     return SizedBox(

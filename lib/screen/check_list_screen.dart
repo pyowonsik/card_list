@@ -22,7 +22,7 @@ class CheckListScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
-              itemCount: state.checkedTodoList.length,
+              itemCount: state.checkedCardList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Draggable(
                     data: index,
@@ -72,7 +72,7 @@ class CheckListScreen extends StatelessWidget {
                                         onPressed: () {
                                           cardListBloc.add(ChangeTodoEvent(
                                               id: state
-                                                  .checkedTodoList[index].id,
+                                                  .checkedCardList[index].id,
                                               todo: todoController.text));
                                           Navigator.pop(context);
                                         },
