@@ -1,6 +1,5 @@
 import 'package:card_list/screen/List_screen.dart';
 import 'package:card_list/screen/check_list_screen.dart';
-import 'package:card_list/screen/un_check_list_screen.dart';
 import 'package:flutter/material.dart';
 
 // 투두리스트 처럼 체크 박스를 추가해주세요
@@ -26,8 +25,8 @@ class CardListScreen extends StatelessWidget {
             ),
             body: const TabBarView(children: [
               ListScreen(),
-              CheckListScreen(),
-              UnCheckListScreen()
+              CheckListScreen(isChecked: true),
+              CheckListScreen(isChecked: false),
             ]),
           )),
     );

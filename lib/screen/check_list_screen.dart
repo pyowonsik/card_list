@@ -1,3 +1,4 @@
+import 'package:card_list/todo/todo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,14 +8,19 @@ import '../bloc/card_list_state.dart';
 import '../widget/card_widget.dart';
 
 class CheckListScreen extends StatelessWidget {
-  const CheckListScreen({super.key});
+  final bool isChecked;
+  const CheckListScreen({super.key, required this.isChecked});
 
   @override
   Widget build(BuildContext context) {
     CardListBloc cardListBloc = context.read<CardListBloc>();
     final todoController = TextEditingController();
+    List<Todo>? todoListType;
 
     return BlocBuilder<CardListBloc, CardListState>(builder: (context, state) {
+      (isChecked)
+          ? todoListType = state.checkedCardList
+          : todoListType = state.unCheckedCardList;
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -22,7 +28,7 @@ class CheckListScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
-              itemCount: state.checkedCardList.length,
+              itemCount: todoListType!.length,
               itemBuilder: (BuildContext context, int index) {
                 return Draggable(
                     data: index,
@@ -41,8 +47,17 @@ class CheckListScreen extends StatelessWidget {
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
                             maxWidth: MediaQuery.of(context).size.width),
-                        child: CardWidget(
-                            index: index, state: state, listType: 'check'),
+                        child: (isChecked)
+                            ? CardWidget(
+                                index: index,
+                                state: state,
+                                listType: 'check',
+                              )
+                            : CardWidget(
+                                index: index,
+                                state: state,
+                                listType: 'uncheck',
+                              ),
                       ),
                     ),
                     child: GestureDetector(
@@ -71,8 +86,7 @@ class CheckListScreen extends StatelessWidget {
                                         child: const Text("변경"),
                                         onPressed: () {
                                           cardListBloc.add(ChangeTodoEvent(
-                                              id: state
-                                                  .checkedCardList[index].id,
+                                              id: todoListType![index].id,
                                               todo: todoController.text));
                                           Navigator.pop(context);
                                         },
@@ -97,11 +111,17 @@ class CheckListScreen extends StatelessWidget {
                           List<dynamic> accepted,
                           List<dynamic> rejected,
                         ) {
-                          return CardWidget(
-                            index: index,
-                            state: state,
-                            listType: 'check',
-                          );
+                          return (isChecked)
+                              ? CardWidget(
+                                  index: index,
+                                  state: state,
+                                  listType: 'check',
+                                )
+                              : CardWidget(
+                                  index: index,
+                                  state: state,
+                                  listType: 'uncheck',
+                                );
                         },
                         onMove: (detail) {
                           if (state.isDragging) {
