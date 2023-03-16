@@ -1,3 +1,6 @@
+import 'dart:collection';
+
+import 'package:card_list/card/card_model.dart';
 import 'package:card_list/screen/List_screen.dart';
 import 'package:card_list/screen/check_list_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +11,9 @@ import 'bloc/card_list_state.dart';
 
 class CardList extends StatelessWidget {
   const CardList({super.key});
-
   @override
   Widget build(BuildContext context) {
+    final searchController = TextEditingController();
     return BlocBuilder<CardListBloc, CardListState>(
       builder: (context, state) {
         return MaterialApp(
@@ -25,17 +28,43 @@ class CardList extends StatelessWidget {
                     Tab(text: 'uncheck'),
                   ]),
                 ),
-                body: TabBarView(children: [
-                  ListScreen(cardList: state.cardList),
-                  CheckListScreen(
-                      cardList: state.cardList
-                          .where((e) => e.isChecked == true)
-                          .toList()),
-                  CheckListScreen(
-                      cardList: state.cardList
-                          .where((e) => e.isChecked == false)
-                          .toList()),
-                ]),
+                body: Column(
+                  children: [
+                    const SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                      child: TextFormField(
+                        controller: searchController,
+                        onChanged: (val) {
+                          print(state.cardList
+                              .where((e) => e.card.contains(val))
+                              .toList());
+                          print(state.cardList
+                              .where((e) =>
+                                  e.isChecked == true && e.card.contains(val))
+                              .toList());
+                          print(state.cardList
+                              .where((e) =>
+                                  e.isChecked == false && e.card.contains(val))
+                              .toList());
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: TabBarView(children: [
+                        ListScreen(cardList: state.cardList),
+                        CheckListScreen(
+                            cardList: state.cardList
+                                .where((e) => e.isChecked == true)
+                                .toList()),
+                        CheckListScreen(
+                            cardList: state.cardList
+                                .where((e) => e.isChecked == false)
+                                .toList()),
+                      ]),
+                    ),
+                  ],
+                ),
               )),
         );
       },

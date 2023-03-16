@@ -64,13 +64,16 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<SearchCardEvent>(
       (SearchCardEvent event, emit) {
-        return emit(
-          state.copyWith(
-            cardList: state.cardList
-                .where((e) => e.card.contains(event.card))
-                .toList(),
-          ),
-        );
+        print(event.card);
+        print(
+            state.cardList.where((e) => e.card.contains(event.card)).toList());
+        // return emit(
+        //   state.copyWith(
+        //     cardList: state.cardList
+        //         .where((e) => e.card.contains(event.card))
+        //         .toList(),
+        //   ),
+        // );
       },
     );
 
