@@ -43,17 +43,6 @@ class CardList extends StatelessWidget {
                           }
                           context.read<CardListBloc>().add(SearchCardEvent(
                               card: val, cardModel: state.cardList));
-                          // print(state.cardList
-                          //     .where((e) => e.card.contains(val))
-                          //     .toList());
-                          // print(state.cardList
-                          //     .where((e) =>
-                          //         e.isChecked == true && e.card.contains(val))
-                          //     .toList());
-                          // print(state.cardList
-                          //     .where((e) =>
-                          //         e.isChecked == false && e.card.contains(val))
-                          //     .toList());
                         },
                       ),
                     ),
