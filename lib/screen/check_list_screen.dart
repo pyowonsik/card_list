@@ -70,10 +70,7 @@ class CheckListScreen extends StatelessWidget {
                           });
                       todoController.clear();
                     },
-                    child: CardWidget(
-                      index: index,
-                      cardList: cardList,
-                    ));
+                    child: CardWidget(card: cardList[index]));
               },
             )),
           ],

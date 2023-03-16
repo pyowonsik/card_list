@@ -85,8 +85,7 @@ class ListScreen extends StatelessWidget {
                         constraints: BoxConstraints(
                             maxWidth: MediaQuery.of(context).size.width),
                         child: CardWidget(
-                          index: index,
-                          cardList: cardList,
+                          card: cardList[index],
                         ),
                       ),
                     ),
@@ -137,8 +136,7 @@ class ListScreen extends StatelessWidget {
                           List<dynamic> rejected,
                         ) {
                           return CardWidget(
-                            index: index,
-                            cardList: cardList,
+                            card: cardList[index],
                           );
                         },
                         onMove: (detail) {
