@@ -35,6 +35,13 @@ class CheckCardEvent extends CardListEvent {
   List<Object> get props => [time];
 }
 
+class SearchCardEvent extends CardListEvent {
+  final String card;
+  SearchCardEvent({required this.card});
+  @override
+  List<Object> get props => [card];
+}
+
 class DragStartEvent extends CardListEvent {
   final int index;
   DragStartEvent({required this.index});

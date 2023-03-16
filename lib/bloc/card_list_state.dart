@@ -17,12 +17,14 @@ class CardListState extends Equatable {
       {bool? isDragging,
       int? dragIndex,
       String? dragTodo,
-      List<CardModel>? cardList}) {
+      List<CardModel>? cardList,
+      String? searchText}) {
     return CardListState(
-        isDragging: isDragging ?? this.isDragging,
-        dragIndex: dragIndex ?? this.dragIndex,
-        dragTodo: dragTodo ?? this.dragTodo,
-        cardList: cardList ?? this.cardList);
+      isDragging: isDragging ?? this.isDragging,
+      dragIndex: dragIndex ?? this.dragIndex,
+      dragTodo: dragTodo ?? this.dragTodo,
+      cardList: cardList ?? this.cardList,
+    );
   }
 
   @override

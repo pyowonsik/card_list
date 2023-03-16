@@ -25,7 +25,7 @@ class CardWidget extends StatelessWidget {
                       .add(CheckCardEvent(time: card.time));
                 }),
             Text(
-              card.todo,
+              card.card,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             ElevatedButton(

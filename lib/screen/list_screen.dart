@@ -15,12 +15,19 @@ class ListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     CardListBloc cardListBloc = context.read<CardListBloc>();
     final todoController = TextEditingController();
-
+    final searchController = TextEditingController();
     return BlocBuilder<CardListBloc, CardListState>(builder: (context, state) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            const SizedBox(height: 30),
+            TextFormField(
+              controller: searchController,
+              onChanged: (val) {
+                context.read<CardListBloc>().add(SearchCardEvent(card: val));
+              },
+            ),
             const SizedBox(height: 30),
             ElevatedButton(
                 onPressed: () {
