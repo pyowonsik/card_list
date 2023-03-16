@@ -1,4 +1,4 @@
-import 'package:card_list/todo/card_model.dart';
+import 'package:card_list/card/card_model.dart';
 import 'package:equatable/equatable.dart';
 
 class CardListState extends Equatable {

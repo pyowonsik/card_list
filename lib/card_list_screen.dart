@@ -1,6 +1,6 @@
 import 'package:card_list/screen/List_screen.dart';
 import 'package:card_list/screen/check_list_screen.dart';
-import 'package:card_list/todo/card_model.dart';
+import 'package:card_list/card/card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
