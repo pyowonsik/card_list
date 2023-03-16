@@ -31,13 +31,8 @@ class ListScreen extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),
                           title: const Text('Todo 입력 '),
-                          content: BlocBuilder<CardListBloc, CardListState>(
-                            bloc: cardListBloc, // showDialog에서 bloc 등록
-                            builder: (context, state) {
-                              return TextField(
-                                controller: todoController,
-                              );
-                            },
+                          content: TextField(
+                            controller: todoController,
                           ),
                           actions: [
                             Row(
@@ -70,7 +65,7 @@ class ListScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
-              itemCount: state.cardList.length,
+              itemCount: cardList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Draggable(
                     data: index,
@@ -104,14 +99,8 @@ class ListScreen extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0)),
                                 title: const Text('변경할 Todo 입력 '),
-                                content:
-                                    BlocBuilder<CardListBloc, CardListState>(
-                                  bloc: cardListBloc, // showDialog에서 bloc 등록
-                                  builder: (context, state) {
-                                    return TextField(
-                                      controller: todoController,
-                                    );
-                                  },
+                                content: TextField(
+                                  controller: todoController,
                                 ),
                                 actions: [
                                   Row(
@@ -121,7 +110,7 @@ class ListScreen extends StatelessWidget {
                                         child: const Text("변경"),
                                         onPressed: () {
                                           cardListBloc.add(ChangeCardEvent(
-                                            time: state.cardList[index].time,
+                                            time: cardList[index].time,
                                             card: todoController.text,
                                           ));
                                           Navigator.pop(context);
