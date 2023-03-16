@@ -19,10 +19,10 @@ class RemoveCardEvent extends CardListEvent {
   List<Object> get props => [time];
 }
 
-class ChangeCardEvent extends CardListEvent {
+class ChangeCardNameEvent extends CardListEvent {
   final String card;
   final DateTime time;
-  ChangeCardEvent({required this.card, required this.time});
+  ChangeCardNameEvent({required this.card, required this.time});
   @override
   List<Object> get props => [card, time];
 }

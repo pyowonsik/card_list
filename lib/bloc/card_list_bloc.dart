@@ -35,8 +35,8 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       },
     );
 
-    on<ChangeCardEvent>(
-      (ChangeCardEvent event, emit) {
+    on<ChangeCardNameEvent>(
+      (ChangeCardNameEvent event, emit) {
         List<CardModel> currentTodo = [...state.cardList];
 
         int index = state.cardList.indexWhere((e) => e.time == event.time);
