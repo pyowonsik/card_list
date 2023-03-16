@@ -108,7 +108,7 @@ class ListScreen extends StatelessWidget {
                                       ElevatedButton(
                                         child: const Text("변경"),
                                         onPressed: () {
-                                          cardListBloc.add(ChangeCardEvent(
+                                          cardListBloc.add(ChangeCardNameEvent(
                                             time: cardList[index].time,
                                             card: todoController.text,
                                           ));
