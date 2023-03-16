@@ -1,3 +1,4 @@
+import 'package:card_list/card/card_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CardListEvent extends Equatable {
@@ -37,9 +38,10 @@ class CheckCardEvent extends CardListEvent {
 
 class SearchCardEvent extends CardListEvent {
   final String card;
-  SearchCardEvent({required this.card});
+  final List<CardModel> cardModel;
+  SearchCardEvent({required this.card, required this.cardModel});
   @override
-  List<Object> get props => [card];
+  List<Object> get props => [card, cardModel];
 }
 
 class DragStartEvent extends CardListEvent {

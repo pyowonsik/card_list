@@ -6,7 +6,11 @@ import 'package:card_list/card/card_model.dart';
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
   CardListBloc()
       : super(const CardListState(
-            isDragging: false, dragIndex: 0, dragTodo: '', cardList: [])) {
+            isDragging: false,
+            dragIndex: 0,
+            dragTodo: '',
+            cardList: [],
+            searchList: [])) {
     on<AddCardEvent>(
       (AddCardEvent event, emit) {
         DateTime time = DateTime.now();
@@ -64,16 +68,9 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
     on<SearchCardEvent>(
       (SearchCardEvent event, emit) {
-        print(event.card);
-        print(
-            state.cardList.where((e) => e.card.contains(event.card)).toList());
-        // return emit(
-        //   state.copyWith(
-        //     cardList: state.cardList
-        //         .where((e) => e.card.contains(event.card))
-        //         .toList(),
-        //   ),
-        // );
+        return emit(state.copyWith(searchList: [
+          ...event.cardModel.where((e) => e.card.contains(event.card)).toList()
+        ]));
       },
     );
 

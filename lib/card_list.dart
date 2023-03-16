@@ -1,6 +1,4 @@
-import 'dart:collection';
-
-import 'package:card_list/card/card_model.dart';
+import 'package:card_list/bloc/card_list_event.dart';
 import 'package:card_list/screen/List_screen.dart';
 import 'package:card_list/screen/check_list_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +12,7 @@ class CardList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final searchController = TextEditingController();
+    bool isSearch = false;
     return BlocBuilder<CardListBloc, CardListState>(
       builder: (context, state) {
         return MaterialApp(
@@ -36,31 +35,51 @@ class CardList extends StatelessWidget {
                       child: TextFormField(
                         controller: searchController,
                         onChanged: (val) {
-                          print(state.cardList
-                              .where((e) => e.card.contains(val))
-                              .toList());
-                          print(state.cardList
-                              .where((e) =>
-                                  e.isChecked == true && e.card.contains(val))
-                              .toList());
-                          print(state.cardList
-                              .where((e) =>
-                                  e.isChecked == false && e.card.contains(val))
-                              .toList());
+                          if (val == '') {
+                            isSearch = false;
+                          }
+                          if (val != '') {
+                            isSearch = true;
+                          }
+                          context.read<CardListBloc>().add(SearchCardEvent(
+                              card: val, cardModel: state.cardList));
+                          // print(state.cardList
+                          //     .where((e) => e.card.contains(val))
+                          //     .toList());
+                          // print(state.cardList
+                          //     .where((e) =>
+                          //         e.isChecked == true && e.card.contains(val))
+                          //     .toList());
+                          // print(state.cardList
+                          //     .where((e) =>
+                          //         e.isChecked == false && e.card.contains(val))
+                          //     .toList());
                         },
                       ),
                     ),
                     Expanded(
                       child: TabBarView(children: [
-                        ListScreen(cardList: state.cardList),
-                        CheckListScreen(
-                            cardList: state.cardList
-                                .where((e) => e.isChecked == true)
-                                .toList()),
-                        CheckListScreen(
-                            cardList: state.cardList
-                                .where((e) => e.isChecked == false)
-                                .toList()),
+                        (isSearch)
+                            ? ListScreen(cardList: state.searchList)
+                            : ListScreen(cardList: state.cardList),
+                        (isSearch)
+                            ? CheckListScreen(
+                                cardList: state.searchList
+                                    .where((e) => e.isChecked == true)
+                                    .toList())
+                            : CheckListScreen(
+                                cardList: state.cardList
+                                    .where((e) => e.isChecked == true)
+                                    .toList()),
+                        (isSearch)
+                            ? CheckListScreen(
+                                cardList: state.searchList
+                                    .where((e) => e.isChecked == false)
+                                    .toList())
+                            : CheckListScreen(
+                                cardList: state.cardList
+                                    .where((e) => e.isChecked == false)
+                                    .toList())
                       ]),
                     ),
                   ],
