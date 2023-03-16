@@ -1,5 +1,5 @@
 import 'package:card_list/bloc/card_list_bloc.dart';
-import 'package:card_list/card_list_screen.dart';
+import 'package:card_list/card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocProvider(
         create: (context) => CardListBloc(),
-        child: const CardListScreen(),
+        child: const CardList(),
       ),
     );
   }

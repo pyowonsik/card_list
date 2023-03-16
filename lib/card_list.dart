@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/card_list_bloc.dart';
 import 'bloc/card_list_state.dart';
 
-class CardListScreen extends StatelessWidget {
-  const CardListScreen({super.key});
+class CardList extends StatelessWidget {
+  const CardList({super.key});
 
   @override
   Widget build(BuildContext context) {
