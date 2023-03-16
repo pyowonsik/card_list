@@ -35,41 +35,36 @@ class CardList extends StatelessWidget {
                       child: TextFormField(
                         controller: searchController,
                         onChanged: (val) {
-                          if (val == '') {
-                            isSearch = false;
-                          }
-                          if (val != '') {
-                            isSearch = true;
-                          }
+                          (val.isEmpty) ? isSearch = false : isSearch = true;
                           context.read<CardListBloc>().add(SearchCardEvent(
-                              card: val, cardModel: state.cardList));
+                              cardName: val, cardModel: state.cardList));
                         },
                       ),
                     ),
                     Expanded(
-                      child: TabBarView(children: [
-                        (isSearch)
-                            ? ListScreen(cardList: state.searchList)
-                            : ListScreen(cardList: state.cardList),
-                        (isSearch)
-                            ? CheckListScreen(
-                                cardList: state.searchList
-                                    .where((e) => e.isChecked == true)
-                                    .toList())
-                            : CheckListScreen(
-                                cardList: state.cardList
-                                    .where((e) => e.isChecked == true)
-                                    .toList()),
-                        (isSearch)
-                            ? CheckListScreen(
-                                cardList: state.searchList
-                                    .where((e) => e.isChecked == false)
-                                    .toList())
-                            : CheckListScreen(
-                                cardList: state.cardList
-                                    .where((e) => e.isChecked == false)
-                                    .toList())
-                      ]),
+                      child: (isSearch)
+                          ? TabBarView(children: [
+                              ListScreen(cardList: state.searchList),
+                              CheckListScreen(
+                                  cardList: state.searchList
+                                      .where((e) => e.isChecked == true)
+                                      .toList()),
+                              CheckListScreen(
+                                  cardList: state.searchList
+                                      .where((e) => e.isChecked == false)
+                                      .toList())
+                            ])
+                          : TabBarView(children: [
+                              ListScreen(cardList: state.cardList),
+                              CheckListScreen(
+                                  cardList: state.cardList
+                                      .where((e) => e.isChecked == true)
+                                      .toList()),
+                              CheckListScreen(
+                                  cardList: state.cardList
+                                      .where((e) => e.isChecked == false)
+                                      .toList())
+                            ]),
                     ),
                   ],
                 ),
