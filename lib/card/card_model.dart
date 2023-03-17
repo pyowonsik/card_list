@@ -12,5 +12,5 @@ class CardModel with _$CardModel {
   }) = _CardModel;
 
   factory CardModel.fromJson(Map<String, dynamic> json) =>
-      _$$_CardModelFromJson(json);
+      _$CardModelFromJson(json);
 }

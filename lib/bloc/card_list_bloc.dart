@@ -5,7 +5,7 @@ import 'package:card_list/card/card_model.dart';
 
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
   CardListBloc()
-      : super(const CardListState(
+      : super(CardListState(
             isDragging: false,
             dragIndex: 0,
             dragTodo: '',
