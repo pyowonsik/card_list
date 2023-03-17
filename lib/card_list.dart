@@ -26,12 +26,16 @@ class CardList extends StatelessWidget {
                     Tab(text: 'uncheck'),
                   ]),
                 ),
-                body: Column(
-                  children: [
-                    const SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-                      child: TextFormField(
+                body: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 30),
+                      const Text('Search',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      TextFormField(
                         controller: searchController,
                         onChanged: (val) {
                           context.read<CardListBloc>().add(
@@ -40,31 +44,33 @@ class CardList extends StatelessWidget {
                               );
                         },
                       ),
-                    ),
-                    Expanded(
-                      child: TabBarView(
-                        children: [
-                          ListScreen(
-                              cardList: state.cardList
-                                  .where((e) =>
-                                      e.card.contains(searchController.text))
-                                  .toList()),
-                          CheckListScreen(
-                              cardList: state.cardList
-                                  .where((e) =>
-                                      e.card.contains(searchController.text) &&
-                                      e.isChecked == true)
-                                  .toList()),
-                          CheckListScreen(
-                              cardList: state.cardList
-                                  .where((e) =>
-                                      e.card.contains(searchController.text) &&
-                                      e.isChecked == false)
-                                  .toList())
-                        ],
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            ListScreen(
+                                cardList: state.cardList
+                                    .where((e) =>
+                                        e.card.contains(searchController.text))
+                                    .toList()),
+                            CheckListScreen(
+                                cardList: state.cardList
+                                    .where((e) =>
+                                        e.card
+                                            .contains(searchController.text) &&
+                                        e.isChecked == true)
+                                    .toList()),
+                            CheckListScreen(
+                                cardList: state.cardList
+                                    .where((e) =>
+                                        e.card
+                                            .contains(searchController.text) &&
+                                        e.isChecked == false)
+                                    .toList())
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               )),
         );
