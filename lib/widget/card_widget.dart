@@ -1,5 +1,5 @@
 import 'package:card_list/bloc/card_list_bloc.dart';
-import 'package:card_list/card/card_model.dart';
+import 'package:card_list/model/card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/card_list_event.dart';

@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:card_list/bloc/card_list_state.dart';
 import 'package:card_list/bloc/card_list_event.dart';
-import 'package:card_list/card/card_model.dart';
+import 'package:card_list/model/card_model.dart';
 
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
   CardListBloc()
-      : super(const CardListState(
+      : super(CardListState(
             isDragging: false,
             dragIndex: 0,
             dragTodo: '',

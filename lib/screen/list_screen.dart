@@ -1,4 +1,4 @@
-import 'package:card_list/card/card_model.dart';
+import 'package:card_list/model/card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -70,15 +70,13 @@ class ListScreen extends StatelessWidget {
                 return Draggable(
                     data: index,
                     onDragStarted: () {
-                      context
-                          .read<CardListBloc>()
-                          .add(DragStartEvent(index: index));
+                      cardListBloc.add(DragStartEvent(index: index));
                     },
                     onDraggableCanceled: (_, __) {
-                      context.read<CardListBloc>().add(DragEndEvent());
+                      cardListBloc.add(DragEndEvent());
                     },
                     onDragCompleted: () {
-                      context.read<CardListBloc>().add(DragEndEvent());
+                      cardListBloc.add(DragEndEvent());
                     },
                     feedback: Material(
                       child: ConstrainedBox(

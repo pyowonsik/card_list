@@ -1,39 +1,18 @@
-import 'package:card_list/card/card_model.dart';
-import 'package:equatable/equatable.dart';
+import 'package:card_list/model/card_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class CardListState extends Equatable {
-  final bool isDragging;
-  final int dragIndex;
-  final String dragTodo;
-  final List<CardModel> cardList;
-  final List<CardModel> searchList;
+part 'card_list_state.freezed.dart';
+part 'card_list_state.g.dart';
 
-  const CardListState({
-    required this.isDragging,
-    required this.dragIndex,
-    required this.dragTodo,
-    required this.cardList,
-    required this.searchList,
-  });
+@freezed
+class CardListState with _$CardListState {
+  factory CardListState(
+      {required bool isDragging,
+      required int dragIndex,
+      required String dragTodo,
+      required List<CardModel> cardList,
+      required List<CardModel> searchList}) = _CardListState;
 
-  CardListState copyWith({
-    bool? isDragging,
-    int? dragIndex,
-    String? dragTodo,
-    List<CardModel>? cardList,
-    String? searchText,
-    List<CardModel>? searchList,
-  }) {
-    return CardListState(
-      isDragging: isDragging ?? this.isDragging,
-      dragIndex: dragIndex ?? this.dragIndex,
-      dragTodo: dragTodo ?? this.dragTodo,
-      cardList: cardList ?? this.cardList,
-      searchList: searchList ?? this.searchList,
-    );
-  }
-
-  @override
-  List<Object> get props =>
-      [isDragging, dragIndex, dragTodo, cardList, searchList];
+  factory CardListState.fromJson(Map<String, dynamic> json) =>
+      _$CardListStateFromJson(json);
 }
