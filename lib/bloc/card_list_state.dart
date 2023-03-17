@@ -21,7 +21,6 @@ class CardListState extends Equatable {
     int? dragIndex,
     String? dragTodo,
     List<CardModel>? cardList,
-    String? searchText,
     List<CardModel>? searchList,
   }) {
     return CardListState(
