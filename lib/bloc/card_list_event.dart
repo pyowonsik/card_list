@@ -1,4 +1,4 @@
-import 'package:card_list/card/card_model.dart';
+import 'package:card_list/model/card_model.dart';
 
 abstract class CardListEvent {}
 
