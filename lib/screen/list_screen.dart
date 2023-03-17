@@ -1,4 +1,4 @@
-import 'package:card_list/todo/card_model.dart';
+import 'package:card_list/card/card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,13 +31,8 @@ class ListScreen extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),
                           title: const Text('Todo 입력 '),
-                          content: BlocBuilder<CardListBloc, CardListState>(
-                            bloc: cardListBloc, // showDialog에서 bloc 등록
-                            builder: (context, state) {
-                              return TextField(
-                                controller: todoController,
-                              );
-                            },
+                          content: TextField(
+                            controller: todoController,
                           ),
                           actions: [
                             Row(
@@ -70,7 +65,7 @@ class ListScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
-              itemCount: state.cardList.length,
+              itemCount: cardList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Draggable(
                     data: index,
@@ -90,8 +85,7 @@ class ListScreen extends StatelessWidget {
                         constraints: BoxConstraints(
                             maxWidth: MediaQuery.of(context).size.width),
                         child: CardWidget(
-                          index: index,
-                          cardList: cardList,
+                          card: cardList[index],
                         ),
                       ),
                     ),
@@ -104,14 +98,8 @@ class ListScreen extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0)),
                                 title: const Text('변경할 Todo 입력 '),
-                                content:
-                                    BlocBuilder<CardListBloc, CardListState>(
-                                  bloc: cardListBloc, // showDialog에서 bloc 등록
-                                  builder: (context, state) {
-                                    return TextField(
-                                      controller: todoController,
-                                    );
-                                  },
+                                content: TextField(
+                                  controller: todoController,
                                 ),
                                 actions: [
                                   Row(
@@ -120,8 +108,8 @@ class ListScreen extends StatelessWidget {
                                       ElevatedButton(
                                         child: const Text("변경"),
                                         onPressed: () {
-                                          cardListBloc.add(ChangeCardEvent(
-                                            time: state.cardList[index].time,
+                                          cardListBloc.add(ChangeCardNameEvent(
+                                            time: cardList[index].time,
                                             card: todoController.text,
                                           ));
                                           Navigator.pop(context);
@@ -148,8 +136,7 @@ class ListScreen extends StatelessWidget {
                           List<dynamic> rejected,
                         ) {
                           return CardWidget(
-                            index: index,
-                            cardList: cardList,
+                            card: cardList[index],
                           );
                         },
                         onMove: (detail) {

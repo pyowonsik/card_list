@@ -1,4 +1,4 @@
-import 'package:card_list/todo/card_model.dart';
+import 'package:card_list/card/card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,7 +50,7 @@ class CheckListScreen extends StatelessWidget {
                                     ElevatedButton(
                                       child: const Text("변경"),
                                       onPressed: () {
-                                        cardListBloc.add(ChangeCardEvent(
+                                        cardListBloc.add(ChangeCardNameEvent(
                                             time: cardList[index].time,
                                             card: todoController.text));
                                         Navigator.pop(context);
@@ -70,10 +70,7 @@ class CheckListScreen extends StatelessWidget {
                           });
                       todoController.clear();
                     },
-                    child: CardWidget(
-                      index: index,
-                      cardList: cardList,
-                    ));
+                    child: CardWidget(card: cardList[index]));
               },
             )),
           ],

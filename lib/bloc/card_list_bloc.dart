@@ -1,22 +1,22 @@
 import 'package:bloc/bloc.dart';
 import 'package:card_list/bloc/card_list_state.dart';
 import 'package:card_list/bloc/card_list_event.dart';
-import 'package:card_list/todo/card_model.dart';
+import 'package:card_list/card/card_model.dart';
 
 class CardListBloc extends Bloc<CardListEvent, CardListState> {
   CardListBloc()
       : super(const CardListState(
-          isDragging: false,
-          dragIndex: 0,
-          dragTodo: '',
-          cardList: [],
-        )) {
+            isDragging: false,
+            dragIndex: 0,
+            dragTodo: '',
+            cardList: [],
+            searchList: [])) {
     on<AddCardEvent>(
       (AddCardEvent event, emit) {
         DateTime time = DateTime.now();
         List<CardModel> currentTodo = [
           ...state.cardList,
-          CardModel(todo: event.card, isChecked: false, time: time),
+          CardModel(card: event.card, isChecked: false, time: time),
         ];
 
         return emit(state.copyWith(
@@ -35,13 +35,13 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
       },
     );
 
-    on<ChangeCardEvent>(
-      (ChangeCardEvent event, emit) {
+    on<ChangeCardNameEvent>(
+      (ChangeCardNameEvent event, emit) {
         List<CardModel> currentTodo = [...state.cardList];
 
         int index = state.cardList.indexWhere((e) => e.time == event.time);
         currentTodo[index] = CardModel(
-            todo: event.card,
+            card: event.card,
             isChecked: state.cardList[index].isChecked,
             time: state.cardList[index].time);
 
@@ -55,22 +55,32 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
       (currentTodo[index].isChecked == true)
           ? currentTodo[index] = CardModel(
-              todo: state.cardList[index].todo,
+              card: state.cardList[index].card,
               isChecked: false,
               time: state.cardList[index].time)
           : currentTodo[index] = CardModel(
-              todo: state.cardList[index].todo,
+              card: state.cardList[index].card,
               isChecked: true,
               time: state.cardList[index].time);
 
       return emit(state.copyWith(cardList: currentTodo));
     });
 
+    on<SearchCardEvent>(
+      (SearchCardEvent event, emit) {
+        return emit(state.copyWith(searchList: [
+          ...event.cardModel
+              .where((e) => e.card.contains(event.cardName))
+              .toList()
+        ]));
+      },
+    );
+
     on<DragStartEvent>(
       (DragStartEvent event, emit) {
         return emit(
           state.copyWith(
-              dragTodo: state.cardList[event.index].todo,
+              dragTodo: state.cardList[event.index].card,
               dragIndex: event.index,
               isDragging: true),
         );

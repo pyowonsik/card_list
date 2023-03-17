@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
 
 class CardModel extends Equatable {
-  final String todo;
+  final String card;
   final bool isChecked;
   final DateTime time;
 
   const CardModel({
-    required this.todo,
+    required this.card,
     required this.isChecked,
     required this.time,
   });
 
   @override
-  List<Object> get props => [todo, isChecked, time];
+  List<Object> get props => [card, isChecked, time];
 }

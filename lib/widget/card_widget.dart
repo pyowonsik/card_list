@@ -1,14 +1,12 @@
 import 'package:card_list/bloc/card_list_bloc.dart';
-import 'package:card_list/bloc/card_list_state.dart';
-import 'package:card_list/todo/card_model.dart';
+import 'package:card_list/card/card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/card_list_event.dart';
 
 class CardWidget extends StatelessWidget {
-  final int index;
-  final List<CardModel> cardList;
-  const CardWidget({super.key, required this.index, required this.cardList});
+  final CardModel card;
+  const CardWidget({super.key, required this.card});
 
   @override
   Widget build(BuildContext context) {
@@ -20,21 +18,21 @@ class CardWidget extends StatelessWidget {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Checkbox(
-                value: cardList[index].isChecked,
+                value: card.isChecked,
                 onChanged: (value) {
                   context
                       .read<CardListBloc>()
-                      .add(CheckCardEvent(time: cardList[index].time));
+                      .add(CheckCardEvent(time: card.time));
                 }),
             Text(
-              cardList[index].todo,
+              card.card,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             ElevatedButton(
                 onPressed: () {
                   context
                       .read<CardListBloc>()
-                      .add(RemoveCardEvent(time: cardList[index].time));
+                      .add(RemoveCardEvent(time: card.time));
                 },
                 child: const Text('삭제')),
           ]),
