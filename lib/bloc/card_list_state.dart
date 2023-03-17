@@ -1,7 +1,6 @@
 import 'package:card_list/card/card_model.dart';
-import 'package:equatable/equatable.dart';
 
-class CardListState extends Equatable {
+class CardListState {
   final bool isDragging;
   final int dragIndex;
   final String dragTodo;
@@ -31,8 +30,4 @@ class CardListState extends Equatable {
       searchList: searchList ?? this.searchList,
     );
   }
-
-  @override
-  List<Object> get props =>
-      [isDragging, dragIndex, dragTodo, cardList, searchList];
 }
