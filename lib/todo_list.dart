@@ -1,6 +1,6 @@
-import 'package:card_list/bloc/todo_list_event.dart';
-import 'package:card_list/screen/check_list_screen.dart';
-import 'package:card_list/screen/list_screen.dart';
+import 'package:todo_list/bloc/todo_list_event.dart';
+import 'package:todo_list/screen/check_list_screen.dart';
+import 'package:todo_list/screen/list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

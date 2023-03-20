@@ -1,4 +1,4 @@
-import 'package:card_list/model/todo.dart';
+import 'package:todo_list/model/todo.dart';
 
 abstract class TodoListEvent {}
 
