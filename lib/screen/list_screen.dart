@@ -1,22 +1,21 @@
-import 'package:card_list/model/card_model.dart';
+import 'package:card_list/bloc/todo_list_bloc.dart';
+import 'package:card_list/bloc/todo_list_event.dart';
+import 'package:card_list/bloc/todo_list_state.dart';
+import 'package:card_list/model/todo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../bloc/card_list_bloc.dart';
-import '../bloc/card_list_event.dart';
-import '../bloc/card_list_state.dart';
-import '../widget/card_widget.dart';
+import '../widget/todo_widget.dart';
 
 class ListScreen extends StatelessWidget {
-  final List<CardModel> cardList;
-  const ListScreen({super.key, required this.cardList});
+  final List<Todo> todoList;
+  const ListScreen({super.key, required this.todoList});
 
   @override
   Widget build(BuildContext context) {
-    CardListBloc cardListBloc = context.read<CardListBloc>();
+    TodoListBloc todoListBloc = context.read<TodoListBloc>();
     final todoController = TextEditingController();
 
-    return BlocBuilder<CardListBloc, CardListState>(builder: (context, state) {
+    return BlocBuilder<TodoListBloc, TodoListState>(builder: (context, state) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -41,8 +40,9 @@ class ListScreen extends StatelessWidget {
                                 ElevatedButton(
                                   child: const Text("추가"),
                                   onPressed: () {
-                                    cardListBloc.add(AddCardEvent(
-                                        card: todoController.text));
+                                    todoListBloc.add(AddTodoEvent(
+                                        todo: todoController.text));
+
                                     Navigator.pop(context);
                                   },
                                 ),
@@ -65,25 +65,25 @@ class ListScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
-              itemCount: cardList.length,
+              itemCount: todoList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Draggable(
                     data: index,
                     onDragStarted: () {
-                      cardListBloc.add(DragStartEvent(index: index));
+                      todoListBloc.add(DragStartEvent(index: index));
                     },
                     onDraggableCanceled: (_, __) {
-                      cardListBloc.add(DragEndEvent());
+                      todoListBloc.add(DragEndEvent());
                     },
                     onDragCompleted: () {
-                      cardListBloc.add(DragEndEvent());
+                      todoListBloc.add(DragEndEvent());
                     },
                     feedback: Material(
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
                             maxWidth: MediaQuery.of(context).size.width),
-                        child: CardWidget(
-                          card: cardList[index],
+                        child: TodoWidget(
+                          todo: todoList[index],
                         ),
                       ),
                     ),
@@ -106,9 +106,9 @@ class ListScreen extends StatelessWidget {
                                       ElevatedButton(
                                         child: const Text("변경"),
                                         onPressed: () {
-                                          cardListBloc.add(ChangeCardNameEvent(
-                                            time: cardList[index].time,
-                                            card: todoController.text,
+                                          todoListBloc.add(ChangeTodoNameEvent(
+                                            time: todoList[index].time,
+                                            todo: todoController.text,
                                           ));
                                           Navigator.pop(context);
                                         },
@@ -133,14 +133,14 @@ class ListScreen extends StatelessWidget {
                           List<dynamic> accepted,
                           List<dynamic> rejected,
                         ) {
-                          return CardWidget(
-                            card: cardList[index],
+                          return TodoWidget(
+                            todo: todoList[index],
                           );
                         },
                         onMove: (detail) {
                           if (state.isDragging) {
                             context
-                                .read<CardListBloc>()
+                                .read<TodoListBloc>()
                                 .add(DragEvent(index: index));
                           }
                         },
