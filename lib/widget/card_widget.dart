@@ -24,10 +24,19 @@ class CardWidget extends StatelessWidget {
                       .read<CardListBloc>()
                       .add(CheckCardEvent(time: card.time));
                 }),
-            Text(
-              card.card,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
+            (card.isChecked)
+                ? Text(
+                    card.card,
+                    style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey),
+                  )
+                : Text(
+                    card.card,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
             ElevatedButton(
                 onPressed: () {
                   context

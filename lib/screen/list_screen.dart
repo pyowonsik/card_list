@@ -43,9 +43,6 @@ class ListScreen extends StatelessWidget {
                                   onPressed: () {
                                     cardListBloc.add(AddCardEvent(
                                         card: todoController.text));
-                                    state.copyWith(cardList: []);
-                                    // freezed를 이용한 사용 가능
-                                    print(state.toString());
 
                                     Navigator.pop(context);
                                   },
