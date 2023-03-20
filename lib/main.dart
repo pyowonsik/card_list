@@ -1,5 +1,5 @@
-import 'package:card_list/bloc/todo_list_bloc.dart';
-import 'package:card_list/todo_list.dart';
+import 'package:todo_list/bloc/todo_list_bloc.dart';
+import 'package:todo_list/todo_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Card List',
+      title: 'Todo List',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:card_list/bloc/todo_list_event.dart';
-import 'package:card_list/bloc/todo_list_state.dart';
+import 'package:todo_list/bloc/todo_list_event.dart';
+import 'package:todo_list/bloc/todo_list_state.dart';
 
 import '../model/todo.dart';
 
