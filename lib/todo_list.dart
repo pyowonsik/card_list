@@ -1,18 +1,18 @@
-import 'package:card_list/bloc/card_list_event.dart';
-import 'package:card_list/screen/List_screen.dart';
+import 'package:card_list/bloc/todo_list_event.dart';
 import 'package:card_list/screen/check_list_screen.dart';
+import 'package:card_list/screen/list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'bloc/card_list_bloc.dart';
-import 'bloc/card_list_state.dart';
+import 'bloc/todo_list_bloc.dart';
+import 'bloc/todo_list_state.dart';
 
-class CardList extends StatelessWidget {
-  const CardList({super.key});
+class TodoList extends StatelessWidget {
+  const TodoList({super.key});
   @override
   Widget build(BuildContext context) {
     final searchController = TextEditingController();
-    return BlocBuilder<CardListBloc, CardListState>(
+    return BlocBuilder<TodoListBloc, TodoListState>(
       builder: (context, state) {
         return MaterialApp(
           home: DefaultTabController(
@@ -38,9 +38,9 @@ class CardList extends StatelessWidget {
                       TextFormField(
                         controller: searchController,
                         onChanged: (val) {
-                          context.read<CardListBloc>().add(
-                                SearchCardEvent(
-                                    cardName: val, cardModel: state.cardList),
+                          context.read<TodoListBloc>().add(
+                                SearchTodoEvent(
+                                    todoName: val, todo: state.todoList),
                               );
                         },
                       ),
@@ -48,21 +48,21 @@ class CardList extends StatelessWidget {
                         child: TabBarView(
                           children: [
                             ListScreen(
-                                cardList: state.cardList
+                                todoList: state.todoList
                                     .where((e) =>
-                                        e.card.contains(searchController.text))
+                                        e.todo.contains(searchController.text))
                                     .toList()),
                             CheckListScreen(
-                                cardList: state.cardList
+                                todoList: state.todoList
                                     .where((e) =>
-                                        e.card
+                                        e.todo
                                             .contains(searchController.text) &&
                                         e.isChecked == true)
                                     .toList()),
                             CheckListScreen(
-                                cardList: state.cardList
+                                todoList: state.todoList
                                     .where((e) =>
-                                        e.card
+                                        e.todo
                                             .contains(searchController.text) &&
                                         e.isChecked == false)
                                     .toList())

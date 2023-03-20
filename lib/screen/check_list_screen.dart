@@ -1,22 +1,22 @@
-import 'package:card_list/model/card_model.dart';
+import 'package:card_list/bloc/todo_list_bloc.dart';
+import 'package:card_list/model/todo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/card_list_bloc.dart';
-import '../bloc/card_list_event.dart';
-import '../bloc/card_list_state.dart';
-import '../widget/card_widget.dart';
+import '../bloc/todo_list_event.dart';
+import '../bloc/todo_list_state.dart';
+import '../widget/todo_widget.dart';
 
 class CheckListScreen extends StatelessWidget {
-  final List<CardModel> cardList;
-  const CheckListScreen({super.key, required this.cardList});
+  final List<Todo> todoList;
+  const CheckListScreen({super.key, required this.todoList});
 
   @override
   Widget build(BuildContext context) {
-    CardListBloc cardListBloc = context.read<CardListBloc>();
+    TodoListBloc todoListBloc = context.read<TodoListBloc>();
     final todoController = TextEditingController();
 
-    return BlocBuilder<CardListBloc, CardListState>(builder: (context, state) {
+    return BlocBuilder<TodoListBloc, TodoListState>(builder: (context, state) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -24,7 +24,7 @@ class CheckListScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
-              itemCount: cardList.length,
+              itemCount: todoList.length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                     onTap: () {
@@ -35,8 +35,8 @@ class CheckListScreen extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0)),
                               title: const Text('변경할 Todo 입력 '),
-                              content: BlocBuilder<CardListBloc, CardListState>(
-                                bloc: cardListBloc, // showDialog에서 bloc 등록
+                              content: BlocBuilder<TodoListBloc, TodoListState>(
+                                bloc: todoListBloc, // showDialog에서 bloc 등록
                                 builder: (context, state) {
                                   return TextField(
                                     controller: todoController,
@@ -50,9 +50,9 @@ class CheckListScreen extends StatelessWidget {
                                     ElevatedButton(
                                       child: const Text("변경"),
                                       onPressed: () {
-                                        cardListBloc.add(ChangeCardNameEvent(
-                                            time: cardList[index].time,
-                                            card: todoController.text));
+                                        todoListBloc.add(ChangeTodoNameEvent(
+                                            time: todoList[index].time,
+                                            todo: todoController.text));
                                         Navigator.pop(context);
                                       },
                                     ),
@@ -70,7 +70,7 @@ class CheckListScreen extends StatelessWidget {
                           });
                       todoController.clear();
                     },
-                    child: CardWidget(card: cardList[index]));
+                    child: TodoWidget(todo: todoList[index]));
               },
             )),
           ],

@@ -1,5 +1,5 @@
-import 'package:card_list/bloc/card_list_bloc.dart';
-import 'package:card_list/card_list.dart';
+import 'package:card_list/bloc/todo_list_bloc.dart';
+import 'package:card_list/todo_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: BlocProvider(
-        create: (context) => CardListBloc(),
-        child: const CardList(),
+        create: (context) => TodoListBloc(),
+        child: const TodoList(),
       ),
     );
   }

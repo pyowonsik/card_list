@@ -1,12 +1,12 @@
-import 'package:card_list/bloc/card_list_bloc.dart';
-import 'package:card_list/model/card_model.dart';
+import 'package:card_list/bloc/todo_list_bloc.dart';
+import 'package:card_list/model/todo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/card_list_event.dart';
+import '../bloc/todo_list_event.dart';
 
-class CardWidget extends StatelessWidget {
-  final CardModel card;
-  const CardWidget({super.key, required this.card});
+class TodoWidget extends StatelessWidget {
+  final Todo todo;
+  const TodoWidget({super.key, required this.todo});
 
   @override
   Widget build(BuildContext context) {
@@ -18,30 +18,30 @@ class CardWidget extends StatelessWidget {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Checkbox(
-                value: card.isChecked,
+                value: todo.isChecked,
                 onChanged: (value) {
                   context
-                      .read<CardListBloc>()
-                      .add(CheckCardEvent(time: card.time));
+                      .read<TodoListBloc>()
+                      .add(CheckTodoEvent(time: todo.time));
                 }),
-            (card.isChecked)
+            (todo.isChecked)
                 ? Text(
-                    card.card,
+                    todo.todo,
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey),
                   )
                 : Text(
-                    card.card,
+                    todo.todo,
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold),
                   ),
             ElevatedButton(
                 onPressed: () {
                   context
-                      .read<CardListBloc>()
-                      .add(RemoveCardEvent(time: card.time));
+                      .read<TodoListBloc>()
+                      .add(RemoveTodoEvent(time: todo.time));
                 },
                 child: const Text('삭제')),
           ]),

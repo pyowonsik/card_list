@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'card_list_state.dart';
+part of 'todo_list_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,42 +14,42 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-CardListState _$CardListStateFromJson(Map<String, dynamic> json) {
-  return _CardListState.fromJson(json);
+TodoListState _$TodoListStateFromJson(Map<String, dynamic> json) {
+  return _TodoListState.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CardListState {
+mixin _$TodoListState {
   bool get isDragging => throw _privateConstructorUsedError;
   int get dragIndex => throw _privateConstructorUsedError;
   String get dragTodo => throw _privateConstructorUsedError;
-  List<CardModel> get cardList => throw _privateConstructorUsedError;
-  List<CardModel> get searchList => throw _privateConstructorUsedError;
+  List<Todo> get todoList => throw _privateConstructorUsedError;
+  List<Todo> get searchList => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CardListStateCopyWith<CardListState> get copyWith =>
+  $TodoListStateCopyWith<TodoListState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CardListStateCopyWith<$Res> {
-  factory $CardListStateCopyWith(
-          CardListState value, $Res Function(CardListState) then) =
-      _$CardListStateCopyWithImpl<$Res, CardListState>;
+abstract class $TodoListStateCopyWith<$Res> {
+  factory $TodoListStateCopyWith(
+          TodoListState value, $Res Function(TodoListState) then) =
+      _$TodoListStateCopyWithImpl<$Res, TodoListState>;
   @useResult
   $Res call(
       {bool isDragging,
       int dragIndex,
       String dragTodo,
-      List<CardModel> cardList,
-      List<CardModel> searchList});
+      List<Todo> todoList,
+      List<Todo> searchList});
 }
 
 /// @nodoc
-class _$CardListStateCopyWithImpl<$Res, $Val extends CardListState>
-    implements $CardListStateCopyWith<$Res> {
-  _$CardListStateCopyWithImpl(this._value, this._then);
+class _$TodoListStateCopyWithImpl<$Res, $Val extends TodoListState>
+    implements $TodoListStateCopyWith<$Res> {
+  _$TodoListStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -62,7 +62,7 @@ class _$CardListStateCopyWithImpl<$Res, $Val extends CardListState>
     Object? isDragging = null,
     Object? dragIndex = null,
     Object? dragTodo = null,
-    Object? cardList = null,
+    Object? todoList = null,
     Object? searchList = null,
   }) {
     return _then(_value.copyWith(
@@ -78,40 +78,40 @@ class _$CardListStateCopyWithImpl<$Res, $Val extends CardListState>
           ? _value.dragTodo
           : dragTodo // ignore: cast_nullable_to_non_nullable
               as String,
-      cardList: null == cardList
-          ? _value.cardList
-          : cardList // ignore: cast_nullable_to_non_nullable
-              as List<CardModel>,
+      todoList: null == todoList
+          ? _value.todoList
+          : todoList // ignore: cast_nullable_to_non_nullable
+              as List<Todo>,
       searchList: null == searchList
           ? _value.searchList
           : searchList // ignore: cast_nullable_to_non_nullable
-              as List<CardModel>,
+              as List<Todo>,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_CardListStateCopyWith<$Res>
-    implements $CardListStateCopyWith<$Res> {
-  factory _$$_CardListStateCopyWith(
-          _$_CardListState value, $Res Function(_$_CardListState) then) =
-      __$$_CardListStateCopyWithImpl<$Res>;
+abstract class _$$_TodoListStateCopyWith<$Res>
+    implements $TodoListStateCopyWith<$Res> {
+  factory _$$_TodoListStateCopyWith(
+          _$_TodoListState value, $Res Function(_$_TodoListState) then) =
+      __$$_TodoListStateCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {bool isDragging,
       int dragIndex,
       String dragTodo,
-      List<CardModel> cardList,
-      List<CardModel> searchList});
+      List<Todo> todoList,
+      List<Todo> searchList});
 }
 
 /// @nodoc
-class __$$_CardListStateCopyWithImpl<$Res>
-    extends _$CardListStateCopyWithImpl<$Res, _$_CardListState>
-    implements _$$_CardListStateCopyWith<$Res> {
-  __$$_CardListStateCopyWithImpl(
-      _$_CardListState _value, $Res Function(_$_CardListState) _then)
+class __$$_TodoListStateCopyWithImpl<$Res>
+    extends _$TodoListStateCopyWithImpl<$Res, _$_TodoListState>
+    implements _$$_TodoListStateCopyWith<$Res> {
+  __$$_TodoListStateCopyWithImpl(
+      _$_TodoListState _value, $Res Function(_$_TodoListState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -120,10 +120,10 @@ class __$$_CardListStateCopyWithImpl<$Res>
     Object? isDragging = null,
     Object? dragIndex = null,
     Object? dragTodo = null,
-    Object? cardList = null,
+    Object? todoList = null,
     Object? searchList = null,
   }) {
-    return _then(_$_CardListState(
+    return _then(_$_TodoListState(
       isDragging: null == isDragging
           ? _value.isDragging
           : isDragging // ignore: cast_nullable_to_non_nullable
@@ -136,32 +136,32 @@ class __$$_CardListStateCopyWithImpl<$Res>
           ? _value.dragTodo
           : dragTodo // ignore: cast_nullable_to_non_nullable
               as String,
-      cardList: null == cardList
-          ? _value._cardList
-          : cardList // ignore: cast_nullable_to_non_nullable
-              as List<CardModel>,
+      todoList: null == todoList
+          ? _value._todoList
+          : todoList // ignore: cast_nullable_to_non_nullable
+              as List<Todo>,
       searchList: null == searchList
           ? _value._searchList
           : searchList // ignore: cast_nullable_to_non_nullable
-              as List<CardModel>,
+              as List<Todo>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_CardListState implements _CardListState {
-  _$_CardListState(
+class _$_TodoListState implements _TodoListState {
+  _$_TodoListState(
       {required this.isDragging,
       required this.dragIndex,
       required this.dragTodo,
-      required final List<CardModel> cardList,
-      required final List<CardModel> searchList})
-      : _cardList = cardList,
+      required final List<Todo> todoList,
+      required final List<Todo> searchList})
+      : _todoList = todoList,
         _searchList = searchList;
 
-  factory _$_CardListState.fromJson(Map<String, dynamic> json) =>
-      _$$_CardListStateFromJson(json);
+  factory _$_TodoListState.fromJson(Map<String, dynamic> json) =>
+      _$$_TodoListStateFromJson(json);
 
   @override
   final bool isDragging;
@@ -169,17 +169,17 @@ class _$_CardListState implements _CardListState {
   final int dragIndex;
   @override
   final String dragTodo;
-  final List<CardModel> _cardList;
+  final List<Todo> _todoList;
   @override
-  List<CardModel> get cardList {
-    if (_cardList is EqualUnmodifiableListView) return _cardList;
+  List<Todo> get todoList {
+    if (_todoList is EqualUnmodifiableListView) return _todoList;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_cardList);
+    return EqualUnmodifiableListView(_todoList);
   }
 
-  final List<CardModel> _searchList;
+  final List<Todo> _searchList;
   @override
-  List<CardModel> get searchList {
+  List<Todo> get searchList {
     if (_searchList is EqualUnmodifiableListView) return _searchList;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_searchList);
@@ -187,21 +187,21 @@ class _$_CardListState implements _CardListState {
 
   @override
   String toString() {
-    return 'CardListState(isDragging: $isDragging, dragIndex: $dragIndex, dragTodo: $dragTodo, cardList: $cardList, searchList: $searchList)';
+    return 'TodoListState(isDragging: $isDragging, dragIndex: $dragIndex, dragTodo: $dragTodo, todoList: $todoList, searchList: $searchList)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CardListState &&
+            other is _$_TodoListState &&
             (identical(other.isDragging, isDragging) ||
                 other.isDragging == isDragging) &&
             (identical(other.dragIndex, dragIndex) ||
                 other.dragIndex == dragIndex) &&
             (identical(other.dragTodo, dragTodo) ||
                 other.dragTodo == dragTodo) &&
-            const DeepCollectionEquality().equals(other._cardList, _cardList) &&
+            const DeepCollectionEquality().equals(other._todoList, _todoList) &&
             const DeepCollectionEquality()
                 .equals(other._searchList, _searchList));
   }
@@ -213,33 +213,33 @@ class _$_CardListState implements _CardListState {
       isDragging,
       dragIndex,
       dragTodo,
-      const DeepCollectionEquality().hash(_cardList),
+      const DeepCollectionEquality().hash(_todoList),
       const DeepCollectionEquality().hash(_searchList));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CardListStateCopyWith<_$_CardListState> get copyWith =>
-      __$$_CardListStateCopyWithImpl<_$_CardListState>(this, _$identity);
+  _$$_TodoListStateCopyWith<_$_TodoListState> get copyWith =>
+      __$$_TodoListStateCopyWithImpl<_$_TodoListState>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CardListStateToJson(
+    return _$$_TodoListStateToJson(
       this,
     );
   }
 }
 
-abstract class _CardListState implements CardListState {
-  factory _CardListState(
+abstract class _TodoListState implements TodoListState {
+  factory _TodoListState(
       {required final bool isDragging,
       required final int dragIndex,
       required final String dragTodo,
-      required final List<CardModel> cardList,
-      required final List<CardModel> searchList}) = _$_CardListState;
+      required final List<Todo> todoList,
+      required final List<Todo> searchList}) = _$_TodoListState;
 
-  factory _CardListState.fromJson(Map<String, dynamic> json) =
-      _$_CardListState.fromJson;
+  factory _TodoListState.fromJson(Map<String, dynamic> json) =
+      _$_TodoListState.fromJson;
 
   @override
   bool get isDragging;
@@ -248,11 +248,11 @@ abstract class _CardListState implements CardListState {
   @override
   String get dragTodo;
   @override
-  List<CardModel> get cardList;
+  List<Todo> get todoList;
   @override
-  List<CardModel> get searchList;
+  List<Todo> get searchList;
   @override
   @JsonKey(ignore: true)
-  _$$_CardListStateCopyWith<_$_CardListState> get copyWith =>
+  _$$_TodoListStateCopyWith<_$_TodoListState> get copyWith =>
       throw _privateConstructorUsedError;
 }
