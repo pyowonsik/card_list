@@ -43,7 +43,7 @@ class TodoWidget extends StatelessWidget {
                       .read<TodoListBloc>()
                       .add(RemoveTodoEvent(time: todo.time));
                 },
-                child: const Text('삭제')),
+                child: const Icon(Icons.delete)),
           ]),
         ),
       ),

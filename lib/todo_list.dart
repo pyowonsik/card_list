@@ -19,22 +19,20 @@ class TodoList extends StatelessWidget {
               length: 3,
               child: Scaffold(
                 appBar: AppBar(
-                  title: const Text('Todo List'),
+                  title: const Center(
+                      child: Text('TODOS', style: TextStyle(fontSize: 30))),
                   bottom: const TabBar(tabs: [
-                    Tab(text: 'all'),
-                    Tab(text: 'check'),
-                    Tab(text: 'uncheck'),
+                    Tab(text: '전체 보기'),
+                    Tab(text: '해야할 일'),
+                    Tab(text: '완료한 일'),
                   ]),
                 ),
                 body: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       const SizedBox(height: 30),
-                      const Text('Search',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
                       TextFormField(
                         controller: searchController,
                         onChanged: (val) {
@@ -57,15 +55,15 @@ class TodoList extends StatelessWidget {
                                     .where((e) =>
                                         e.todo
                                             .contains(searchController.text) &&
-                                        e.isChecked == true)
+                                        e.isChecked == false)
                                     .toList()),
                             CheckListScreen(
                                 todoList: state.todoList
                                     .where((e) =>
                                         e.todo
                                             .contains(searchController.text) &&
-                                        e.isChecked == false)
-                                    .toList())
+                                        e.isChecked == true)
+                                    .toList()),
                           ],
                         ),
                       ),

@@ -36,6 +36,15 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
       },
     );
 
+    on<RemoveAllTodosEvent>(
+      (RemoveAllTodosEvent event, emit) {
+        return emit(
+          state.copyWith(
+            todoList: [],
+          ),
+        );
+      },
+    );
     on<ChangeTodoNameEvent>(
       (ChangeTodoNameEvent event, emit) {
         List<Todo> currentTodo = [...state.todoList];
