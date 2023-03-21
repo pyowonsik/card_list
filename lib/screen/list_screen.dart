@@ -21,47 +21,58 @@ class ListScreen extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 30),
-            ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          title: const Text('Todo 입력 '),
-                          content: TextField(
-                            controller: todoController,
-                          ),
-                          actions: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ElevatedButton(
-                                  child: const Text("추가"),
-                                  onPressed: () {
-                                    todoListBloc.add(AddTodoEvent(
-                                        todo: todoController.text));
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              title: const Text('Todo 입력 '),
+                              content: TextField(
+                                controller: todoController,
+                              ),
+                              actions: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                      child: const Text("추가"),
+                                      onPressed: () {
+                                        todoListBloc.add(AddTodoEvent(
+                                            todo: todoController.text));
 
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                                const SizedBox(width: 15),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('취소'),
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    const SizedBox(width: 15),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('취소'),
+                                    ),
+                                  ],
                                 ),
                               ],
-                            ),
-                          ],
-                        );
-                      });
+                            );
+                          });
 
-                  todoController.clear();
-                },
-                child: const Text('추가')),
+                      todoController.clear();
+                    },
+                    child: const Text('추가')),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                    onPressed: () {
+                      context.read<TodoListBloc>().add(RemoveAllTodosEvent());
+                    },
+                    child: const Text('모두 삭제')),
+              ],
+            ),
             const SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(

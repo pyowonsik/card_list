@@ -12,6 +12,8 @@ class RemoveTodoEvent extends TodoListEvent {
   RemoveTodoEvent({required this.time});
 }
 
+class RemoveAllTodosEvent extends TodoListEvent {}
+
 class ChangeTodoNameEvent extends TodoListEvent {
   final String todo;
   final DateTime time;

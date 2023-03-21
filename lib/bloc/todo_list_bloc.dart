@@ -36,6 +36,15 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
       },
     );
 
+    on<RemoveAllTodosEvent>(
+      (RemoveAllTodosEvent event, emit) {
+        return emit(
+          state.copyWith(
+            todoList: [],
+          ),
+        );
+      },
+    );
     on<ChangeTodoNameEvent>(
       (ChangeTodoNameEvent event, emit) {
         List<Todo> currentTodo = [...state.todoList];
@@ -118,4 +127,17 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
 
   bool isDragDown(int index) => (state.dragIndex < index) ? true : false;
   bool isDragUp(int index) => (state.dragIndex > index) ? true : false;
+
+  // json sample
+  // Future<List<Words>> fetchJson() async {
+  //   var url = Uri.parse(
+  //       "http://${baseApiUrl}/wordbook/getwordbooklist/${finalEmail}");
+  //   http.Response res = await http.get(url);
+  //   List<Words> wordlist = [];
+  //   var urjson = json.decode(res.body);
+  //   for (var jsonData in urjson) {
+  //     wordlist.add(Words.fromJson(jsonData));
+  //   }
+  //   return wordlist;
+  // }
 }
